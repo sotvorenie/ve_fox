@@ -3,3 +3,10 @@
 @use 'variables';
 @use 'utils';
 @use 'globals';
+@use 'classes';
+
+@use 'blocks/input';
+
+@use 'blocks/main/main';
+@use 'blocks/main/menu';
+@use 'blocks/main/header';

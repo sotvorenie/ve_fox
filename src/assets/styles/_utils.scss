@@ -21,3 +21,74 @@
     display: none !important;
   }
 }
+
+.recolor-svg {
+  svg {
+    &[stroke]:not([stroke="none"]),
+    *[stroke]:not([stroke="none"]) {
+      stroke: currentColor !important;
+    }
+
+    &[fill]:not([fill="none"]),
+    *[fill]:not([fill="none"]) {
+      fill: currentColor !important;
+    }
+
+    path,
+    circle,
+    rect,
+    polygon,
+    polyline,
+    line,
+    ellipse {
+      &[stroke]:not([stroke="none"]) {
+        stroke: currentColor !important;
+      }
+      &[fill]:not([fill="none"]) {
+        fill: currentColor !important;
+      }
+    }
+  }
+}
+
+.img-container {
+  overflow: hidden;
+  user-select: none;
+
+  @include hover {
+    img {
+      scale: 1.05;
+    }
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    transition-duration: var(--transition-duration);
+    object-fit: cover;
+  }
+}
+
+.i-svg {
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.hover-color-accent {
+  @include hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+}
+
+.button-width-svg {
+
+  svg {
+    width: 80%;
+    height: auto;
+    max-height: 80%;
+  }
+}
