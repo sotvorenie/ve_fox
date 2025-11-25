@@ -805,6 +805,10 @@ input, textarea {
 .input:focus {
   border-color: var(--color-accent);
 }
+.input::placeholder {
+  color: var(--color-light-alt);
+  opacity: 0.8;
+}
 
 .main {
   width: 100%;

@@ -1,4 +1,6 @@
-import React, {useRef, useState} from "react";
+import React, {useRef} from "react";
+
+import {useSearch} from "../../../hooks/useSearch.ts";
 
 import CrossIcon from "../../../assets/images/icons/CrossIcon.tsx";
 import SearchIcon from "../../../assets/images/icons/SearchIcon.tsx";
@@ -6,18 +8,13 @@ import SearchIcon from "../../../assets/images/icons/SearchIcon.tsx";
 import avatarImage from "../../../assets/images/аватар.webp";
 
 function MainHeader() {
-    const [searchText, setSearchText] = useState('')
+    const {searchName, setSearchName, clearSearchName} = useSearch();
 
     const inputRef = useRef<HTMLInputElement>(null)
 
 
     const handleSearchText = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setSearchText(event.target.value)
-    }
-
-    const clearSearchText = (): void => {
-        setSearchText('')
-        inputRef.current?.focus()
+        setSearchName(event.target.value)
     }
 
     return(
@@ -25,7 +22,7 @@ function MainHeader() {
             <div className="header__search flex overflow-hidden position-relative">
                 <input className="header__input input"
                        ref={inputRef}
-                       value={searchText}
+                       value={searchName}
                        onChange={handleSearchText}
                        type="text"
                        placeholder="Введите запрос"
@@ -38,13 +35,13 @@ function MainHeader() {
                 >
                     <SearchIcon/>
                 </button>
-                {searchText && (
+                {searchName && (
                     <button
                         className="header__clear recolor-svg position-absolute button-width-svg flex-center hover-color-accent"
                         type="button"
                         aria-label="Очистить"
                         title="Очистить"
-                        onClick={clearSearchText}
+                        onClick={clearSearchName}
                     >
                         <CrossIcon/>
                     </button>
