@@ -1,0 +1,58 @@
+@use '../../helpers' as *;
+
+.header {
+  width: 100%;
+  backdrop-filter: blur(5px);
+  background: #3d4b5680;
+  position: sticky;
+  top: 0;
+  padding-block: fluid(40, 20);
+
+  &__avatar {
+    @include abs-y;
+
+    right: fluid(40, 20);
+    border-radius: 50%;
+    aspect-ratio: 1;
+    width: fluid(65, 45);
+  }
+
+  &__search {
+    width: fluid(800, 500);
+    height: fluid(60, 40);
+    border-radius: var(--radius-big);
+    border: var(--border-light-alt);
+
+    & * {
+      height: 100%;
+    }
+  }
+
+  &__input {
+    border: none;
+    padding-inline: rem(20) fluid(70, 50);
+    flex-grow: 1;
+  }
+
+  &__btn {
+    width: fluid(80, 55);
+    background: var(--color-dark-alt);
+
+    @include hover {
+      filter: brightness(1.1);
+    }
+
+    svg {
+      width: 50%;
+    }
+  }
+
+  &__clear {
+    @include abs-y;
+
+    aspect-ratio: 1;
+    height: 100%;
+    right: fluid(80, 55);
+    z-index: 1000;
+  }
+}

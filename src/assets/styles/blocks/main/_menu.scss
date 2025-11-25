@@ -1,0 +1,33 @@
+@use '../../helpers' as *;
+
+.menu {
+  width: fit-content;
+  padding: fluid(40, 20) fluid(30, 10);
+  height: 100%;
+  border-right: var(--border-light-alt);
+
+  &__logo {
+    margin-bottom: rem(50);
+    column-gap: rem(10);
+
+    svg {
+      width: fluid(80, 50);
+    }
+  }
+
+  &__btn {
+    width: 100%;
+    column-gap: rem(10);
+    padding: rem(20) rem(10);
+    border-radius: var(--radius-regular);
+
+    @include hover {
+      background: var(--color-dark-alt);
+    }
+
+    svg {
+      width: rem(30);
+      height: auto;
+    }
+  }
+}

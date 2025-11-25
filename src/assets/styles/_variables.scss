@@ -1,0 +1,27 @@
+@use 'helpers' as *;
+
+:root {
+  --color-light: #ebeced;
+  --color-light-alt: #cccfd2;
+
+  --color-dark: #3d4b56;
+  --color-dark-alt: #5f6d78;
+
+  --color-accent: #fe7971;
+
+  --border-light: #{rem(1)} solid var(--color-light);
+  --border-light-alt: #{rem(1)} solid var(--color-light-alt);
+
+  --border-accent: #{rem(1)} solid var(--color-accent);
+
+  --radius-regular: #{rem(8)};
+  --radius-medium: #{rem(12)};
+  --radius-semi-big: #{rem(20)};
+  --radius-big: #{rem(32)};
+
+  --font-family-base: 'Axiforma', sans-serif;
+
+  --container-padding-x: #{rem(16)};
+
+  --transition-duration: 0.2s;
+}

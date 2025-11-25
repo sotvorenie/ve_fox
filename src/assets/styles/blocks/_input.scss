@@ -1,0 +1,13 @@
+@use '../helpers' as *;
+
+.input {
+  border: var(--border-light-alt);
+
+  @include hover {
+    border-color: var(--color-accent);
+  }
+
+  &:focus {
+    border-color: var(--color-accent);
+  }
+}
