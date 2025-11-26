@@ -1,12 +1,14 @@
 import {configureStore} from "@reduxjs/toolkit";
 
-import connectionReducer from "./websocket-server/useConnectionStore.ts"
 import searchReducer from "./useSearchStore.ts";
+import videosReducer from "./useVideosStore.ts";
+import videoReducer from "./useVideoStore.ts";
 
 export const store = configureStore({
     reducer: {
-        connection: connectionReducer,
         search: searchReducer,
+        videos: videosReducer,
+        video: videoReducer,
     }
 })
 

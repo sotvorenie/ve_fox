@@ -1,12 +1,25 @@
-@use '../../helpers' as *;
+@use '../helpers/index' as *;
 
 .header {
   width: 100%;
-  backdrop-filter: blur(5px);
-  background: #3d4b5680;
+  backdrop-filter: blur(52px);
+  background: #3d4b5690;
   position: sticky;
   top: 0;
-  padding-block: fluid(40, 20);
+  padding-block: fluid(30, 15);
+  z-index: 1000;
+
+  &__back {
+    @include abs-y;
+
+    column-gap: rem(10);
+    left: fluid(40, 20);
+    z-index: 1000;
+
+    svg {
+      @include square(40)
+    }
+  }
 
   &__avatar {
     @include abs-y;
@@ -14,14 +27,15 @@
     right: fluid(40, 20);
     border-radius: 50%;
     aspect-ratio: 1;
-    width: fluid(65, 45);
+    width: fluid(55, 40);
   }
 
   &__search {
     width: fluid(800, 500);
-    height: fluid(60, 40);
+    height: fluid(50, 40);
     border-radius: var(--radius-big);
     border: var(--border-light-alt);
+    background: var(--color-dark);
 
     & * {
       height: 100%;

@@ -7,10 +7,10 @@ function MainContent() {
 
 
     return (
-        <div className="main__right position-relative">
+        <div className="main-page__right position-relative">
             <MainHeader/>
 
-            <div className="main__content">
+            <div className="main-page__content">
                 <MainHomePage/>
             </div>
         </div>

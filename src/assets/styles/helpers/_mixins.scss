@@ -48,6 +48,8 @@
 @mixin square($size) {
   width: if(type-of($size) == 'number', $size + px, $size);
   height: if(type-of($size) == 'number', $size + px, $size);
+  min-height: if(type-of($size) == 'number', $size + px, $size);
+  min-width: if(type-of($size) == 'number', $size + px, $size);
 }
 
 @mixin visually-hidden {

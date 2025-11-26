@@ -1,13 +1,21 @@
 import React, {useRef} from "react";
+import {Link} from "react-router-dom";
 
 import {useSearch} from "../../../hooks/useSearch.ts";
+
+import ArrowIcon from "../../../assets/images/icons/ArrowIcon.tsx";
 
 import CrossIcon from "../../../assets/images/icons/CrossIcon.tsx";
 import SearchIcon from "../../../assets/images/icons/SearchIcon.tsx";
 
 import avatarImage from "../../../assets/images/аватар.webp";
 
-function MainHeader() {
+
+interface Props {
+    backVisible?: boolean
+}
+
+function MainHeader({backVisible = false}: Props) {
     const {searchName, setSearchName, clearSearchName} = useSearch();
 
     const inputRef = useRef<HTMLInputElement>(null)
@@ -18,7 +26,15 @@ function MainHeader() {
     }
 
     return(
-        <header className="header flex flex-align-center flex-justify-center">
+        <header className="header flex flex-align-center flex-justify-center position-sticky">
+            {backVisible &&
+                <Link to="/"
+                      className="header__back position-absolute flex flex-align-center recolor-svg"
+                >
+                    <ArrowIcon/>
+                    <span className="h5">Назад</span>
+                </Link>}
+
             <div className="header__search flex overflow-hidden position-relative">
                 <input className="header__input input"
                        ref={inputRef}
@@ -37,7 +53,7 @@ function MainHeader() {
                 </button>
                 {searchName && (
                     <button
-                        className="header__clear recolor-svg position-absolute button-width-svg flex-center hover-color-accent"
+                        className="header__clear recolor-svg button-width-svg flex-center hover-color-accent"
                         type="button"
                         aria-label="Очистить"
                         title="Очистить"

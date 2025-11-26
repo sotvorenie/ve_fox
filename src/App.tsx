@@ -11,7 +11,7 @@ function App() {
       <main className="main">
         <Routes>
           <Route path="/" element={<MainPage/>}/>
-          <Route path="/" element={<VideoPage/>}/>
+          <Route path="/video" element={<VideoPage/>}/>
         </Routes>
       </main>
   );

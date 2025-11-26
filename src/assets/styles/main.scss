@@ -5,9 +5,15 @@
 @use 'globals';
 @use 'classes';
 
+@use 'blocks/main';
 @use 'blocks/input';
+@use 'blocks/video-list';
+@use 'blocks/header';
 
-@use 'blocks/main/main';
+@use 'blocks/main/main-page';
 @use 'blocks/main/menu';
-@use 'blocks/main/header';
 @use 'blocks/main/video-item';
+
+@use 'blocks/video/video-page';
+@use 'blocks/video/video';
+@use 'blocks/video/recommended';

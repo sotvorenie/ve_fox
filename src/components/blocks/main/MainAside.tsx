@@ -22,7 +22,7 @@ function MainAside() {
                         <button className="menu__btn flex flex-align-center recolor-svg hover-color-accent text-nowrap"
                                 type="button"
                         >
-                            <item.icon style={{fill: 'none'}}></item.icon>
+                            <item.icon style={{fill: 'currentColor'}}></item.icon>
                             <span>{item.title}</span>
                         </button>
                     </li>

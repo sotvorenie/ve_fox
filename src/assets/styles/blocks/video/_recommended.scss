@@ -1,0 +1,38 @@
+@use '../../helpers/index' as *;
+
+.recommended {
+  height: 100%;
+  overflow-y: auto;
+  padding-right: fluid(40, 10);
+
+  &__item {
+    column-gap: rem(10);
+    padding: rem(8);
+    border-radius: var(--radius-medium);
+
+    @include hover {
+      background: #fe797180;
+      color: inherit;
+
+      .video__preview {
+        border-radius: 0;
+      }
+    }
+  }
+
+  &__preview {
+    aspect-ratio: 16/9;
+    flex: 0 0 50%;
+    border-radius: var(--radius-medium);
+  }
+
+  &__title {
+    font-size: rem(15);
+  }
+
+  &__date, &__channel {
+    font-size: rem(13);
+    color: var(--color-light-alt);
+    opacity: .9;
+  }
+}

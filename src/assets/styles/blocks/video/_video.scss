@@ -1,0 +1,70 @@
+@use '../../helpers/index' as *;
+
+.video {
+  flex: 0 0 75%;
+
+  &__video {
+    width: 100%;
+    aspect-ratio: 16/9;
+    margin-bottom: rem(15);
+    background: var(--color-dark-alt);
+  }
+
+  &__actions {
+    justify-content: space-between;
+  }
+
+  &__title {
+    margin-bottom: rem(10) !important;
+  }
+
+  &__channel {
+    column-gap: rem(10);
+
+    @include hover {
+      .video__channel-avatar {
+        color: var(--color-light-alt);
+      }
+    }
+
+    &-avatar {
+      @include square(50);
+      @include flex-center();
+
+      background: var(--color-dark-alt);
+      border-radius: 50%;
+    }
+
+    &-name {
+      font-size: rem(20);
+    }
+  }
+
+  &__buttons {
+    column-gap: rem(20);
+  }
+
+  &__button {
+    background: var(--color-dark-alt);
+    padding: rem(5) rem(30);
+    border-radius: var(--radius-big);
+
+    @include hover() {
+      background: var(--color-accent);
+
+      svg {
+        fill: currentColor !important;
+      }
+    }
+
+    svg {
+      @include square(30);
+
+      fill: currentColor;
+
+      &.fill {
+        fill: var(--color-accent);
+      }
+    }
+  }
+}

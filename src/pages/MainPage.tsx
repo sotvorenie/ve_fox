@@ -5,7 +5,7 @@ function MainPage() {
 
 
     return (
-        <div className="main flex">
+        <div className="main-page flex">
             <MainAside/>
             <MainContent/>
         </div>

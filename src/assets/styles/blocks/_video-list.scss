@@ -1,0 +1,56 @@
+@use '../helpers' as *;
+
+.video-list {
+
+  &__item {
+    cursor: pointer;
+    padding: rem(8);
+    transition-duration: var(--transition-duration);
+    border-radius: var(--radius-medium);
+
+    @include hover {
+      background: #fe797180;
+      color: inherit;
+
+      .video-list__preview {
+        border-radius: 0;
+      }
+    }
+  }
+
+  &__preview {
+    border-radius: var(--radius-medium);
+    aspect-ratio: 16 / 9;
+    margin-bottom: rem(10);
+  }
+
+  &__info {
+    display: flex;
+    column-gap: rem(15);
+  }
+
+  &__avatar {
+    @include square(40);
+    @include flex-center();
+
+    background: var(--color-light-alt);
+    border-radius: 50%;
+    color: var(--color-dark-alt);
+    text-transform: uppercase;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    margin-bottom: rem(5);
+  }
+
+  &__date, &__channel {
+    font-size: rem(14);
+    color: var(--color-light-alt);
+    opacity: .9;
+  }
+}
