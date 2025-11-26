@@ -5,7 +5,7 @@
 
   &__content {
     height: 100%;
-    padding-left: fluid(60, 30);
-    column-gap: rem(20);
+    padding-left: fluid(60, 20);
+    column-gap: fluid(20, 10);
   }
 }

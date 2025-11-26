@@ -6,7 +6,7 @@
   padding-right: fluid(40, 10);
 
   &__item {
-    column-gap: rem(10);
+    gap: rem(10);
     padding: rem(8);
     border-radius: var(--radius-medium);
 
@@ -18,6 +18,10 @@
         border-radius: 0;
       }
     }
+
+    @include laptop {
+      flex-direction: column;
+    }
   }
 
   &__preview {
@@ -27,7 +31,7 @@
   }
 
   &__title {
-    font-size: rem(15);
+    @include fluid-text(15, 13)
   }
 
   &__date, &__channel {
