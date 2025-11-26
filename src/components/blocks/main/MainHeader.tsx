@@ -1,7 +1,8 @@
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import {Link} from "react-router-dom";
 
-import {useSearch} from "../../../hooks/useSearch.ts";
+import {useVideos} from "../../../hooks/useVideos.ts";
+import {useMainPages} from "../../../hooks/useMainPages.ts";
 
 import ArrowIcon from "../../../assets/images/icons/ArrowIcon.tsx";
 
@@ -16,13 +17,27 @@ interface Props {
 }
 
 function MainHeader({backVisible = false}: Props) {
-    const {searchName, setSearchName, clearSearchName} = useSearch();
+    const {getSearchVideos} = useVideos()
+    const {pageList, setPageName} = useMainPages()
+
+    const [searchName, setSearchName] = useState("");
 
     const inputRef = useRef<HTMLInputElement>(null)
 
 
     const handleSearchText = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setSearchName(event.target.value)
+    }
+
+    const clearSearchName = (): void => {
+        setSearchName("");
+    }
+
+    const handleSearch = async () => {
+        if (searchName) {
+            setPageName(pageList.search);
+            await getSearchVideos(searchName)
+        }
     }
 
     return(
@@ -48,6 +63,7 @@ function MainHeader({backVisible = false}: Props) {
                         type="button"
                         aria-label="Поиск"
                         title="Поиск"
+                        onClick={handleSearch}
                 >
                     <SearchIcon/>
                 </button>

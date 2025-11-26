@@ -1,14 +1,14 @@
 import {configureStore} from "@reduxjs/toolkit";
 
-import searchReducer from "./useSearchStore.ts";
 import videosReducer from "./useVideosStore.ts";
 import videoReducer from "./useVideoStore.ts";
+import mainPagesReducer from "./useMainPagesStore.ts";
 
 export const store = configureStore({
     reducer: {
-        search: searchReducer,
         videos: videosReducer,
         video: videoReducer,
+        mainPages: mainPagesReducer,
     }
 })
 

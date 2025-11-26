@@ -1,6 +1,6 @@
 import MainHeader from "../components/blocks/main/MainHeader.tsx";
-import MainVideo from "../components/blocks/main/video/MainVideo.tsx";
-import MainRecommended from "../components/blocks/main/video/MainRecommended.tsx";
+import VideoVideo from "../components/blocks/video/VideoVideo.tsx";
+import VideoRecommended from "../components/blocks/video/VideoRecommended.tsx";
 
 
 function VideoPage() {
@@ -10,9 +10,9 @@ function VideoPage() {
             <MainHeader backVisible={true}/>
 
             <div className="video-page__content flex">
-                <MainVideo/>
+                <VideoVideo/>
 
-                <MainRecommended/>
+                <VideoRecommended/>
             </div>
         </div>
     );

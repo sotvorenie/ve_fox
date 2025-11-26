@@ -1,11 +1,11 @@
 import {useDispatch, useSelector} from "react-redux";
 import {RootState, AppDispatch} from "../store";
-import {setVideos} from "../store/useVideosStore.ts";
-import {apiGetAllVideos} from "../api/videos/videos.ts";
+import {setVideos, setSearchVideos} from "../store/useVideosStore.ts";
+import {apiGetAllVideos, apiGetVideoByTitle} from "../api/videos/videos.ts";
 
 export const useVideos = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const {allVideos} = useSelector((state: RootState) => state.videos)
+    const {allVideos, searchVideos} = useSelector((state: RootState) => state.videos)
 
     const getAllVideos = async () => {
         try {
@@ -16,10 +16,21 @@ export const useVideos = () => {
         }
     }
 
+    const getSearchVideos = async (title: string) => {
+        try {
+            const videos = await apiGetVideoByTitle(title);
+            dispatch(setSearchVideos(videos));
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return {
         allVideos,
+        searchVideos,
 
         setVideos: (videos: any[]) => dispatch(setVideos(videos)),
         getAllVideos,
+        getSearchVideos,
     }
 }

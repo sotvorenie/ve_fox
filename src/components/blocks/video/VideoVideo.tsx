@@ -1,10 +1,10 @@
 import {useState} from "react";
 
-import {useVideo} from "../../../../hooks/useVideo.ts";
+import {useVideo} from "../../../hooks/useVideo.ts";
 
-import LikeIcon from "../../../../assets/images/icons/LikeIcon.tsx";
+import LikeIcon from "../../../assets/images/icons/LikeIcon.tsx";
 
-function MainVideo() {
+function VideoVideo() {
     const {video} = useVideo()
 
     const [isLiked, setIsLiked] = useState(false)
@@ -49,4 +49,4 @@ function MainVideo() {
     )
 }
 
-export default MainVideo;
+export default VideoVideo;

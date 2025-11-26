@@ -1,13 +1,13 @@
-import {Video} from "../../../../types/video.ts";
+import {Video} from "../../../types/video.ts";
 
-import {replaceLines, sliceString} from "../../../../composables/useRedactVideoName.ts";
-import {redactDate} from "../../../../composables/useRedactDate.ts";
+import {replaceLines, sliceString} from "../../../composables/useRedactVideoName.ts";
+import {redactDate} from "../../../composables/useRedactDate.ts";
 
-import {useVideos} from "../../../../hooks/useVideos.ts";
-import {useVideo} from "../../../../hooks/useVideo.ts";
+import {useVideos} from "../../../hooks/useVideos.ts";
+import {useVideo} from "../../../hooks/useVideo.ts";
 
 
-function MainRecommended() {
+function VideoRecommended() {
     const {allVideos} = useVideos()
     const {setVideo} = useVideo()
 
@@ -40,4 +40,4 @@ function MainRecommended() {
     )
 }
 
-export default MainRecommended;
+export default VideoRecommended;

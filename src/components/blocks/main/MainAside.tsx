@@ -1,20 +1,27 @@
-import {Link} from "react-router-dom";
-
 import {Menu} from "../../../types/menu.ts";
 
 import menuItems from "../../../data/main/menuAside.ts";
 
+import {useMainPages} from "../../../hooks/useMainPages.ts";
+
 import Logo from "../../../assets/images/Logo.tsx";
 
 function MainAside() {
+    const {pageList, setPageName} = useMainPages();
 
+    const handleLogo = () => {
+        setPageName(pageList.home)
+    }
 
     return (
         <aside className="menu">
-            <Link to="/" className="menu__logo button-width-svg flex flex-align-center">
+            <button className="menu__logo button-width-svg flex flex-align-center"
+                    type="button"
+                    onClick={handleLogo}
+            >
                 <Logo/>
                 <p className="h4">veFox</p>
-            </Link>
+            </button>
 
             <ul className="menu__list">
                 {menuItems.map((item: Menu) => (
