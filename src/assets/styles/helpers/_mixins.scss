@@ -52,6 +52,16 @@
   min-width: if(type-of($size) == 'number', $size + px, $size);
 }
 
+@mixin fluid-square($max, $min) {
+  aspect-ratio: 1 / 1;
+
+  width: fluid($max, $min);
+  height: fluid($max, $min);
+
+  min-width: fluid($max, $min);
+  min-height: fluid($max, $min);
+}
+
 @mixin visually-hidden {
   position: absolute !important;
   width: 1px !important;
