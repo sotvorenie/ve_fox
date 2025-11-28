@@ -13,11 +13,13 @@ function MainHomePage() {
     }, [])
 
     return (
-        <ul className="video-list list-row row">
-            {allVideos.length ? allVideos.map((video: Video) => (
-                <VideoItem key={video.video} video={video}/>
-            )) : (<div>видев нет</div>)}
-        </ul>
+        <div className="main-page__home">
+            <ul className="video-list list-row row">
+                {allVideos.length ? allVideos.map((video: Video) => (
+                    <VideoItem key={video.video} video={video} isRow={false}/>
+                )) : (<div>видев нет</div>)}
+            </ul>
+        </div>
     )
 }
 

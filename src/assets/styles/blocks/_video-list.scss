@@ -7,6 +7,7 @@
     padding: rem(8);
     transition-duration: var(--transition-duration);
     border-radius: var(--radius-medium);
+    width: 100%;
 
     @include hover {
       background: #fe797180;
@@ -29,8 +30,8 @@
   }
 
   &__info {
-    display: flex;
     column-gap: fluid(15, 5);
+    row-gap: fluid(20, 10);
   }
 
   &__avatar {
@@ -52,5 +53,21 @@
     font-size: rem(14);
     color: var(--color-light-alt);
     opacity: .9;
+  }
+
+  &__row {
+
+    &-item {
+      column-gap: rem(10);
+      width: 100%;
+
+      .video-list__preview {
+        flex: 0 0 50%;
+      }
+    }
+
+    &-channel {
+      column-gap: rem(10);
+    }
   }
 }

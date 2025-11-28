@@ -1,0 +1,40 @@
+@use '../../helpers/index' as *;
+
+.channel {
+
+  &__banner {
+    width: 100%;
+    height: rem(300);
+    background: var(--color-accent);
+    border-radius: var(--radius-big);
+    margin-bottom: rem(20);
+  }
+
+  &__info {
+    column-gap: rem(20);
+    margin-bottom: rem(30);
+  }
+
+  &__avatar {
+    @include square(120);
+
+    border-radius: 50%;
+    background: var(--color-light-alt);
+  }
+
+  &__tabs {
+    border-bottom: var(--border-dark-alt);
+  }
+
+  &__tab {
+
+    &.is-active {
+      border-bottom: var(--border-accent);
+      pointer-events: none;
+    }
+
+    button {
+      padding: rem(10) rem(20);
+    }
+  }
+}

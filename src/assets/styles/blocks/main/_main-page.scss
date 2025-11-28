@@ -13,4 +13,18 @@
   &__content {
     padding: 0 rem(20) rem(40);
   }
+
+  &__search {
+
+    .video-list {
+      max-width: rem(1200);
+    }
+  }
+
+  &__channel {
+
+    @include tablet-above {
+      width: 80%;
+    }
+  }
 }

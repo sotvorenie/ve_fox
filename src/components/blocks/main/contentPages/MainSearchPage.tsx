@@ -6,11 +6,13 @@ function MainSearchPage() {
     const {searchVideos} = useVideos()
 
     return (
-        <ul className="video-list list-column">
-            {searchVideos.length ? searchVideos.map((video: Video) => (
-                <VideoItem key={video.video} video={video}/>
-            )) : (<div>видев нет</div>)}
-        </ul>
+        <div className="main-page__search">
+            <ul className="video-list list-column m-auto">
+                {searchVideos.length ? searchVideos.map((video: Video) => (
+                    <VideoItem key={video.video} video={video} isRow={true}/>
+                )) : (<div>видев нет</div>)}
+            </ul>
+        </div>
     )
 }
 

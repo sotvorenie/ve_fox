@@ -1,16 +1,23 @@
 import {useState} from "react";
+import {Link} from "react-router-dom";
 
 import {useVideo} from "../../../hooks/useVideo.ts";
+import {useMainPages} from "../../../hooks/useMainPages.ts";
 
 import LikeIcon from "../../../assets/images/icons/LikeIcon.tsx";
 
 function VideoVideo() {
     const {video} = useVideo()
+    const {pageList, setPageName} = useMainPages()
 
     const [isLiked, setIsLiked] = useState(false)
 
     const handleLike = () => {
         setIsLiked(prev => !prev)
+    }
+
+    const handleChannel = () => {
+        setPageName(pageList.channel)
     }
 
     return (
@@ -30,7 +37,12 @@ function VideoVideo() {
                             (<span>{video.channel.slice(0, 1)}</span>)
                         }
                     </div>
-                    <p className="video__channel-name text-w700">{video.channel}</p>
+                    <Link to="/"
+                          className="video__channel-name text-w700"
+                          onClick={handleChannel}
+                    >
+                        {video.channel}
+                    </Link>
                 </div>
 
                 <div className="video__buttons flex">
