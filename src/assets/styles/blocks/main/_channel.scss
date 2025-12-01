@@ -24,6 +24,7 @@
 
   &__tabs {
     border-bottom: var(--border-dark-alt);
+    margin-bottom: rem(20);
   }
 
   &__tab {
@@ -36,5 +37,9 @@
     button {
       padding: rem(10) rem(20);
     }
+  }
+
+  &__sub-title {
+    padding-left: rem(15);
   }
 }

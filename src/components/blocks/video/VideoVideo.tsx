@@ -3,12 +3,14 @@ import {Link} from "react-router-dom";
 
 import {useVideo} from "../../../hooks/useVideo.ts";
 import {useMainPages} from "../../../hooks/useMainPages.ts";
+import {useChannel} from "../../../hooks/useChannel.ts";
 
 import LikeIcon from "../../../assets/images/icons/LikeIcon.tsx";
 
 function VideoVideo() {
     const {video} = useVideo()
     const {pageList, setPageName} = useMainPages()
+    const {setChannelName, setChannelAvatar} = useChannel()
 
     const [isLiked, setIsLiked] = useState(false)
 
@@ -16,7 +18,13 @@ function VideoVideo() {
         setIsLiked(prev => !prev)
     }
 
-    const handleChannel = () => {
+    const handleChannel = (name: string, avatar: string | undefined) => {
+        setChannelName(name)
+
+        if (avatar) {
+            setChannelAvatar(avatar)
+        }
+
         setPageName(pageList.channel)
     }
 
@@ -30,20 +38,19 @@ function VideoVideo() {
             <p className="video__title h5">{video.name}</p>
 
             <div className="video__actions flex flex-align-center">
-                <div className="video__channel flex flex-align-center cursor-pointer hover-color-accent">
-                    <div className="video__channel-avatar img-container">
+                <Link to="/"
+                      className="video__channel flex flex-align-center cursor-pointer hover-color-accent"
+                      onClick={() => handleChannel(video.channel, video.avatar)}
+                >
+                    <div className="video__channel-avatar img-container"
+                    >
                         {video.avatar ?
                             (<img src={video.avatar} alt={video.channel}/>) :
                             (<span>{video.channel.slice(0, 1)}</span>)
                         }
                     </div>
-                    <Link to="/"
-                          className="video__channel-name text-w700"
-                          onClick={handleChannel}
-                    >
-                        {video.channel}
-                    </Link>
-                </div>
+                    <span className="video__channel-name text-w700">{video.channel}</span>
+                </Link>
 
                 <div className="video__buttons flex">
                     <button className="video__button recolor-svg"

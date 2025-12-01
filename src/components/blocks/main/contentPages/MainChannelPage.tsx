@@ -1,26 +1,66 @@
+import {useChannel} from "../../../../hooks/useChannel.ts";
+import {useEffect, useState} from "react";
+import ChannelMain from "../channelComponents/channelMain.tsx";
+import ChannelVideos from "../channelComponents/channelVideos.tsx";
+import ChannelAbout from "../channelComponents/channelAbout.tsx";
 
 function MainChannelPage() {
+    const {channelName, channelAvatar, getChannelVideos} = useChannel();
+
+    const [activeTab, setActiveTab] = useState(0)
+
+    const handleTab = (index: number) => {
+        setActiveTab(index)
+    }
+
+    useEffect(() => {
+        getChannelVideos()
+    }, []);
 
     return (
         <div className="main-page__channel channel m-auto">
             <div className="channel__banner"></div>
 
             <div className="channel__info flex flex-align-center">
-                <div className="channel__avatar img-container"></div>
-                <p className="h3">Канал Не Витоса</p>
+                <div className="channel__avatar img-container flex-center">
+                    {channelAvatar ?
+                        <img src={channelAvatar?.length ? channelAvatar : channelName[0]} alt={channelName}/>
+                        : <span className="text-center">{channelName[0]}</span>
+                    }
+                </div>
+                <p className="h3">{channelName}</p>
             </div>
 
             <ul className="channel__tabs flex flex-align-center">
-                <li className="channel__tab is-active hover-color-accent">
+                <li className={
+                        activeTab === 0 ? 'channel__tab is-active hover-color-accent'
+                            : 'channel__tab hover-color-accent'
+                    }
+                    onClick={() => handleTab(0)}
+                >
                     <button type="button">Главная</button>
                 </li>
-                <li className="channel__tab hover-color-accent">
+                <li className={
+                    activeTab === 1 ? 'channel__tab is-active hover-color-accent'
+                        : 'channel__tab hover-color-accent'
+                    }
+                    onClick={() => handleTab(1)}
+                >
                     <button type="button">Видео</button>
                 </li>
-                <li className="channel__tab hover-color-accent">
+                <li className={
+                    activeTab === 2 ? 'channel__tab is-active hover-color-accent'
+                        : 'channel__tab hover-color-accent'
+                    }
+                    onClick={() => handleTab(2)}
+                >
                     <button type="button">О канале</button>
                 </li>
             </ul>
+
+            {activeTab === 0 && (<ChannelMain/>)}
+            {activeTab === 1 && (<ChannelVideos/>)}
+            {activeTab === 2 && (<ChannelAbout/>)}
         </div>
     )
 }

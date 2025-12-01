@@ -1,8 +1,9 @@
-import React, {useRef, useState} from "react";
+import React, {useRef} from "react";
 import {Link} from "react-router-dom";
 
 import {useVideos} from "../../../hooks/useVideos.ts";
 import {useMainPages} from "../../../hooks/useMainPages.ts";
+import {useSearch} from "../../../hooks/useSearch.ts";
 
 import ArrowIcon from "../../../assets/images/icons/ArrowIcon.tsx";
 
@@ -19,24 +20,23 @@ interface Props {
 function MainHeader({backVisible = false}: Props) {
     const {getSearchVideos} = useVideos()
     const {pageList, setPageName} = useMainPages()
-
-    const [searchName, setSearchName] = useState("");
+    const {searchTitle, setSearchTitle} = useSearch()
 
     const inputRef = useRef<HTMLInputElement>(null)
 
 
     const handleSearchText = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setSearchName(event.target.value)
+        setSearchTitle(event.target.value)
     }
 
     const clearSearchName = (): void => {
-        setSearchName("");
+        setSearchTitle('')
     }
 
     const handleSearch = async () => {
-        if (searchName) {
+        if (searchTitle) {
             setPageName(pageList.search);
-            await getSearchVideos(searchName)
+            await getSearchVideos(searchTitle)
         }
     }
 
@@ -53,21 +53,22 @@ function MainHeader({backVisible = false}: Props) {
             <div className="header__search flex overflow-hidden position-relative">
                 <input className="header__input input"
                        ref={inputRef}
-                       value={searchName}
+                       value={searchTitle}
                        onChange={handleSearchText}
                        type="text"
                        placeholder="Введите запрос"
                 />
 
-                <button className="header__btn flex-center recolor-svg"
+                <Link   to="/"
+                        className="header__btn flex-center recolor-svg"
                         type="button"
                         aria-label="Поиск"
                         title="Поиск"
                         onClick={handleSearch}
                 >
                     <SearchIcon/>
-                </button>
-                {searchName && (
+                </Link>
+                {searchTitle && (
                     <button
                         className="header__clear recolor-svg button-width-svg flex-center hover-color-accent"
                         type="button"

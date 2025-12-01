@@ -1037,6 +1037,7 @@ input, textarea {
 }
 .channel__tabs {
   border-bottom: var(--border-dark-alt);
+  margin-bottom: 1.25rem;
 }
 .channel__tab.is-active {
   border-bottom: var(--border-accent);
@@ -1044,6 +1045,9 @@ input, textarea {
 }
 .channel__tab button {
   padding: 0.625rem 1.25rem;
+}
+.channel__sub-title {
+  padding-left: 0.9375rem;
 }
 
 .video-page {
