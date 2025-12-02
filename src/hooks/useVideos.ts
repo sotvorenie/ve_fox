@@ -1,23 +1,42 @@
 import {useDispatch, useSelector} from "react-redux";
 import {RootState, AppDispatch} from "../store";
-import {setVideos} from "../store/useVideosStore.ts";
+import {ResponseVideos} from "../types/responseVideos.ts";
+import {
+    setVideos,
+    setPage,
+    setHasMore,
+    setTotal,
+} from "../store/useVideosStore.ts";
 import {apiGetAllVideos} from "../api/videos/videos.ts";
 
 export const useVideos = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const {allVideos} = useSelector((state: RootState) => state.videos)
+    const {
+        videos,
+        page,
+        total,
+        has_more
+    } = useSelector((state: RootState) => state.videos)
 
     const getAllVideos = async () => {
         try {
-            const videos = await apiGetAllVideos();
-            dispatch(setVideos(videos));
+            const data: ResponseVideos = await apiGetAllVideos();
+
+            dispatch(setVideos(data.videos));
+            dispatch(setPage(page + 1))
+            dispatch(setTotal(data.total))
+            dispatch(setHasMore(data.has_more))
         } catch (err) {
             console.log(err)
         }
     }
 
     return {
-        allVideos,
+        videos,
+
+        page,
+        total,
+        has_more,
 
         setVideos: (videos: any[]) => dispatch(setVideos(videos)),
         getAllVideos,

@@ -1,11 +1,12 @@
 import {url} from "../index.ts";
 
-import {Video} from "../../types/video.ts";
+import {ResponseVideos} from "../../types/responseVideos.ts";
+
 
 export const apiGetAllVideos = async () => {
-    const response = await fetch(`${url}/videos`);
+    const response = await fetch(`${url}/all_videos`);
 
-    const data: Video[] = await response.json();
+    const data: ResponseVideos = await response.json();
 
     return data
 }

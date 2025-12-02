@@ -1,10 +1,11 @@
 import {url} from "../index.ts";
-import {Video} from "../../types/video.ts";
+
+import {ResponseVideos} from "../../types/responseVideos.ts";
 
 export const apiGetVideoByTitle = async (title: string) => {
-    const response = await fetch(`${url}/videos/?name=${title}`);
+    const response = await fetch(`${url}/search/?name=${title}`);
 
-    const data: Video[] = await response.json();
+    const data: ResponseVideos = await response.json();
 
     return data
 }

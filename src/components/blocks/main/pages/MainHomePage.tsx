@@ -8,7 +8,7 @@ import {useVideos} from "../../../../hooks/useVideos.ts";
 import VideoItem from "../../../common/VideoItem.tsx";
 
 function MainHomePage() {
-    const {allVideos, getAllVideos} = useVideos();
+    const {videos, getAllVideos} = useVideos();
 
     const [_, setSearchParams] = useSearchParams()
 
@@ -22,7 +22,7 @@ function MainHomePage() {
     return (
         <div className="main-page__home">
             <ul className="video-list list-row row">
-                {allVideos.length ? allVideos.map((video: Video) => (
+                {videos.length ? videos.map((video: Video) => (
                     <VideoItem key={video.video} video={video} isRow={false}/>
                 )) : (<div>видев нет</div>)}
             </ul>
