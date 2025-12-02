@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import {RootState, AppDispatch} from "../store";
 import {setSearchTitle, setSearchVideos} from "../store/useSearchStore.ts";
-import {apiGetVideoByTitle} from "../api/videos/videos.ts";
+import {apiGetVideoByTitle} from "../api/search/search.ts";
 
 export const useSearch = () => {
     const dispatch = useDispatch<AppDispatch>();
