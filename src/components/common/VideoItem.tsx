@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 
 import {Video} from "../../types/video.ts";
 
@@ -20,13 +21,21 @@ function VideoItem({video, isRow = false}: Props) {
     const {setChannelName, setChannelAvatar} = useChannel()
     const {pageList, setPageName} = useMainPages()
 
+    const [_, setSearchParams] = useSearchParams()
+
     const handleChannel = (event: React.MouseEvent<HTMLElement>, name: string, avatar: string | undefined) => {
         event.stopPropagation()
         event.preventDefault()
 
         setChannelName(name)
 
-        setChannelAvatar(avatar ?? '')
+        setChannelAvatar(avatar ?? null)
+
+        setSearchParams({
+            page: 'channel',
+            channelName: name,
+            channelAvatar: avatar ?? ''
+        })
 
         setPageName(pageList.channel)
     }

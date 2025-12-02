@@ -1,3 +1,5 @@
+import {useSearchParams} from "react-router-dom";
+
 import {useChannel} from "../../../../hooks/useChannel.ts";
 import {useEffect, useState} from "react";
 import ChannelMain from "../channelComponents/channelMain.tsx";
@@ -5,7 +7,9 @@ import ChannelVideos from "../channelComponents/channelVideos.tsx";
 import ChannelAbout from "../channelComponents/channelAbout.tsx";
 
 function MainChannelPage() {
-    const {channelName, channelAvatar, getChannelVideos} = useChannel();
+    const {channelName, channelAvatar, getChannelVideos, setChannelName, setChannelAvatar} = useChannel();
+
+    const [searchParams, _] = useSearchParams()
 
     const [activeTab, setActiveTab] = useState(0)
 
@@ -14,8 +18,15 @@ function MainChannelPage() {
     }
 
     useEffect(() => {
-        getChannelVideos()
+        setChannelName(searchParams.get('channelName') ?? '')
+        setChannelAvatar(searchParams.get('channelAvatar'))
     }, []);
+
+    useEffect(() => {
+        if (channelName) {
+            getChannelVideos()
+        }
+    }, [channelName]);
 
     return (
         <div className="main-page__channel channel m-auto">
@@ -24,7 +35,7 @@ function MainChannelPage() {
             <div className="channel__info flex flex-align-center">
                 <div className="channel__avatar img-container flex-center">
                     {channelAvatar ?
-                        <img src={channelAvatar?.length ? channelAvatar : channelName[0]} alt={channelName}/>
+                        <img src={channelAvatar} alt={channelName}/>
                         : <span className="text-center">{channelName[0]}</span>
                     }
                 </div>

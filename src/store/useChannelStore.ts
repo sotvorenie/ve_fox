@@ -3,7 +3,7 @@ import {Video} from "../types/video.ts";
 
 interface Channel {
     channelName: string;
-    channelAvatar: string;
+    channelAvatar: string | null;
     page: number;
     limit: number;
     channelVideos: Video[];
@@ -11,7 +11,7 @@ interface Channel {
 
 const initialState: Channel = {
     channelName: '',
-    channelAvatar: '',
+    channelAvatar: null,
     page: 1,
     limit: 20,
     channelVideos: [],
@@ -26,7 +26,7 @@ export const channelStore = createSlice({
         setChannelName: (state, action: PayloadAction<string>) => {
             state.channelName = action.payload
         },
-        setChannelAvatar: (state, action: PayloadAction<string>) => {
+        setChannelAvatar: (state, action: PayloadAction<string | null>) => {
             state.channelAvatar = action.payload
         },
         setChannelVideos: (state, action: PayloadAction<Video[]>) => {

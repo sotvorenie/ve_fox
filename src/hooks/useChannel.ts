@@ -28,7 +28,7 @@ export const useChannel = () => {
         page,
 
         setChannelName: (name: string) => dispatch(setChannelName(name)),
-        setChannelAvatar: (url: string) => dispatch(setChannelAvatar(url)),
+        setChannelAvatar: (url: string | null) => dispatch(setChannelAvatar(url)),
         getChannelVideos,
     }
 }
