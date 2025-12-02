@@ -3,14 +3,12 @@ import {Link} from "react-router-dom";
 
 import SearchIcon from "../../../../assets/images/icons/SearchIcon.tsx";
 import CrossIcon from "../../../../assets/images/icons/CrossIcon.tsx";
-import {useVideos} from "../../../../hooks/useVideos.ts";
 import {useMainPages} from "../../../../hooks/useMainPages.ts";
 import {useSearch} from "../../../../hooks/useSearch.ts";
 
 function MainHeaderSearch() {
-    const {getSearchVideos} = useVideos()
     const {pageList, setPageName} = useMainPages()
-    const {searchTitle, setSearchTitle} = useSearch()
+    const {searchTitle, setSearchTitle, getSearchVideos} = useSearch()
 
     const inputRef = useRef<HTMLInputElement>(null)
 

@@ -1,9 +1,11 @@
-import {useVideos} from "../../../../hooks/useVideos.ts";
 import {Video} from "../../../../types/video.ts";
+
 import VideoItem from "../../../common/VideoItem.tsx";
 
+import {useSearch} from "../../../../hooks/useSearch.ts";
+
 function MainSearchPage() {
-    const {searchVideos} = useVideos()
+    const {searchVideos} = useSearch();
 
     return (
         <div className="main-page__search">
