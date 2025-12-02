@@ -21,7 +21,13 @@
     z-index: 1000;
 
     svg {
-      @include square(40)
+      @include fluid-square(40, 20);
+    }
+
+    span {
+      @include laptop {
+        display: none;
+      }
     }
   }
 

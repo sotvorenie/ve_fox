@@ -2,6 +2,8 @@ import {useNavigate} from "react-router-dom";
 
 import {Video} from "../../../../types/video.ts";
 
+import useWidthWatcher from "../../../../composables/useWidthWatcher.ts";
+
 import {useVideo} from "../../../../hooks/useVideo.ts";
 
 import ArrowIcon from "../../../../assets/images/icons/ArrowIcon.tsx";
@@ -20,6 +22,9 @@ function MainHeaderNavigation({isVideoPage = false}: Props) {
         clearVideoHistory,
         setVideo,
     } = useVideo()
+
+    const isLaptop: boolean = useWidthWatcher('(max-width: 1440px)')
+
 
     const handleBack = (): void => {
         if (activeVideoFromHistory === 1) {
@@ -56,6 +61,7 @@ function MainHeaderNavigation({isVideoPage = false}: Props) {
                 <div className="header__btn-bar flex flex-align-center position-absolute">
                     <a className="header__back flex flex-align-center recolor-svg cursor-pointer"
                        onClick={handleBack}
+                       title={isLaptop ? 'Назад' : ''}
                     >
                         <ArrowIcon/>
                         <span className="h5">Назад</span>
@@ -64,6 +70,7 @@ function MainHeaderNavigation({isVideoPage = false}: Props) {
                     {videoHistory.length > 1 && activeVideoFromHistory < videoHistory.length && (
                         <a className="header__forward flex flex-align-center recolor-svg cursor-pointer"
                            onClick={handleForward}
+                           title={isLaptop ? 'Вперед' : ''}
                         >
                             <ArrowIcon/>
                             <span className="h5">Вперед</span>

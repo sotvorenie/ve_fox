@@ -908,10 +908,16 @@ input, textarea {
   z-index: 1000;
 }
 .header__back svg, .header__forward svg {
-  width: 40px;
-  height: 40px;
-  min-height: 40px;
-  min-width: 40px;
+  aspect-ratio: 1/1;
+  width: clamp(1.25rem, 0.4487179487rem + 1.2820512821vw, 2.5rem);
+  height: clamp(1.25rem, 0.4487179487rem + 1.2820512821vw, 2.5rem);
+  min-width: clamp(1.25rem, 0.4487179487rem + 1.2820512821vw, 2.5rem);
+  min-height: clamp(1.25rem, 0.4487179487rem + 1.2820512821vw, 2.5rem);
+}
+@media (width <= 90.06125rem) {
+  .header__back span, .header__forward span {
+    display: none;
+  }
 }
 .header__forward {
   flex-direction: row-reverse;
