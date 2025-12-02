@@ -3,10 +3,10 @@ import {useSearchParams} from "react-router-dom";
 
 import {useMainPages} from "../../../hooks/useMainPages.ts";
 
-import MainHeader from "./MainHeader.tsx";
-import MainHomePage from "./contentPages/MainHomePage.tsx";
-import MainSearchPage from "./contentPages/MainSearchPage.tsx";
-import MainChannelPage from "./contentPages/MainChannelPage.tsx";
+import MainHeader from "./header/MainHeader.tsx";
+import MainHomePage from "./pages/MainHomePage.tsx";
+import MainSearchPage from "./pages/MainSearchPage.tsx";
+import MainChannelPage from "./pages/MainChannelPage.tsx";
 
 function MainContent() {
     const {pageName, pageList, setPageName} = useMainPages()

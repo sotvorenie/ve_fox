@@ -4,10 +4,14 @@ import {Video} from "../types/video.ts";
 
 interface VideoState {
     video: Video;
+    videoHistory: Video[];
+    activeVideoFromHistory: number;
 }
 
 const initialState: VideoState = {
     video: {name: '', video: '', channel: '', date: ''},
+    videoHistory: [],
+    activeVideoFromHistory: 0,
 }
 
 export const videoStore = createSlice({
@@ -18,9 +22,23 @@ export const videoStore = createSlice({
     reducers: {
         setVideo: (state, action: PayloadAction<Video>) => {
             state.video = action.payload
+        },
+        setVideoHistory: (state, action: PayloadAction<Video>) => {
+            state.videoHistory.push(action.payload)
+        },
+        setActiveVideoFromHistory: (state, action: PayloadAction<number>) => {
+            state.activeVideoFromHistory = action.payload
+        },
+        clearVideoHistory: (state) => {
+            state.videoHistory = []
         }
     }
 })
 
-export const {setVideo} = videoStore.actions
+export const {
+    setVideo,
+    setVideoHistory,
+    setActiveVideoFromHistory,
+    clearVideoHistory,
+} = videoStore.actions
 export default videoStore.reducer

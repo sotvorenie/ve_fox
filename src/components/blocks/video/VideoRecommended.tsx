@@ -6,14 +6,9 @@ import {redactDate} from "../../../composables/useRedactDate.ts";
 import {useVideos} from "../../../hooks/useVideos.ts";
 import {useVideo} from "../../../hooks/useVideo.ts";
 
-
 function VideoRecommended() {
     const {allVideos} = useVideos()
-    const {setVideo} = useVideo()
-
-    const handleVideo = (video: Video) => {
-        setVideo(video)
-    }
+    const {handleVideo} = useVideo()
 
     return (
         <ul className="recommended">

@@ -2,14 +2,14 @@ import {useSearchParams} from "react-router-dom";
 
 import {useChannel} from "../../../../hooks/useChannel.ts";
 import {useEffect, useState} from "react";
-import ChannelMain from "../channelComponents/channelMain.tsx";
-import ChannelVideos from "../channelComponents/channelVideos.tsx";
-import ChannelAbout from "../channelComponents/channelAbout.tsx";
+import ChannelMain from "../channel/channelMain.tsx";
+import ChannelVideos from "../channel/channelVideos.tsx";
+import ChannelAbout from "../channel/channelAbout.tsx";
 
 function MainChannelPage() {
     const {channelName, channelAvatar, getChannelVideos, setChannelName, setChannelAvatar} = useChannel();
 
-    const [searchParams, _] = useSearchParams()
+    const [searchParams, setSearchParams] = useSearchParams()
 
     const [activeTab, setActiveTab] = useState(0)
 
@@ -18,12 +18,20 @@ function MainChannelPage() {
     }
 
     useEffect(() => {
-        setChannelName(searchParams.get('channelName') ?? '')
-        setChannelAvatar(searchParams.get('channelAvatar'))
+        if (!channelName) {
+            setChannelName(searchParams.get('channelName') ?? '')
+            setChannelAvatar(searchParams.get('channelAvatar'))
+        }
     }, []);
 
     useEffect(() => {
         if (channelName) {
+            setSearchParams({
+                page: 'channel',
+                channelName: channelName,
+                channelAvatar: channelAvatar ?? ''
+            })
+
             getChannelVideos()
         }
     }, [channelName]);

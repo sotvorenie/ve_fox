@@ -9,15 +9,27 @@
   padding-block: fluid(30, 15);
   z-index: 1000;
 
-  &__back {
+  &__btn-bar {
     @include abs-y;
 
+    column-gap: fluid(30, 10);
+    left: fluid(50, 10);
+  }
+
+  &__back, &__forward {
     column-gap: rem(10);
-    left: fluid(40, 20);
     z-index: 1000;
 
     svg {
       @include square(40)
+    }
+  }
+
+  &__forward {
+    flex-direction: row-reverse;
+
+    svg {
+      rotate: 180deg;
     }
   }
 

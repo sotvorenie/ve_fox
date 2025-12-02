@@ -1,6 +1,5 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {useSearchParams} from "react-router-dom";
 
 import {Video} from "../../types/video.ts";
 
@@ -13,15 +12,13 @@ import {useMainPages} from "../../hooks/useMainPages.ts";
 
 interface Props {
     video: Video;
-    isRow: boolean
+    isRow: boolean;
 }
 
 function VideoItem({video, isRow = false}: Props) {
-    const {setVideo} = useVideo()
+    const {handleVideo} = useVideo()
     const {setChannelName, setChannelAvatar} = useChannel()
     const {pageList, setPageName} = useMainPages()
-
-    const [_, setSearchParams] = useSearchParams()
 
     const handleChannel = (event: React.MouseEvent<HTMLElement>, name: string, avatar: string | undefined) => {
         event.stopPropagation()
@@ -31,12 +28,6 @@ function VideoItem({video, isRow = false}: Props) {
 
         setChannelAvatar(avatar ?? null)
 
-        setSearchParams({
-            page: 'channel',
-            channelName: name,
-            channelAvatar: avatar ?? ''
-        })
-
         setPageName(pageList.channel)
     }
 
@@ -44,7 +35,7 @@ function VideoItem({video, isRow = false}: Props) {
         <Link to="/video"
               state={{video: video}}
               className="video-list__item col-4"
-              onClick={() => setVideo(video)}
+              onClick={() => handleVideo(video)}
         >
             <li className={isRow ? 'video-list__row-item flex flex-align-start' : ''}>
                 <div className="video-list__preview img-container">
@@ -54,6 +45,7 @@ function VideoItem({video, isRow = false}: Props) {
                     {!isRow &&
                         <div className="video-list__avatar img-container"
                              onClick={(event: React.MouseEvent<HTMLDivElement>) => handleChannel(event, video.channel, video.avatar)}
+                             title={video.channel}
                         >
                             {video.avatar ?
                                 (<img src={video.avatar} alt={video.channel}/>) :
@@ -67,9 +59,7 @@ function VideoItem({video, isRow = false}: Props) {
                                         {replaceLines(sliceString(video.name, 90))}
                                     </span>
                         {!isRow &&
-                            <span className="video-list__channel"
-                                  onClick={(event: React.MouseEvent<HTMLDivElement>) => handleChannel(event, video.channel, video.avatar)}
-                            >
+                            <span className="video-list__channel">
                                 {video.channel}
                             </span>
                         }

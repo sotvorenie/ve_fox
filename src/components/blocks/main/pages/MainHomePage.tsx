@@ -1,14 +1,21 @@
 import {useEffect} from "react";
+import {useSearchParams} from "react-router-dom";
 
 import {Video} from "../../../../types/video.ts";
 
 import {useVideos} from "../../../../hooks/useVideos.ts";
+
 import VideoItem from "../../../common/VideoItem.tsx";
 
 function MainHomePage() {
     const {allVideos, getAllVideos} = useVideos();
 
+    const [_, setSearchParams] = useSearchParams()
+
+
     useEffect(() => {
+        setSearchParams({})
+
         getAllVideos()
     }, [])
 

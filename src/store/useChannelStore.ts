@@ -5,7 +5,6 @@ interface Channel {
     channelName: string;
     channelAvatar: string | null;
     page: number;
-    limit: number;
     channelVideos: Video[];
 }
 
@@ -13,7 +12,6 @@ const initialState: Channel = {
     channelName: '',
     channelAvatar: null,
     page: 1,
-    limit: 20,
     channelVideos: [],
 }
 

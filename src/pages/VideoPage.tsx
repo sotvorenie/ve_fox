@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {useLocation} from "react-router-dom";
 
-import MainHeader from "../components/blocks/main/MainHeader.tsx";
+import MainHeader from "../components/blocks/main/header/MainHeader.tsx";
 import VideoVideo from "../components/blocks/video/VideoVideo.tsx";
 import VideoRecommended from "../components/blocks/video/VideoRecommended.tsx";
 
@@ -10,17 +10,17 @@ import {useVideo} from "../hooks/useVideo.ts";
 function VideoPage() {
     const location = useLocation();
 
-    const {setVideo} = useVideo()
+    const {video, handleVideo} = useVideo()
 
     useEffect(() => {
-        if (location.state?.video) {
-            setVideo(location.state.video)
+        if (location.state?.video && !video.name) {
+            handleVideo(location.state.video)
         }
     }, []);
 
     return(
         <div className="video-page">
-            <MainHeader backVisible={true}/>
+            <MainHeader isVideoPage={true}/>
 
             <div className="video-page__content flex">
                 <VideoVideo/>
