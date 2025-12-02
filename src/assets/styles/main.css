@@ -903,6 +903,13 @@ input, textarea {
   column-gap: clamp(0.625rem, -0.1762820513rem + 1.2820512821vw, 1.875rem);
   left: clamp(0.625rem, -0.9775641026rem + 2.5641025641vw, 3.125rem);
 }
+.header__logo {
+  aspect-ratio: 1/1;
+  width: clamp(2.5rem, 0.8974358974rem + 2.5641025641vw, 5rem);
+  height: clamp(2.5rem, 0.8974358974rem + 2.5641025641vw, 5rem);
+  min-width: clamp(2.5rem, 0.8974358974rem + 2.5641025641vw, 5rem);
+  min-height: clamp(2.5rem, 0.8974358974rem + 2.5641025641vw, 5rem);
+}
 .header__back, .header__forward {
   column-gap: 0.625rem;
   z-index: 1000;

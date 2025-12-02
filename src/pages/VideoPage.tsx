@@ -10,10 +10,13 @@ import {useVideo} from "../hooks/useVideo.ts";
 function VideoPage() {
     const location = useLocation();
 
-    const {video, handleVideo} = useVideo()
+    const {video, handleVideo, clearVideoHistory, setActiveVideoFromHistory} = useVideo()
 
     useEffect(() => {
         if (location.state?.video && !video.name) {
+            clearVideoHistory()
+            setActiveVideoFromHistory(0)
+
             handleVideo(location.state.video)
         }
     }, []);

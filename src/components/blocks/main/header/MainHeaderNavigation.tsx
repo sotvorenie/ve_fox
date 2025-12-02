@@ -7,6 +7,7 @@ import useWidthWatcher from "../../../../composables/useWidthWatcher.ts";
 import {useVideo} from "../../../../hooks/useVideo.ts";
 
 import ArrowIcon from "../../../../assets/images/icons/ArrowIcon.tsx";
+import Logo from "../../../../assets/images/Logo.tsx";
 
 interface Props {
     isVideoPage?: boolean
@@ -26,12 +27,16 @@ function MainHeaderNavigation({isVideoPage = false}: Props) {
     const isLaptop: boolean = useWidthWatcher('(max-width: 1440px)')
 
 
+    const clearHistory = () => {
+        navigate("/")
+
+        clearVideoHistory()
+        setActiveVideoFromHistory(0)
+    }
+
     const handleBack = (): void => {
         if (activeVideoFromHistory === 1) {
-            navigate("/")
-
-            clearVideoHistory()
-            setActiveVideoFromHistory(0)
+            clearHistory()
         } else {
             setActiveVideoFromHistory(activeVideoFromHistory - 1)
 
@@ -74,6 +79,15 @@ function MainHeaderNavigation({isVideoPage = false}: Props) {
                         >
                             <ArrowIcon/>
                             <span className="h5">Вперед</span>
+                        </a>
+                    )}
+
+                    {videoHistory.length > 1 && activeVideoFromHistory > 1 && (
+                        <a className="header__logo button-width-svg flex-center cursor-pointer"
+                           title="На главную"
+                           onClick={clearHistory}
+                        >
+                            <Logo/>
                         </a>
                     )}
                 </div>

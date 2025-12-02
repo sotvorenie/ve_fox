@@ -16,6 +16,10 @@
     left: fluid(50, 10);
   }
 
+  &__logo {
+    @include fluid-square(80, 40);
+  }
+
   &__back, &__forward {
     column-gap: rem(10);
     z-index: 1000;
