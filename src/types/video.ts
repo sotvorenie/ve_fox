@@ -1,6 +1,6 @@
 export interface Video {
     name: string;
-    video: string;
+    video: string | undefined;
     channel: string;
     date: string;
     avatar?: string;

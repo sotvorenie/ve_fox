@@ -9,7 +9,7 @@ interface VideoState {
 }
 
 const initialState: VideoState = {
-    video: {name: '', video: '', channel: '', date: ''},
+    video: {name: '', video: undefined, channel: '', date: ''},
     videoHistory: [],
     activeVideoFromHistory: 0,
 }
