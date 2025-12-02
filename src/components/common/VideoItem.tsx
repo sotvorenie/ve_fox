@@ -20,15 +20,9 @@ function VideoItem({video, isRow = false}: Props) {
     const {setChannelName, setChannelAvatar} = useChannel()
     const {pageList, setPageName} = useMainPages()
 
-    const handleVideo = (video: Video) => {
-        setVideo(video)
-    }
-
     const handleChannel = (event: React.MouseEvent<HTMLElement>, name: string, avatar: string | undefined) => {
         event.stopPropagation()
         event.preventDefault()
-
-        console.log(name)
 
         setChannelName(name)
 
@@ -39,8 +33,9 @@ function VideoItem({video, isRow = false}: Props) {
 
     return (
         <Link to="/video"
+              state={{video: video}}
               className="video-list__item col-4"
-              onClick={() => handleVideo(video)}
+              onClick={() => setVideo(video)}
         >
             <li className={isRow ? 'video-list__row-item flex flex-align-start' : ''}>
                 <div className="video-list__preview img-container">
