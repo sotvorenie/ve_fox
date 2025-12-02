@@ -1,7 +1,7 @@
+import {useEffect, useState} from "react";
 import {useSearchParams} from "react-router-dom";
 
 import {useChannel} from "../../../../hooks/useChannel.ts";
-import {useEffect, useState} from "react";
 import ChannelMain from "../channel/channelMain.tsx";
 import ChannelVideos from "../channel/channelVideos.tsx";
 import ChannelAbout from "../channel/channelAbout.tsx";

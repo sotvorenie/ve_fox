@@ -8,29 +8,34 @@ import {useVideo} from "../../../hooks/useVideo.ts";
 
 function VideoRecommended() {
     const {allVideos} = useVideos()
-    const {handleVideo} = useVideo()
+    const {video: activeVideo, handleVideo} = useVideo()
 
     return (
         <ul className="recommended">
-            {allVideos.length ? allVideos.map((video: Video) => (
-                <li className="recommended__item flex cursor-pointer"
-                    key={video.video}
-                    onClick={() => handleVideo(video)}
-                >
-                    <div className="recommended__preview img-container">
-                        <img src={video.preview} alt={video.name} loading="lazy"/>
-                    </div>
-                    <div className="recommended__info">
-                        <div className="recommended__text flex flex-column">
+            {allVideos.length ? allVideos.map((video: Video) => {
+
+                if (video.video === activeVideo.video) return
+
+                return (
+                    <li className="recommended__item flex cursor-pointer"
+                        key={video.video}
+                        onClick={() => handleVideo(video)}
+                    >
+                        <div className="recommended__preview img-container">
+                            <img src={video.preview} alt={video.name} loading="lazy"/>
+                        </div>
+                        <div className="recommended__info">
+                            <div className="recommended__text flex flex-column">
                             <span className="recommended__title">
                                 {replaceLines(sliceString(video.name, 34))}
                             </span>
-                            <span className="recommended__channel">{video.channel}</span>
-                            <span className="recommended__date">{redactDate(video.date)}</span>
+                                <span className="recommended__channel">{video.channel}</span>
+                                <span className="recommended__date">{redactDate(video.date)}</span>
+                            </div>
                         </div>
-                    </div>
-                </li>
-            )) : (<div>нет видео</div>)}
+                    </li>
+                )
+            }) : (<div>нет видео</div>)}
         </ul>
     )
 }
