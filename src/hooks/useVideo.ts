@@ -5,7 +5,8 @@ import {Video} from "../types/video.ts";
 
 export const useVideo = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const {video,
+    const {
+        video,
         videoHistory,
         activeVideoFromHistory
     } = useSelector((state: RootState) => state.video);

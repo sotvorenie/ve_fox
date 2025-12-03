@@ -1,19 +1,19 @@
 import {useNavigate} from "react-router-dom";
 
-import {Video} from "../../../../types/video.ts";
+import {Video} from "../../../types/video.ts";
 
-import useWidthWatcher from "../../../../composables/useWidthWatcher.ts";
+import useWidthWatcher from "../../../composables/useWidthWatcher.ts";
 
-import {useVideo} from "../../../../hooks/useVideo.ts";
+import {useVideo} from "../../../hooks/useVideo.ts";
 
-import ArrowIcon from "../../../../assets/images/icons/ArrowIcon.tsx";
-import Logo from "../../../../assets/images/Logo.tsx";
+import ArrowIcon from "../../../assets/images/icons/ArrowIcon.tsx";
+import Logo from "../../../assets/images/Logo.tsx";
 
 interface Props {
     isVideoPage?: boolean
 }
 
-function MainHeaderNavigation({isVideoPage = false}: Props) {
+function HeaderNavigation({isVideoPage = false}: Props) {
     const navigate = useNavigate();
 
     const {
@@ -35,7 +35,7 @@ function MainHeaderNavigation({isVideoPage = false}: Props) {
     }
 
     const handleBack = (): void => {
-        if (activeVideoFromHistory === 1) {
+        if (activeVideoFromHistory <= 1) {
             clearHistory()
         } else {
             setActiveVideoFromHistory(activeVideoFromHistory - 1)
@@ -96,4 +96,4 @@ function MainHeaderNavigation({isVideoPage = false}: Props) {
     )
 }
 
-export default MainHeaderNavigation;
+export default HeaderNavigation;

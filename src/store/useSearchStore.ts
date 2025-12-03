@@ -1,18 +1,24 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Video} from "../types/video.ts";
-import {ResponseVideos} from "../types/responseVideos.ts";
 
-interface Search extends Omit<ResponseVideos, "limit">{
-    searchTitle: string;
+interface SearchState {
+    search: string;
+
+    videos: Video[],
+
+    total: number;
+    hasMore: boolean;
+    page: number;
 }
 
-const initialState: Search = {
-    searchTitle: '',
+const initialState: SearchState = {
+    search: '',
 
-    page: 1,
-    has_more: false,
+    videos: [],
+
     total: 0,
-    videos: []
+    hasMore: false,
+    page: 1,
 }
 
 export const searchStore = createSlice({
@@ -21,9 +27,10 @@ export const searchStore = createSlice({
     initialState,
 
     reducers: {
-        setSearchTitle: (state, action: PayloadAction<string>) => {
-            state.searchTitle = action.payload
+        setSearch: (state, action: PayloadAction<string>) => {
+            state.search = action.payload
         },
+
         setVideos: (state, action: PayloadAction<Video[]>) => {
             state.videos = action.payload
         },
@@ -35,16 +42,16 @@ export const searchStore = createSlice({
             state.page = action.payload
         },
         setHasMore: (state, action: PayloadAction<boolean>) => {
-            state.has_more = action.payload
-        },
+            state.hasMore = action.payload
+        }
     }
 })
 
 export const {
-    setSearchTitle,
+    setSearch,
     setVideos,
-    setTotal,
     setPage,
-    setHasMore,
+    setTotal,
+    setHasMore
 } = searchStore.actions
-export default searchStore.reducer;
+export default  searchStore.reducer

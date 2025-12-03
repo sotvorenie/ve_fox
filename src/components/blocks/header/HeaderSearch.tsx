@@ -1,30 +1,35 @@
 import React, {useRef} from "react";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
-import SearchIcon from "../../../../assets/images/icons/SearchIcon.tsx";
-import CrossIcon from "../../../../assets/images/icons/CrossIcon.tsx";
-import {useMainPages} from "../../../../hooks/useMainPages.ts";
-import {useSearch} from "../../../../hooks/useSearch.ts";
+import SearchIcon from "../../../assets/images/icons/SearchIcon.tsx";
+import CrossIcon from "../../../assets/images/icons/CrossIcon.tsx";
 
-function MainHeaderSearch() {
-    const {pageList, setPageName} = useMainPages()
-    const {searchTitle, setSearchTitle, getSearchVideos} = useSearch()
+import {useSearch} from "../../../hooks/useSearch.ts";
+
+function HeaderSearch() {
+    const navigate = useNavigate();
+
+    const {
+        search,
+        setSearch,
+        getSearchVideos
+    } = useSearch();
 
     const inputRef = useRef<HTMLInputElement>(null)
 
 
     const handleSearchText = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setSearchTitle(event.target.value)
+        setSearch(event.target.value)
     }
 
     const clearSearchName = (): void => {
-        setSearchTitle('')
+        setSearch('')
     }
 
     const handleSearch = async () => {
-        if (searchTitle) {
-            setPageName(pageList.search);
-            await getSearchVideos(searchTitle)
+        if (search) {
+            navigate("/search")
+            await getSearchVideos()
         }
     }
 
@@ -32,22 +37,21 @@ function MainHeaderSearch() {
         <div className="header__search flex overflow-hidden position-relative">
             <input className="header__input input"
                    ref={inputRef}
-                   value={searchTitle}
                    onChange={handleSearchText}
+                   value={search}
                    type="text"
                    placeholder="Введите запрос"
             />
 
-            <Link to="/"
-                  className="header__btn flex-center recolor-svg"
-                  type="button"
-                  aria-label="Поиск"
-                  title="Поиск"
-                  onClick={handleSearch}
+            <button className="header__btn flex-center recolor-svg"
+                      type="button"
+                      aria-label="Поиск"
+                      title="Поиск"
+                      onClick={handleSearch}
             >
                 <SearchIcon/>
-            </Link>
-            {searchTitle && (
+            </button>
+            {search && (
                 <button
                     className="header__clear recolor-svg button-width-svg flex-center hover-color-accent"
                     type="button"
@@ -62,4 +66,4 @@ function MainHeaderSearch() {
     )
 }
 
-export default MainHeaderSearch;
+export default HeaderSearch;

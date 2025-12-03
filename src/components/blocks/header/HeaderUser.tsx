@@ -1,6 +1,6 @@
-import avatarImage from "../../../../assets/images/аватар.webp";
+import avatarImage from "../../../assets/images/аватар.webp";
 
-function MainHeaderUser() {
+function HeaderUser() {
 
     return (
         <div className="header__avatar img-container position-absolute cursor-pointer"
@@ -11,4 +11,4 @@ function MainHeaderUser() {
     )
 }
 
-export default MainHeaderUser;
+export default HeaderUser;

@@ -1,0 +1,14 @@
+@use '../helpers/index' as *;
+
+.main-layout {
+  height: 100%;
+
+  &__right {
+    width: 100%;
+    overflow-y: auto;
+  }
+
+  &__content {
+    padding: 0 rem(20) rem(40);
+  }
+}

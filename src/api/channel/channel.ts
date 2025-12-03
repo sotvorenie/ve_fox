@@ -1,18 +1,16 @@
 import {url} from "../index.ts";
 
-import {Video} from "../../types/video.ts";
+import {ResponseVideos} from "../../types/responseVideos.ts";
+import {Channel} from "../../types/channel.ts";
 
-interface ResponseData {
-    total: number;
-    page: number;
-    limit: number;
-    videos: Video[]
+export const apiGetChannel = async (channel: string): Promise<Channel> => {
+    const response = await fetch(`${url}/channel/${channel}`);
+
+    return await response.json()
 }
 
-export const apiGetVideosFromChannel = async (channel: string, page: number):Promise<ResponseData> => {
+export const apiGetVideosFromChannel = async (channel: string, page: number):Promise<ResponseVideos> => {
     const response = await fetch(`${url}/channel/${channel}/videos?page=${page}&limit=20`)
 
-    const data: ResponseData = await response.json();
-
-    return data
+    return await response.json()
 }

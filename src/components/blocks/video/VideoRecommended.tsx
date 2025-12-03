@@ -3,16 +3,14 @@ import {Video} from "../../../types/video.ts";
 import {replaceLines, sliceString} from "../../../composables/useRedactVideoName.ts";
 import {redactDate} from "../../../composables/useRedactDate.ts";
 
-import {useVideos} from "../../../hooks/useVideos.ts";
 import {useVideo} from "../../../hooks/useVideo.ts";
 
 function VideoRecommended() {
-    const {allVideos} = useVideos()
     const {video: activeVideo, handleVideo} = useVideo()
 
     return (
         <ul className="recommended">
-            {allVideos.length ? allVideos.map((video: Video) => {
+            {[].length ? [].map((video: Video) => {
 
                 if (video.video === activeVideo.video) return
 

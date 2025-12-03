@@ -1,0 +1,9 @@
+@use '../../helpers/index' as *;
+
+.search-page {
+
+  &__total {
+    padding-left: rem(20);
+    margin-bottom: rem(10);
+  }
+}
