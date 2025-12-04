@@ -8,6 +8,8 @@ interface SearchState {
 
     total: number;
     hasMore: boolean;
+
+    isLoading: boolean;
 }
 
 const initialState: SearchState = {
@@ -17,6 +19,8 @@ const initialState: SearchState = {
 
     total: 0,
     hasMore: false,
+
+    isLoading: true,
 }
 
 export const searchStore = createSlice({
@@ -38,6 +42,10 @@ export const searchStore = createSlice({
         },
         setHasMore: (state, action: PayloadAction<boolean>) => {
             state.hasMore = action.payload
+        },
+
+        setIsLoading: (state, action: PayloadAction<boolean>) => {
+            state.isLoading = action.payload
         }
     }
 })
@@ -46,6 +54,7 @@ export const {
     setSearch,
     setVideos,
     setTotal,
-    setHasMore
+    setHasMore,
+    setIsLoading
 } = searchStore.actions
 export default  searchStore.reducer

@@ -4,7 +4,8 @@ import {
     setSearch,
     setVideos,
     setTotal,
-    setHasMore
+    setHasMore,
+    setIsLoading
 } from "../store/useSearchStore.ts";
 import {ResponseVideos} from "../types/responseVideos.ts";
 import {apiGetVideoByTitle} from "../api/search/search.ts";
@@ -15,11 +16,14 @@ export const useSearch = () => {
         search,
         videos,
         hasMore,
-        total
+        total,
+        isLoading
     } = useSelector((state: RootState) => state.search);
 
     const getSearchVideos = async (page: number = 1) => {
         try {
+            dispatch(setIsLoading(true))
+
             const data: ResponseVideos = await apiGetVideoByTitle(search, page)
 
             if (data) {
@@ -29,6 +33,8 @@ export const useSearch = () => {
             }
         } catch (err) {
 
+        } finally {
+            dispatch(setIsLoading(false))
         }
     }
 
@@ -37,6 +43,7 @@ export const useSearch = () => {
         videos,
         hasMore,
         total,
+        isLoading,
 
         setSearch: (search: string) => dispatch(setSearch(search)),
 

@@ -6,6 +6,7 @@ import {ResponseVideos} from "../types/responseVideos.ts";
 import {apiGetAllVideos} from "../api/videos/videos.ts";
 
 import VideoItem from "../components/common/VideoItem.tsx";
+import ListRowSkeleton from "../components/ui/skeletons/ListRowSkeleton.tsx";
 
 function MainPage() {
     const [page, setPage] = useState<number>(1)
@@ -13,8 +14,12 @@ function MainPage() {
 
     const [videos, setVideos] = useState<Video[]>([])
 
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+
     const getAllVideos = async () => {
         try {
+            setIsLoading(true)
+
             const data: ResponseVideos = await apiGetAllVideos()
 
             if (data) {
@@ -24,6 +29,8 @@ function MainPage() {
             }
         } catch (err) {
 
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -34,11 +41,15 @@ function MainPage() {
 
     return (
         <div className="main-page__home">
-            <ul className="video-list list-row row">
-                {videos.length ? videos.map((video: Video) => (
-                    <VideoItem key={video.video} video={video} isRow={false}/>
-                )) : (<div>видев нет</div>)}
-            </ul>
+            {!isLoading && (
+                <ul className="video-list list-row row">
+                    {videos?.map((video: Video) => (
+                        <VideoItem key={video.video} video={video} isRow={false}/>
+                    ))}
+                </ul>
+            )}
+
+            {isLoading && <ListRowSkeleton/>}
 
             <button style={{display: hasMore ? 'block' : 'none'}}>Еще</button>
         </div>
