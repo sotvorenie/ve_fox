@@ -8,7 +8,6 @@ interface SearchState {
 
     total: number;
     hasMore: boolean;
-    page: number;
 }
 
 const initialState: SearchState = {
@@ -18,7 +17,6 @@ const initialState: SearchState = {
 
     total: 0,
     hasMore: false,
-    page: 1,
 }
 
 export const searchStore = createSlice({
@@ -38,9 +36,6 @@ export const searchStore = createSlice({
         setTotal: (state, action: PayloadAction<number>) => {
             state.total = action.payload
         },
-        setPage: (state, action: PayloadAction<number>) => {
-            state.page = action.payload
-        },
         setHasMore: (state, action: PayloadAction<boolean>) => {
             state.hasMore = action.payload
         }
@@ -50,7 +45,6 @@ export const searchStore = createSlice({
 export const {
     setSearch,
     setVideos,
-    setPage,
     setTotal,
     setHasMore
 } = searchStore.actions

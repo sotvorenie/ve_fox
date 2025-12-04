@@ -7,9 +7,10 @@ import {Channel} from "../types/channel.ts";
 
 import {apiGetChannel, apiGetVideosFromChannel} from "../api/channel/channel.ts";
 
-import ChannelMain from "../components/blocks/channel/channelMain.tsx";
-import ChannelVideos from "../components/blocks/channel/channelVideos.tsx";
-import ChannelAbout from "../components/blocks/channel/channelAbout.tsx";
+import ChannelMain from "../components/blocks/channel/ChannelMain.tsx";
+import ChannelVideos from "../components/blocks/channel/ChannelVideos.tsx";
+import ChannelAbout from "../components/blocks/channel/ChannelAbout.tsx";
+import ChannelTabs from "../components/blocks/channel/ChannelTabs.tsx";
 
 function ChannelPage() {
     const [searchParams] = useSearchParams()
@@ -18,18 +19,25 @@ function ChannelPage() {
 
     const [name, setName] = useState<string>("")
     const [avatar, setAvatar] = useState<string | null>(null)
+    const [date, setDate] = useState<string>('')
+
     const [videos, setVideos] = useState<Video[]>([])
+    const [newVideos, setNewVideos] = useState<Video[]>([])
 
     const [page, setPage] = useState<number>(1)
     const [total, setTotal] = useState<number>(0)
-    const [_, setHasMore] = useState<boolean>(false)
+    const [hasMore, setHasMore] = useState<boolean>(false)
 
     const getChannelVideos = async () => {
         try {
-            const data: ResponseVideos = await apiGetVideosFromChannel(name, page)
+            const data: ResponseVideos = await apiGetVideosFromChannel(name, page, hasMore)
 
             if (data) {
                 setVideos(data.videos)
+
+                if (page === 1) {
+                    setNewVideos(data.videos?.slice(0, 3))
+                }
 
                 setPage(page + 1)
                 setHasMore(data.has_more)
@@ -47,14 +55,11 @@ function ChannelPage() {
             if (data) {
                 setName(data.name)
                 setAvatar(data.avatar)
+                setDate(data.date)
             }
         } catch (err) {
 
         }
-    }
-
-    const handleTab = (index: number) => {
-        setActiveTab(index)
     }
 
     useEffect(() => {
@@ -82,36 +87,11 @@ function ChannelPage() {
                 <p className="h3">{name}</p>
             </div>
 
-            <ul className="channel__tabs flex flex-align-center">
-                <li className={
-                    activeTab === 0 ? 'channel__tab is-active hover-color-accent'
-                        : 'channel__tab hover-color-accent'
-                }
-                    onClick={() => handleTab(0)}
-                >
-                    <button type="button">Главная</button>
-                </li>
-                <li className={
-                    activeTab === 1 ? 'channel__tab is-active hover-color-accent'
-                        : 'channel__tab hover-color-accent'
-                }
-                    onClick={() => handleTab(1)}
-                >
-                    <button type="button">Видео</button>
-                </li>
-                <li className={
-                    activeTab === 2 ? 'channel__tab is-active hover-color-accent'
-                        : 'channel__tab hover-color-accent'
-                }
-                    onClick={() => handleTab(2)}
-                >
-                    <button type="button">О канале</button>
-                </li>
-            </ul>
+            <ChannelTabs activeTab={activeTab} setActiveTab={setActiveTab}/>
 
-            {activeTab === 0 && (<ChannelMain videos={videos}/>)}
-            {activeTab === 1 && (<ChannelVideos videos={videos}/>)}
-            {activeTab === 2 && (<ChannelAbout total={total}/>)}
+            {activeTab === 0 && (<ChannelMain videos={newVideos}/>)}
+            {activeTab === 1 && (<ChannelVideos videos={videos} hasMore={hasMore}/>)}
+            {activeTab === 2 && (<ChannelAbout total={total} date={date}/>)}
         </div>
     )
 }

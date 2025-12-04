@@ -2,7 +2,7 @@ import {Link, Outlet} from "react-router-dom";
 
 import {Menu} from "../types/menu.ts";
 
-import menuItems from "../data/main/menuAside.ts";
+import menuItems from "../data/menuLinks.ts";
 
 import Header from "../components/common/Header.tsx";
 

@@ -39,7 +39,18 @@
     }
   }
 
-  &__sub-title {
+  &__about {
     padding-left: rem(15);
+  }
+
+  &__sub-title {
+    margin-bottom: rem(15);
+  }
+
+  &__statistic-item {
+
+    &:not(:last-child) {
+      margin-bottom: rem(10);
+    }
   }
 }

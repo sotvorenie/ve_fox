@@ -9,14 +9,14 @@ interface VideoProps {
 function ChannelMain({ videos }: VideoProps): JSX.Element {
 
     return (
-        <>
+        <div className="channel__main">
             <p className="channel__sub-title h6">Новинки</p>
             <ul className="channel__list row">
-                {videos && videos.slice(0, 3).map((video: Video) => (
+                {videos && videos.map((video: Video) => (
                     <VideoItem video={video} isRow={false} key={video.video}/>
                 ))}
             </ul>
-        </>
+        </div>
     )
 }
 

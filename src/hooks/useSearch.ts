@@ -3,9 +3,8 @@ import {RootState} from "../store";
 import {
     setSearch,
     setVideos,
-    setPage,
-    setHasMore,
-    setTotal
+    setTotal,
+    setHasMore
 } from "../store/useSearchStore.ts";
 import {ResponseVideos} from "../types/responseVideos.ts";
 import {apiGetVideoByTitle} from "../api/search/search.ts";
@@ -15,20 +14,18 @@ export const useSearch = () => {
     const {
         search,
         videos,
-        total,
         hasMore,
-        page
+        total
     } = useSelector((state: RootState) => state.search);
 
-    const getSearchVideos = async () => {
+    const getSearchVideos = async (page: number = 1) => {
         try {
-            const data: ResponseVideos = await apiGetVideoByTitle(search)
+            const data: ResponseVideos = await apiGetVideoByTitle(search, page)
 
             if (data) {
                 dispatch(setVideos(data.videos))
-                dispatch(setPage(page + 1))
-                dispatch(setHasMore(data.has_more))
                 dispatch(setTotal(data.total))
+                dispatch(setHasMore(data.has_more))
             }
         } catch (err) {
 
@@ -38,8 +35,8 @@ export const useSearch = () => {
     return {
         search,
         videos,
-        total,
         hasMore,
+        total,
 
         setSearch: (search: string) => dispatch(setSearch(search)),
 

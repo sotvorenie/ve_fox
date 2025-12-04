@@ -1,4 +1,5 @@
 import {Video} from "../types/video.ts";
+import {useState} from "react";
 
 import VideoItem from "../components/common/VideoItem.tsx";
 
@@ -11,6 +12,7 @@ function SearchPage() {
         hasMore,
     } = useSearch();
 
+    const [page, setPage] = useState(2);
 
     return (
         <div className="search-page">

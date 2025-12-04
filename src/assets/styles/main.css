@@ -1055,8 +1055,14 @@ input, textarea {
 .channel__tab button {
   padding: 0.625rem 1.25rem;
 }
-.channel__sub-title {
+.channel__about {
   padding-left: 0.9375rem;
+}
+.channel__sub-title {
+  margin-bottom: 0.9375rem;
+}
+.channel__statistic-item:not(:last-child) {
+  margin-bottom: 0.625rem;
 }
 
 .video-page {
