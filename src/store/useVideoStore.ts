@@ -4,14 +4,20 @@ import {Video} from "../types/video.ts";
 
 interface VideoState {
     video: Video;
-    videoHistory: Video[];
-    activeVideoFromHistory: number;
+    isLoading: boolean;
+
+    recommendedVideos: Video[],
+    recommendedIsLoading: boolean,
+    recommendedHasMore: boolean,
 }
 
 const initialState: VideoState = {
     video: {name: '', video: undefined, video_path: '', channel: '', date: ''},
-    videoHistory: [],
-    activeVideoFromHistory: 0,
+    isLoading: true,
+
+    recommendedVideos: [],
+    recommendedIsLoading: true,
+    recommendedHasMore: false,
 }
 
 export const videoStore = createSlice({
@@ -23,22 +29,27 @@ export const videoStore = createSlice({
         setVideo: (state, action: PayloadAction<Video>) => {
             state.video = action.payload
         },
-        setVideoHistory: (state, action: PayloadAction<Video>) => {
-            state.videoHistory.push(action.payload)
+        setIsLoading: (state, action: PayloadAction<boolean>) => {
+            state.isLoading = action.payload
         },
-        setActiveVideoFromHistory: (state, action: PayloadAction<number>) => {
-            state.activeVideoFromHistory = action.payload
+
+        setRecommendedIsLoading: (state, action: PayloadAction<boolean>) => {
+            state.recommendedIsLoading = action.payload
         },
-        clearVideoHistory: (state) => {
-            state.videoHistory = []
+        setRecommendedHasMore: (state, action: PayloadAction<boolean>) => {
+            state.recommendedHasMore = action.payload
+        },
+        setRecommendedVideos: (state, action: PayloadAction<Video[]>) => {
+            state.recommendedVideos = action.payload
         }
     }
 })
 
 export const {
     setVideo,
-    setVideoHistory,
-    setActiveVideoFromHistory,
-    clearVideoHistory,
+    setIsLoading,
+    setRecommendedIsLoading,
+    setRecommendedVideos,
+    setRecommendedHasMore
 } = videoStore.actions
 export default videoStore.reducer

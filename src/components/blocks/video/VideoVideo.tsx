@@ -1,49 +1,20 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {Link} from "react-router-dom";
 
-import {Video} from "../../../types/video.ts";
-
-import {useRouterParams} from "../../../composables/useRouterParams.ts";
 
 import LikeIcon from "../../../assets/images/icons/LikeIcon.tsx";
 
 import {useVideo} from "../../../hooks/useVideo.ts";
-import {apiGetVideo} from "../../../api/video/video.ts";
 
 function VideoVideo() {
-    const {getParam} = useRouterParams()
 
-    const {video, setVideo} = useVideo()
+    const {video} = useVideo()
 
     const [isLiked, setIsLiked] = useState<boolean>(false)
-
-    const [path, setPath] = useState<string>("")
 
     const handleLike = () => {
         setIsLiked(prev => !prev)
     }
-
-    const getVideo = async (path: string) => {
-        try {
-            const data: Video = await apiGetVideo(path)
-
-            if (data) {
-                setVideo(data)
-            }
-        } catch (err) {
-
-        }
-    }
-
-    useEffect(() => {
-        setPath(getParam("video_path") ?? '')
-    }, []);
-
-    useEffect(() => {
-        if (path && !video.name) {
-            getVideo(path)
-        }
-    }, [path]);
 
     return (
         <div className="video">

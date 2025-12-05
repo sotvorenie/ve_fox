@@ -1,7 +1,7 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 
-import {Video} from "../types/video.ts";
+import {useRouterParams} from "../composables/useRouterParams.ts";
 
 import Header from "../components/common/Header.tsx";
 import VideoVideo from "../components/blocks/video/VideoVideo.tsx";
@@ -12,22 +12,21 @@ import {useVideo} from "../hooks/useVideo.ts";
 function VideoPage() {
     const location = useLocation();
 
-    const {
-        handleVideo,
-        clearVideoHistory,
-        setActiveVideoFromHistory,
-    } = useVideo()
+    const {getParam} = useRouterParams()
+
+    const {getVideo} = useVideo()
+
+    const [path, setPath] = useState<string>('');
 
     useEffect(() => {
-        const videoInfo: Video | undefined | null = location.state?.video
+        setPath(getParam("video_path") ?? '')
+    }, [location]);
 
-        clearVideoHistory()
-        setActiveVideoFromHistory(0)
-
-        if (videoInfo) {
-            handleVideo(videoInfo)
+    useEffect(() => {
+        if (path) {
+            getVideo(path)
         }
-    }, []);
+    }, [path]);
 
     return(
         <div className="video-page">

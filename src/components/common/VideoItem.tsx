@@ -32,7 +32,6 @@ function VideoItem({video, isRow = false}: Props) {
 
     return (
         <Link to={`/video?video_path=${video.video_path}`}
-              state={{video}}
               className="video-list__item col-4"
         >
             <li className={isRow ? 'video-list__row-item flex flex-align-start' : ''}>
