@@ -1,6 +1,8 @@
 import {useEffect} from "react";
 import {useLocation} from "react-router-dom";
 
+import {Video} from "../types/video.ts";
+
 import Header from "../components/common/Header.tsx";
 import VideoVideo from "../components/blocks/video/VideoVideo.tsx";
 import VideoRecommended from "../components/blocks/video/VideoRecommended.tsx";
@@ -10,13 +12,21 @@ import {useVideo} from "../hooks/useVideo.ts";
 function VideoPage() {
     const location = useLocation();
 
-    const {handleVideo, clearVideoHistory, setActiveVideoFromHistory} = useVideo()
+    const {
+        handleVideo,
+        clearVideoHistory,
+        setActiveVideoFromHistory,
+    } = useVideo()
 
     useEffect(() => {
+        const videoInfo: Video | undefined | null = location.state?.video
+
         clearVideoHistory()
         setActiveVideoFromHistory(0)
 
-        handleVideo(location.state.video)
+        if (videoInfo) {
+            handleVideo(videoInfo)
+        }
     }, []);
 
     return(

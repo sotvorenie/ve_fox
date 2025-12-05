@@ -28,10 +28,20 @@
   }
 
   &__tab {
+    position: relative;
 
     &.is-active {
-      border-bottom: var(--border-accent);
       pointer-events: none;
+
+      &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: rem(1);
+        left: 0;
+        top: 100%;
+        background: var(--color-accent);
+      }
     }
 
     button {

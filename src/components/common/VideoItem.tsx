@@ -1,13 +1,12 @@
-import React from "react";
 import {Link} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 
 import {Video} from "../../types/video.ts";
 
-import {replaceLines, sliceString} from "../../composables/useRedactVideoName.ts";
+import {replaceSymbols, sliceString} from "../../composables/useRedactVideoName.ts";
 import {redactDate} from "../../composables/useRedactDate.ts";
 
-import {useVideo} from "../../hooks/useVideo.ts";
+import React from "react";
 
 interface Props {
     video: Video;
@@ -17,19 +16,24 @@ interface Props {
 function VideoItem({video, isRow = false}: Props) {
     const navigate = useNavigate();
 
-    const {handleVideo} = useVideo()
-
-    const handleChannel = (event: React.MouseEvent<HTMLElement>, name: string) => {
+    const handleChannel = (event: React.MouseEvent): void => {
         event.stopPropagation()
         event.preventDefault()
 
-        navigate(`/channel?name=${name}`)
+        navigate(`/channel?channel=${video.channel}`, {
+            state: {
+                channel: {
+                    name: video.channel,
+                    avatar: video.avatar,
+                }
+            }
+        })
     }
 
     return (
         <Link to={`/video?video_path=${video.video_path}`}
+              state={{video}}
               className="video-list__item col-4"
-              onClick={() => handleVideo(video)}
         >
             <li className={isRow ? 'video-list__row-item flex flex-align-start' : ''}>
                 <div className="video-list__preview img-container">
@@ -38,8 +42,8 @@ function VideoItem({video, isRow = false}: Props) {
                 <div className={isRow ? 'video-list__info flex flex-column' : 'video-list__info flex'}>
                     {!isRow &&
                         <div className="video-list__avatar img-container"
-                             onClick={(event: React.MouseEvent<HTMLDivElement>) => handleChannel(event, video.channel)}
-                             title={video.channel}
+                                title={video.channel}
+                                onClick={(event) => handleChannel(event)}
                         >
                             {video.avatar ?
                                 (<img src={video.avatar} alt={video.channel}/>) :
@@ -50,7 +54,7 @@ function VideoItem({video, isRow = false}: Props) {
 
                     <div className="video-list__text">
                                     <span className="video-list__title">
-                                        {replaceLines(sliceString(video.name, 90))}
+                                        {replaceSymbols(sliceString(video.name, 90))}
                                     </span>
                         {!isRow &&
                             <span className="video-list__channel">
@@ -61,8 +65,9 @@ function VideoItem({video, isRow = false}: Props) {
                     </div>
 
                     {isRow &&
-                        <div className="video-list__row-channel flex flex-align-center"
-                             onClick={(event: React.MouseEvent<HTMLDivElement>) => handleChannel(event, video.channel)}
+                        <button className="video-list__row-channel flex flex-align-center"
+                                type="button"
+                                onClick={(event) => handleChannel(event)}
                         >
                             <div className="video-list__avatar img-container">
                                 {video.avatar ?
@@ -71,7 +76,7 @@ function VideoItem({video, isRow = false}: Props) {
                                 }
                             </div>
                             <span className="video-list__channel">{video.channel}</span>
-                        </div>
+                        </button>
                     }
                 </div>
             </li>

@@ -1,6 +1,6 @@
 import {Video} from "../../../types/video.ts";
 
-import {replaceLines, sliceString} from "../../../composables/useRedactVideoName.ts";
+import {replaceSymbols, sliceString} from "../../../composables/useRedactVideoName.ts";
 import {redactDate} from "../../../composables/useRedactDate.ts";
 
 import {useVideo} from "../../../hooks/useVideo.ts";
@@ -25,7 +25,7 @@ function VideoRecommended() {
                         <div className="recommended__info">
                             <div className="recommended__text flex flex-column">
                             <span className="recommended__title">
-                                {replaceLines(sliceString(video.name, 34))}
+                                {replaceSymbols(sliceString(video.name, 34))}
                             </span>
                                 <span className="recommended__channel">{video.channel}</span>
                                 <span className="recommended__date">{redactDate(video.date)}</span>

@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 import {Video} from "../../../types/video.ts";
 
@@ -11,8 +11,6 @@ import {useVideo} from "../../../hooks/useVideo.ts";
 import {apiGetVideo} from "../../../api/video/video.ts";
 
 function VideoVideo() {
-    const navigate = useNavigate();
-
     const {getParam} = useRouterParams()
 
     const {video, setVideo} = useVideo()
@@ -23,10 +21,6 @@ function VideoVideo() {
 
     const handleLike = () => {
         setIsLiked(prev => !prev)
-    }
-
-    const handleChannel = (name: string) => {
-        navigate(`/channel?name=${name}`)
     }
 
     const getVideo = async (path: string) => {
@@ -61,9 +55,14 @@ function VideoVideo() {
             <p className="video__title h5">{video?.name}</p>
 
             <div className="video__actions flex flex-align-center">
-                <Link to="/"
+                <Link to={`/channel?channel=${video.channel}`}
+                      state={{
+                          channel: {
+                              name: video.channel,
+                              avatar: video.avatar,
+                          }
+                      }}
                       className="video__channel flex flex-align-center cursor-pointer hover-color-accent"
-                      onClick={() => handleChannel(video.channel)}
                 >
                     <div className="video__channel-avatar img-container"
                     >

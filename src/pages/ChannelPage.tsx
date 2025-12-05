@@ -1,4 +1,4 @@
-import {useSearchParams} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 
 import {Video} from "../types/video.ts";
@@ -7,13 +7,17 @@ import {Channel} from "../types/channel.ts";
 
 import {apiGetChannel, apiGetVideosFromChannel} from "../api/channel/channel.ts";
 
+import {useRouterParams} from "../composables/useRouterParams.ts";
+
 import ChannelMain from "../components/blocks/channel/ChannelMain.tsx";
 import ChannelVideos from "../components/blocks/channel/ChannelVideos.tsx";
 import ChannelAbout from "../components/blocks/channel/ChannelAbout.tsx";
 import ChannelTabs from "../components/blocks/channel/ChannelTabs.tsx";
 
 function ChannelPage() {
-    const [searchParams] = useSearchParams()
+    const {getParam} = useRouterParams()
+
+    const location = useLocation();
 
     const [activeTab, setActiveTab] = useState(0)
 
@@ -30,7 +34,7 @@ function ChannelPage() {
 
     const getChannelVideos = async () => {
         try {
-            const data: ResponseVideos = await apiGetVideosFromChannel(name, page, hasMore)
+            const data: ResponseVideos = await apiGetVideosFromChannel(name, page)
 
             if (data) {
                 setVideos(data.videos)
@@ -63,7 +67,10 @@ function ChannelPage() {
     }
 
     useEffect(() => {
-        setName(searchParams.get('name') ?? '')
+        const name = location.state?.channel?.name || getParam("channel")
+
+        setName(name)
+        setAvatar(location.state?.channel?.avatar)
     }, []);
 
     useEffect(() => {

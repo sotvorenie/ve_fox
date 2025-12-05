@@ -1,5 +1,7 @@
-export const replaceLines = (name: string) => {
-    return name.replaceAll(" ! ", " | ").replaceAll(" !! ", " || ");
+export const replaceSymbols = (name: string) => {
+    return name.replaceAll(" ! ", " | ")
+        .replaceAll(" !! ", " || ")
+        .replaceAll("№", "#")
 }
 
 export const sliceString = (name: string = '', value: number = 20) => {

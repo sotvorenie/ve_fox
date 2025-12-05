@@ -11,9 +11,9 @@ export const useVideo = () => {
         activeVideoFromHistory
     } = useSelector((state: RootState) => state.video);
 
-    const handleVideo = (video: Video): void => {
-        dispatch(setVideo(video))
-        dispatch(setVideoHistory(video))
+    const handleVideo = (newVideo: Video): void => {
+        dispatch(setVideo(newVideo))
+        dispatch(setVideoHistory(newVideo))
         dispatch(setActiveVideoFromHistory(activeVideoFromHistory + 1))
     }
 
