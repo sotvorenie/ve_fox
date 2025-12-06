@@ -49,22 +49,18 @@
     padding: rem(5) rem(30);
     border-radius: var(--radius-big);
 
-    @include hover() {
+    &.fill {
       background: var(--color-accent);
+    }
 
-      svg {
-        fill: currentColor !important;
-      }
+    @include hover() {
+      filter: brightness(1.2);
     }
 
     svg {
       @include square(30);
 
       fill: currentColor;
-
-      &.fill {
-        fill: var(--color-accent);
-      }
     }
   }
 }

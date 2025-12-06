@@ -1211,20 +1211,17 @@ input, textarea {
   padding: 0.3125rem 1.875rem;
   border-radius: var(--radius-big);
 }
+.video__button.fill {
+  background: var(--color-accent);
+}
 @media (any-hover: hover) {
   .video__button:hover {
-    background: var(--color-accent);
-  }
-  .video__button:hover svg {
-    fill: currentColor !important;
+    filter: brightness(1.2);
   }
 }
 @media (any-hover: none) {
   .video__button:active {
-    background: var(--color-accent);
-  }
-  .video__button:active svg {
-    fill: currentColor !important;
+    filter: brightness(1.2);
   }
 }
 .video__button svg {
@@ -1233,9 +1230,6 @@ input, textarea {
   min-height: 30px;
   min-width: 30px;
   fill: currentColor;
-}
-.video__button svg.fill {
-  fill: var(--color-accent);
 }
 
 .recommended {

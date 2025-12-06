@@ -46,11 +46,11 @@ function VideoVideo() {
                 </Link>
 
                 <div className="video__buttons flex">
-                    <button className="video__button recolor-svg"
+                    <button className={`video__button recolor-svg ${isLiked ? 'fill' : ''}`}
                             type="button"
                             onClick={handleLike}
                     >
-                        <LikeIcon className={isLiked ? 'fill' : ''}/>
+                        <LikeIcon/>
                     </button>
                     <button className="video__button" type="button">
                         Смотреть позже
