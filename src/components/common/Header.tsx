@@ -10,7 +10,10 @@ interface Props {
 function Header({isVideoPage = false}: Props) {
 
     return(
-        <header className="header flex flex-align-center flex-justify-center position-sticky">
+        <header className={
+            `header flex flex-align-center flex-justify-center 
+            ${!isVideoPage && "position-sticky"}`
+        }>
             <HeaderNavigation isVideoPage={isVideoPage}/>
 
             <HeaderSearch/>

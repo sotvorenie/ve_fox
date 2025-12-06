@@ -888,7 +888,6 @@ input, textarea {
   width: 100%;
   backdrop-filter: blur(52px);
   background: rgba(61, 75, 86, 0.5647058824);
-  position: sticky;
   top: 0;
   padding-block: clamp(0.9375rem, 0.3365384615rem + 0.9615384615vw, 1.875rem);
   z-index: 1000;
@@ -1159,6 +1158,7 @@ input, textarea {
   height: 100%;
   padding-left: clamp(1.25rem, -0.3525641026rem + 2.5641025641vw, 3.75rem);
   column-gap: clamp(0.625rem, 0.2243589744rem + 0.641025641vw, 1.25rem);
+  padding-bottom: clamp(5rem, 3.3974358974rem + 2.5641025641vw, 7.5rem);
 }
 
 .video {
