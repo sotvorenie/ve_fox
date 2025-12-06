@@ -12,8 +12,14 @@ function VideoVideo() {
 
     const [isLiked, setIsLiked] = useState<boolean>(false)
 
+    const [isWatchLater, setIsWatchLater] = useState<boolean>(false)
+
     const handleLike = () => {
         setIsLiked(prev => !prev)
+    }
+
+    const handleWatchLater = () => {
+        setIsWatchLater(prev => !prev)
     }
 
     return (
@@ -52,8 +58,11 @@ function VideoVideo() {
                     >
                         <LikeIcon/>
                     </button>
-                    <button className="video__button" type="button">
-                        Смотреть позже
+                    <button className={`video__button ${isWatchLater ? 'fill' : ''}`}
+                            type="button"
+                            onClick={handleWatchLater}
+                    >
+                        {isWatchLater ? 'Удалить из "Смотреть позже"' : 'Смотреть позже'}
                     </button>
                 </div>
             </div>
