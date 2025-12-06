@@ -38,6 +38,9 @@ function HeaderSearch() {
             <input className="header__input input"
                    ref={inputRef}
                    onChange={handleSearchText}
+                   onKeyDown={async (e) => {
+                       if (e.key === "Enter") await handleSearch()
+                   }}
                    value={search}
                    type="text"
                    placeholder="Введите запрос"
