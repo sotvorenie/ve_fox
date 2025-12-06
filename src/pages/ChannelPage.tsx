@@ -56,7 +56,7 @@ function ChannelPage() {
         try {
             const data: Channel = await apiGetChannel(name)
 
-            if (data) {
+            if (data.name && data.avatar) {
                 setName(data.name)
                 setAvatar(data.avatar)
                 setDate(data.date)
