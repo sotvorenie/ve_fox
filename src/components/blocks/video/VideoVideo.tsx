@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {Link} from "react-router-dom";
 
 
@@ -7,8 +7,9 @@ import LikeIcon from "../../../assets/images/icons/LikeIcon.tsx";
 import {useVideo} from "../../../hooks/useVideo.ts";
 
 function VideoVideo() {
-
     const {video} = useVideo()
+
+    const videoRef = useRef<HTMLVideoElement | null>(null);
 
     const [isLiked, setIsLiked] = useState<boolean>(false)
 
@@ -22,11 +23,38 @@ function VideoVideo() {
         setIsWatchLater(prev => !prev)
     }
 
+    useEffect(() => {
+        const handleKey = (event: KeyboardEvent) => {
+            if (event.key.toLowerCase() === "f") {
+                if (!document.fullscreenElement) {
+                    videoRef.current?.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            }
+
+            if (event.code === 'Space') {
+                event.preventDefault()
+
+                if (videoRef.current?.paused) {
+                    videoRef.current.play()
+                } else {
+                    videoRef.current?.pause()
+                }
+            }
+        };
+
+        window.addEventListener("keydown", handleKey);
+
+        return () => window.removeEventListener("keydown", handleKey);
+    }, []);
+
     return (
         <div className="video">
             <video className="video__video"
                    src={video?.video}
                    controls autoPlay
+                   ref={videoRef}
             />
 
             <p className="video__title h5">{video?.name}</p>
