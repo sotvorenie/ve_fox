@@ -125,7 +125,7 @@ function VideoVideo({isLiked, setIsLiked, isWatchLater, setIsWatchLater}: Props)
                    ref={videoRef}
             />
 
-            <p className="video__title h5">{video?.name}</p>
+            <p className="video__title h5 one-line">{video?.name}</p>
 
             <div className="video__actions flex flex-align-center">
                 <Link to={`/channel?channel=${video.channel}`}

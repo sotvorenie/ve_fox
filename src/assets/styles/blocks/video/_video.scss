@@ -1,7 +1,8 @@
 @use '../../helpers/index' as *;
 
 .video {
-  flex: 0 0 75%;
+  min-width: 75%;
+  max-width: 75%;
 
   &__video {
     width: 100%;

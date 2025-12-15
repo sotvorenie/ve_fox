@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 
 import {Video} from "../../types/video.ts";
 
-import {replaceSymbols, sliceString} from "../../composables/useRedactVideoName.ts";
+import {replaceSymbols} from "../../composables/useRedactVideoName.ts";
 import {redactDate} from "../../composables/useRedactDate.ts";
 
 import React from "react";
@@ -52,8 +52,8 @@ function VideoItem({video, isRow = false}: Props) {
                     }
 
                     <div className="video-list__text">
-                                    <span className="video-list__title">
-                                        {replaceSymbols(sliceString(video.name, 90))}
+                                    <span className="video-list__title two-lines">
+                                        {replaceSymbols(video.name)}
                                     </span>
                         {!isRow &&
                             <span className="video-list__channel">

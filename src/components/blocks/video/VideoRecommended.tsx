@@ -2,7 +2,7 @@ import {useNavigate} from "react-router-dom";
 
 import {Video} from "../../../types/video.ts";
 
-import {replaceSymbols, sliceString} from "../../../composables/useRedactVideoName.ts";
+import {replaceSymbols} from "../../../composables/useRedactVideoName.ts";
 import {redactDate} from "../../../composables/useRedactDate.ts";
 
 import ListColumnSkeleton from "../../ui/skeletons/ListColumnSkeleton.tsx";
@@ -41,8 +41,8 @@ function VideoRecommended() {
                                 </div>
                                 <div className="recommended__info">
                                     <div className="recommended__text flex flex-column">
-                            <span className="recommended__title">
-                                {replaceSymbols(sliceString(video.name, 34))}
+                            <span className="recommended__title two-lines">
+                                {replaceSymbols(video.name)}
                             </span>
                                         <span className="recommended__channel">{video.channel}</span>
                                         <span className="recommended__date">{redactDate(video.date)}</span>
