@@ -1,25 +1,93 @@
-import {useEffect, useRef, useState} from "react";
+import {Dispatch, SetStateAction, useEffect, useRef, useState} from "react";
 import {Link} from "react-router-dom";
 
+import {removeVideoFromTable, setVideoToTable} from "../../../api/local_database";
 
 import LikeIcon from "../../../assets/images/icons/LikeIcon.tsx";
 
 import {useVideo} from "../../../hooks/useVideo.ts";
 
-function VideoVideo() {
+interface Props {
+    isLiked: boolean,
+    setIsLiked: Dispatch<SetStateAction<boolean>>;
+    isWatchLater: boolean;
+    setIsWatchLater: Dispatch<SetStateAction<boolean>>;
+}
+
+function VideoVideo({isLiked, setIsLiked, isWatchLater, setIsWatchLater}: Props) {
     const {video} = useVideo()
 
     const videoRef = useRef<HTMLVideoElement | null>(null);
 
-    const [isLiked, setIsLiked] = useState<boolean>(false)
+    const [likeIsActive, setLikeIsActive] = useState<boolean>(true)
+    const likeVideo = async () => {
+        try {
+            setLikeIsActive(false)
 
-    const [isWatchLater, setIsWatchLater] = useState<boolean>(false)
+            await setVideoToTable(video, 'liked_videos')
+        } catch (err) {
+
+        } finally {
+            setLikeIsActive(true)
+        }
+    }
+    const dislikeVideo = async () => {
+        try {
+            setLikeIsActive(false)
+
+            await removeVideoFromTable(video.video_path, 'liked_videos')
+        } catch (err) {
+
+        } finally {
+            setLikeIsActive(true)
+        }
+    }
+
+    const [watchLaterIsActive, setWatchLaterIsActive] = useState<boolean>(true)
+    const watchLater = async () => {
+        try {
+            setWatchLaterIsActive(false)
+
+            await setVideoToTable(video, 'watch_later')
+        } catch (err) {
+
+        } finally {
+            setWatchLaterIsActive(true)
+        }
+    }
+    const unwatchLater = async () => {
+        try {
+            setWatchLaterIsActive(false)
+
+            await removeVideoFromTable(video.video_path, 'watch_later')
+        } catch (err) {
+
+        } finally {
+            setWatchLaterIsActive(true)
+        }
+    }
 
     const handleLike = () => {
+        if (!likeIsActive) return
+
+        if (!isLiked) {
+            likeVideo()
+        } else {
+            dislikeVideo()
+        }
+
         setIsLiked(prev => !prev)
     }
 
     const handleWatchLater = () => {
+        if (!watchLaterIsActive) return
+
+        if (!isWatchLater) {
+            watchLater()
+        } else {
+            unwatchLater()
+        }
+
         setIsWatchLater(prev => !prev)
     }
 
@@ -82,12 +150,14 @@ function VideoVideo() {
                 <div className="video__buttons flex">
                     <button className={`video__button recolor-svg ${isLiked ? 'fill' : ''}`}
                             type="button"
+                            disabled={!likeIsActive}
                             onClick={handleLike}
                     >
                         <LikeIcon/>
                     </button>
                     <button className={`video__button ${isWatchLater ? 'fill' : ''}`}
                             type="button"
+                            disabled={!watchLaterIsActive}
                             onClick={handleWatchLater}
                     >
                         {isWatchLater ? 'Удалить из "Смотреть позже"' : 'Смотреть позже'}

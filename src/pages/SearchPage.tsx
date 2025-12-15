@@ -5,6 +5,7 @@ import VideoItem from "../components/common/VideoItem.tsx";
 import ListColumnSkeleton from "../components/ui/skeletons/ListColumnSkeleton.tsx";
 
 import {useSearch} from "../hooks/useSearch.ts";
+import {usePages} from "../hooks/usePages.ts";
 
 function SearchPage() {
     const {
@@ -14,19 +15,21 @@ function SearchPage() {
         isLoading,
         getSearchVideos
     } = useSearch();
+    const {setRouterPage} = usePages()
 
-    const [page, setPage] = useState(2);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         if (!videos?.length) {
-            console.log('привет')
-            getSearchVideos(1)
+            getSearchVideos(page)
         }
+
+        setRouterPage(-1)
     }, []);
 
     return (
         <div className="search-page">
-            <p className="search-page__total h6">Найдено {total} видео</p>
+            <p className="total h6">Найдено {total} видео</p>
 
             {!isLoading && (
                 <ul className="video-list list-column m-auto">

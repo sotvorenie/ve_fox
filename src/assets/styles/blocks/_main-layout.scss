@@ -6,9 +6,12 @@
   &__right {
     width: 100%;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
   }
 
   &__content {
     padding: 0 rem(20) rem(40);
+    flex-grow: 1;
   }
 }

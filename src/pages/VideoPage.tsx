@@ -1,6 +1,9 @@
 import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 
+import {setVideoToTable} from "../api/local_database";
+import {check} from "../api/local_database/checkInfo.ts";
+
 import {useRouterParams} from "../composables/useRouterParams.ts";
 
 import Header from "../components/common/Header.tsx";
@@ -14,9 +17,20 @@ function VideoPage() {
 
     const {getParam} = useRouterParams()
 
-    const {getVideo} = useVideo()
+    const {video, getVideo} = useVideo()
 
     const [path, setPath] = useState<string>('');
+
+    const [isLiked, setIsLiked] = useState<boolean>(false)
+    const [isWatchLater, setIsWatchLater] = useState<boolean>(false)
+
+    const updateDB = async () => {
+        const checkLike: boolean = await check(video.video_path, 'liked_videos')
+        setIsLiked(checkLike)
+        const checkWatchLater: boolean = await check(video.video_path, 'watch_later')
+        setIsWatchLater(checkWatchLater)
+        await setVideoToTable(video, 'history')
+    }
 
     useEffect(() => {
         setPath(getParam("video_path") ?? '')
@@ -28,12 +42,18 @@ function VideoPage() {
         }
     }, [path]);
 
+    useEffect(() => {
+        if (video.video) {
+            updateDB()
+        }
+    }, [video]);
+
     return(
         <div className="video-page">
             <Header isVideoPage={true}/>
 
             <div className="video-page__content flex">
-                <VideoVideo/>
+                <VideoVideo isLiked={isLiked} setIsLiked={setIsLiked} isWatchLater={isWatchLater} setIsWatchLater={setIsWatchLater}/>
 
                 <VideoRecommended/>
             </div>

@@ -879,6 +879,7 @@ input, textarea {
 }
 .video-list__row-item .video-list__preview {
   flex: 0 0 50%;
+  margin-bottom: 0;
 }
 .video-list__row-channel {
   column-gap: 0.625rem;
@@ -985,9 +986,12 @@ input, textarea {
 .main-layout__right {
   width: 100%;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 .main-layout__content {
   padding: 0 1.25rem 2.5rem;
+  flex-grow: 1;
 }
 
 .menu {
@@ -1018,6 +1022,11 @@ input, textarea {
   .menu__btn:active {
     background: var(--color-dark-alt);
   }
+}
+.menu__btn.is-active {
+  color: var(--color-accent);
+  pointer-events: none;
+  background: var(--color-dark-alt);
 }
 .menu__btn svg {
   width: 1.875rem;
@@ -1098,6 +1107,19 @@ input, textarea {
 }
 .skeleton.is-column .skeleton__date {
   margin-bottom: 0.625rem;
+}
+
+.main-empty {
+  height: 100%;
+}
+
+.total {
+  padding-left: 1.25rem;
+  margin-bottom: 0.625rem;
+}
+
+.main-page__home {
+  height: 100%;
 }
 
 .channel__banner {
@@ -1285,10 +1307,6 @@ input, textarea {
     width: 80%;
     margin: auto;
   }
-}
-.search-page__total {
-  padding-left: 1.25rem;
-  margin-bottom: 0.625rem;
 }
 
 /*# sourceMappingURL=main.css.map */

@@ -11,6 +11,10 @@
 @use 'blocks/main-layout';
 @use 'blocks/menu';
 @use 'blocks/skeleton';
+@use 'blocks/empty';
+@use 'blocks/total';
+
+@use 'blocks/main/main-page';
 
 @use 'blocks/channel/channel';
 

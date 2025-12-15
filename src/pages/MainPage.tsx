@@ -7,8 +7,13 @@ import {apiGetAllVideos} from "../api/videos/videos.ts";
 
 import VideoItem from "../components/common/VideoItem.tsx";
 import ListRowSkeleton from "../components/ui/skeletons/ListRowSkeleton.tsx";
+import MainEmpty from "../components/ui/empty/mainEmpty.tsx";
+
+import {usePages} from "../hooks/usePages.ts";
 
 function MainPage() {
+    const {setRouterPage} = usePages()
+
     const [page, setPage] = useState<number>(1)
     const [hasMore, setHasMore] = useState<boolean>(false)
 
@@ -36,6 +41,8 @@ function MainPage() {
 
 
     useEffect(() => {
+        setRouterPage(0)
+
         getAllVideos()
     }, [])
 
@@ -48,6 +55,8 @@ function MainPage() {
                     ))}
                 </ul>
             )}
+
+            {!isLoading && !videos?.length && <MainEmpty/>}
 
             {isLoading && <ListRowSkeleton/>}
 

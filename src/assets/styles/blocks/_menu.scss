@@ -25,6 +25,12 @@
       background: var(--color-dark-alt);
     }
 
+    &.is-active {
+      color: var(--color-accent);
+      pointer-events: none;
+      background: var(--color-dark-alt);
+    }
+
     svg {
       width: rem(30);
       height: auto;
