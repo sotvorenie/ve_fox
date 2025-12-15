@@ -6,7 +6,11 @@ import {removeVideoFromTable, setVideoToTable} from "../../../api/local_database
 import LikeIcon from "../../../assets/images/icons/LikeIcon.tsx";
 
 import {useVideo} from "../../../hooks/useVideo.ts";
-import {getTimeFromWatchTime, setTimeToWatchTime} from "../../../api/local_database/videoWatchTimes.ts";
+import {
+    getTimeFromWatchTime,
+    removeTimeFromWatchTime,
+    setTimeToWatchTime
+} from "../../../api/local_database/videoWatchTimes.ts";
 
 interface Props {
     isLiked: boolean,
@@ -54,13 +58,37 @@ function VideoVideo({isLiked, setIsLiked, isWatchLater, setIsWatchLater}: Props)
         setIsWatchLater(prev => !prev)
     }
 
-    const saveTime = () => {
+    const isVideoAlmostFinished = (currentTime: number, duration: number) => {
+        if (!duration || duration === Infinity) return false;
+
+        const remaining = duration - currentTime;
+
+        // видео <= 5 минут
+        if (duration <= 300) {
+            return remaining <= duration * 0.1;
+        }
+
+        // видео > 5 минут
+        return remaining <= 60;
+    };
+
+    const saveTime = async () => {
         if (!videoRef.current || !video.video_path) return
 
-        setTimeToWatchTime(
-            video.video_path,
-            videoRef.current.currentTime
-        )
+        const { currentTime, duration } = videoRef.current
+
+        if (isVideoAlmostFinished(currentTime, duration)) {
+            try {
+                await removeTimeFromWatchTime(video.video_path)
+            } catch (err) {
+                await setTimeToWatchTime(video.video_path, 0)
+            }
+
+            return
+        }
+
+
+        await setTimeToWatchTime(video.video_path, videoRef.current.currentTime)
     }
 
     useEffect(() => {

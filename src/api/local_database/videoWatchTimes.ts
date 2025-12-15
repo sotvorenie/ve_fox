@@ -26,3 +26,14 @@ export const getTimeFromWatchTime = async (videoPath: string): Promise<number> =
         throw err
     }
 }
+
+export const removeTimeFromWatchTime = async (videoPath: string): Promise<void> => {
+    try {
+        await executeSQL(
+            `DELETE FROM video_watch_times WHERE video_path = ?`,
+            [videoPath]
+        )
+    } catch (err) {
+        throw err
+    }
+}
