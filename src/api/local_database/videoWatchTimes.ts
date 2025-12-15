@@ -1,6 +1,6 @@
 import {executeSQL, selectSQL} from "../database.ts";
 
-export const setTimeToWatchTime = async (videoPath: string, time: string): Promise<void> => {
+export const setTimeToWatchTime = async (videoPath: string, time: number): Promise<void> => {
     try {
         await executeSQL(
             `INSERT INTO video_watch_times (video_path, time)
@@ -14,14 +14,14 @@ export const setTimeToWatchTime = async (videoPath: string, time: string): Promi
     }
 }
 
-export const getTimeFromWatchTime = async (videoPath: string): Promise<string> => {
+export const getTimeFromWatchTime = async (videoPath: string): Promise<number> => {
     try {
-        const info = await selectSQL<string>(
+        const info = await selectSQL<{video_path: string; time: string}>(
             `SELECT * FROM video_watch_times WHERE video_path = ?`,
             [videoPath]
         )
 
-        return info[0]
+        return +info[0].time
     } catch (err) {
         throw err
     }

@@ -6,6 +6,7 @@ import {removeVideoFromTable, setVideoToTable} from "../../../api/local_database
 import LikeIcon from "../../../assets/images/icons/LikeIcon.tsx";
 
 import {useVideo} from "../../../hooks/useVideo.ts";
+import {getTimeFromWatchTime, setTimeToWatchTime} from "../../../api/local_database/videoWatchTimes.ts";
 
 interface Props {
     isLiked: boolean,
@@ -20,84 +21,55 @@ function VideoVideo({isLiked, setIsLiked, isWatchLater, setIsWatchLater}: Props)
     const videoRef = useRef<HTMLVideoElement | null>(null);
 
     const [likeIsActive, setLikeIsActive] = useState<boolean>(true)
-    const likeVideo = async () => {
-        try {
-            setLikeIsActive(false)
-
-            await setVideoToTable(video, 'liked_videos')
-        } catch (err) {
-
-        } finally {
-            setLikeIsActive(true)
-        }
-    }
-    const dislikeVideo = async () => {
-        try {
-            setLikeIsActive(false)
-
-            await removeVideoFromTable(video.video_path, 'liked_videos')
-        } catch (err) {
-
-        } finally {
-            setLikeIsActive(true)
-        }
-    }
-
     const [watchLaterIsActive, setWatchLaterIsActive] = useState<boolean>(true)
-    const watchLater = async () => {
-        try {
-            setWatchLaterIsActive(false)
 
-            await setVideoToTable(video, 'watch_later')
-        } catch (err) {
-
-        } finally {
-            setWatchLaterIsActive(true)
-        }
-    }
-    const unwatchLater = async () => {
-        try {
-            setWatchLaterIsActive(false)
-
-            await removeVideoFromTable(video.video_path, 'watch_later')
-        } catch (err) {
-
-        } finally {
-            setWatchLaterIsActive(true)
-        }
-    }
-
-    const handleLike = () => {
+    const handleLike = async () => {
         if (!likeIsActive) return
 
         if (!isLiked) {
-            likeVideo()
+            setLikeIsActive(false)
+            await setVideoToTable(video, 'liked_videos')
+            setWatchLaterIsActive(true)
         } else {
-            dislikeVideo()
+            setLikeIsActive(false)
+            await removeVideoFromTable(video.video_path, 'liked_videos')
+            setWatchLaterIsActive(true)
         }
 
         setIsLiked(prev => !prev)
     }
-
-    const handleWatchLater = () => {
+    const handleWatchLater = async () => {
         if (!watchLaterIsActive) return
 
         if (!isWatchLater) {
-            watchLater()
+            setWatchLaterIsActive(false)
+            await setVideoToTable(video, 'watch_later')
+            setWatchLaterIsActive(true)
         } else {
-            unwatchLater()
+            setWatchLaterIsActive(false)
+            await removeVideoFromTable(video.video_path, 'watch_later')
+            setWatchLaterIsActive(true)
         }
 
         setIsWatchLater(prev => !prev)
+    }
+
+    const saveTime = () => {
+        if (!videoRef.current || !video.video_path) return
+
+        setTimeToWatchTime(
+            video.video_path,
+            videoRef.current.currentTime
+        )
     }
 
     useEffect(() => {
         const handleKey = (event: KeyboardEvent) => {
             if (event.key.toLowerCase() === "f") {
                 if (!document.fullscreenElement) {
-                    videoRef.current?.requestFullscreen();
+                    videoRef.current?.requestFullscreen()
                 } else {
-                    document.exitFullscreen();
+                    document.exitFullscreen()
                 }
             }
 
@@ -110,12 +82,40 @@ function VideoVideo({isLiked, setIsLiked, isWatchLater, setIsWatchLater}: Props)
                     videoRef.current?.pause()
                 }
             }
-        };
+        }
 
-        window.addEventListener("keydown", handleKey);
+        window.addEventListener("keydown", handleKey)
 
-        return () => window.removeEventListener("keydown", handleKey);
-    }, []);
+        return () => window.removeEventListener("keydown", handleKey)
+    }, [])
+
+    useEffect(() => {
+        if (!videoRef.current || !video.video_path || !video.video) return;
+
+        const videoEl = videoRef.current;
+
+        const restoreTime = async () => {
+            try {
+                const savedTime = await getTimeFromWatchTime(video.video_path)
+                videoEl.currentTime = savedTime || 0;
+            } catch {
+                videoEl.currentTime = 0
+            }
+        }
+
+        videoEl.addEventListener("loadedmetadata", restoreTime)
+        videoEl.addEventListener("seeked", saveTime)
+        videoEl.addEventListener("pause", saveTime)
+
+        const interval = setInterval(saveTime, 5000)
+
+        return () => {
+            videoEl.removeEventListener("loadedmetadata", restoreTime)
+            videoEl.removeEventListener("seeked", saveTime)
+            videoEl.removeEventListener("pause", saveTime)
+            clearInterval(interval)
+        }
+    }, [video.video_path])
 
     return (
         <div className="video">
