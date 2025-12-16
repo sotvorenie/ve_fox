@@ -1,7 +1,7 @@
 import {Video} from "../types/video.ts";
 import {useEffect, useState} from "react";
 
-import VideoItem from "../components/common/VideoItem.tsx";
+import VideoItem from "../components/blocks/VideoItem.tsx";
 import ListColumnSkeleton from "../components/ui/skeletons/ListColumnSkeleton.tsx";
 
 import {useSearch} from "../hooks/useSearch.ts";

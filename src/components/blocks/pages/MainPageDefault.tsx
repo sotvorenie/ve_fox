@@ -5,7 +5,7 @@ import {Meta} from "../../../types/meta.ts";
 
 import {getVideosFromTable} from "../../../api/local_database";
 
-import VideoItem from "../../common/VideoItem.tsx";
+import VideoItem from "../VideoItem.tsx";
 import ListColumnSkeleton from "../../ui/skeletons/ListColumnSkeleton.tsx";
 
 import {usePages} from "../../../hooks/usePages.ts";

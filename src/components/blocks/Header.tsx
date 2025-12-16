@@ -1,6 +1,6 @@
-import HeaderSearch from "../blocks/header/HeaderSearch.tsx";
-import HeaderNavigation from "../blocks/header/HeaderNavigation.tsx";
-import HeaderUser from "../blocks/header/HeaderUser.tsx";
+import HeaderSearch from "./header/HeaderSearch.tsx";
+import HeaderNavigation from "./header/HeaderNavigation.tsx";
+import HeaderUser from "./header/HeaderUser.tsx";
 
 
 interface Props {

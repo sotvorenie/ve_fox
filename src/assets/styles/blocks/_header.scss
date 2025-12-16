@@ -46,9 +46,42 @@
     @include abs-y;
 
     right: fluid(40, 20);
-    border-radius: 50%;
-    aspect-ratio: 1;
-    width: fluid(55, 40);
+
+    @include hover {
+      .header__list {
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+        pointer-events: auto;
+      }
+    }
+
+    .img-container {
+      border-radius: 50%;
+      aspect-ratio: 1;
+      width: fluid(55, 40);
+    }
+  }
+
+  &__list {
+    right: 0;
+    background: var(--color-dark-alt);
+    padding: rem(20) rem(10);
+    border-radius: var(--radius-regular);
+    z-index: 10001;
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    pointer-events: none;
+    transition-duration: var(--transition-duration);
+  }
+
+  &__item {
+    white-space: nowrap;
+
+    &:not(:last-child) {
+      margin-bottom: rem(10);
+    }
   }
 
   &__search {

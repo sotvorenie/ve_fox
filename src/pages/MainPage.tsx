@@ -5,7 +5,7 @@ import {ResponseVideos} from "../types/responseVideos.ts";
 
 import {apiGetAllVideos} from "../api/videos/videos.ts";
 
-import VideoItem from "../components/common/VideoItem.tsx";
+import VideoItem from "../components/blocks/VideoItem.tsx";
 import ListRowSkeleton from "../components/ui/skeletons/ListRowSkeleton.tsx";
 import MainEmpty from "../components/ui/empty/mainEmpty.tsx";
 

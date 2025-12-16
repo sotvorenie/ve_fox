@@ -4,7 +4,7 @@ import {Menu} from "../types/menu.ts";
 
 import menuItems from "../data/menuLinks.ts";
 
-import Header from "../components/common/Header.tsx";
+import Header from "../components/blocks/Header.tsx";
 
 import Logo from "../assets/images/Logo.tsx";
 

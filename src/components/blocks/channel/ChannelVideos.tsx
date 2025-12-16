@@ -1,5 +1,5 @@
 import {Video} from "../../../types/video.ts";
-import VideoItem from "../../common/VideoItem.tsx";
+import VideoItem from "../VideoItem.tsx";
 
 interface VideoProps {
     videos: Video[];

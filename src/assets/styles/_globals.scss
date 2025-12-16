@@ -86,6 +86,10 @@ button {
   color: inherit;
 }
 
+button:disabled {
+  pointer-events: none;
+}
+
 input, textarea {
   background: transparent;
   outline: none;

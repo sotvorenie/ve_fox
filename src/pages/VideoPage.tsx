@@ -6,7 +6,7 @@ import {check} from "../api/local_database/checkInfo.ts";
 
 import {useRouterParams} from "../composables/useRouterParams.ts";
 
-import Header from "../components/common/Header.tsx";
+import Header from "../components/blocks/Header.tsx";
 import VideoVideo from "../components/blocks/video/VideoVideo.tsx";
 import VideoRecommended from "../components/blocks/video/VideoRecommended.tsx";
 

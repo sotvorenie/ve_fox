@@ -94,4 +94,17 @@
       margin-bottom: rem(10);
     }
   }
+
+  &.channels {
+    .skeleton__item {
+      width: 100%;
+      height: rem(30);
+      border-radius: var(--radius-big);
+      background: var(--color-dark);
+
+      &:not(:last-child) {
+        margin-bottom: rem(10);
+      }
+    }
+  }
 }
