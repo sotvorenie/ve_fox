@@ -33,11 +33,11 @@ function VideoVideo({isLiked, setIsLiked, isWatchLater, setIsWatchLater}: Props)
         if (!isLiked) {
             setLikeIsActive(false)
             await setVideoToTable(video, 'liked_videos')
-            setWatchLaterIsActive(true)
+            setLikeIsActive(true)
         } else {
             setLikeIsActive(false)
             await removeVideoFromTable(video.video_path, 'liked_videos')
-            setWatchLaterIsActive(true)
+            setLikeIsActive(true)
         }
 
         setIsLiked(prev => !prev)

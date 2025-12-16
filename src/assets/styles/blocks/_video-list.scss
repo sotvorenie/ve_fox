@@ -27,6 +27,19 @@
     border-radius: var(--radius-medium);
     aspect-ratio: 16 / 9;
     margin-bottom: rem(10);
+
+    span {
+      @include fluid-text(16, 12);
+
+      z-index: 1001;
+      bottom: fluid(15, 5);
+      right: fluid(15, 8);
+      background: var(--color-accent);
+      border-radius: var(--radius-regular);
+      padding-inline: rem(5);
+      text-shadow: 0 0 rem(5) var(--color-dark);
+      border: var(--border-dark-alt);
+    }
   }
 
   &__info {

@@ -52,6 +52,7 @@ export const initDB = async () => {
     CREATE TABLE IF NOT EXISTS history (
       name TEXT,
       video_path TEXT PRIMARY KEY,
+      duration TEXT,
       channel TEXT,
       date TEXT,
       avatar TEXT,
@@ -64,6 +65,7 @@ export const initDB = async () => {
     CREATE TABLE IF NOT EXISTS liked_videos (
       name TEXT,
       video_path TEXT PRIMARY KEY,
+      duration TEXT,
       channel TEXT,
       date TEXT,
       avatar TEXT,
@@ -76,6 +78,7 @@ export const initDB = async () => {
     CREATE TABLE IF NOT EXISTS watch_later (
       name TEXT,
       video_path TEXT PRIMARY KEY,
+      duration TEXT,
       channel TEXT,
       date TEXT,
       avatar TEXT,

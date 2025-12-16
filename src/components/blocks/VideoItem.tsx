@@ -1,3 +1,4 @@
+import React from "react";
 import {Link} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 
@@ -5,8 +6,7 @@ import {Video} from "../../types/video.ts";
 
 import {replaceSymbols} from "../../composables/useRedactVideoName.ts";
 import {redactDate} from "../../composables/useRedactDate.ts";
-
-import React from "react";
+import {formatTime} from "../../composables/useFormatVideoTime.ts";
 
 interface Props {
     video: Video;
@@ -35,8 +35,10 @@ function VideoItem({video, isRow = false}: Props) {
               className="video-list__item col-4"
         >
             <li className={isRow ? 'video-list__row-item flex flex-align-start' : ''}>
-                <div className="video-list__preview img-container">
+                <div className="video-list__preview img-container position-relative">
                     <img src={video.preview} alt={video.name} loading="lazy"/>
+
+                    <span className="position-absolute">{formatTime(video?.duration)}</span>
                 </div>
                 <div className={isRow ? 'video-list__info flex flex-column' : 'video-list__info flex'}>
                     {!isRow &&

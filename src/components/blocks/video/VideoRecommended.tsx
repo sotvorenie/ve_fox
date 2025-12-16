@@ -8,6 +8,7 @@ import {redactDate} from "../../../composables/useRedactDate.ts";
 import ListColumnSkeleton from "../../ui/skeletons/ListColumnSkeleton.tsx";
 
 import {useVideo} from "../../../hooks/useVideo.ts";
+import {formatTime} from "../../../composables/useFormatVideoTime.ts";
 
 function VideoRecommended() {
     const navigate = useNavigate();
@@ -36,11 +37,13 @@ function VideoRecommended() {
                                 key={video.video}
                                 onClick={() => clickToVideo(video)}
                             >
-                                <div className="recommended__preview img-container">
+                                <div className="recommended__preview img-container position-relative">
                                     <img src={video.preview} alt={video.name} loading="lazy"/>
+
+                                    <span className="position-absolute">{formatTime(video?.duration)}</span>
                                 </div>
                                 <div className="recommended__info">
-                                    <div className="recommended__text flex flex-column">
+                                <div className="recommended__text flex flex-column">
                             <span className="recommended__title two-lines">
                                 {replaceSymbols(video.name)}
                             </span>

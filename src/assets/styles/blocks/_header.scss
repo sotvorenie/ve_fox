@@ -6,7 +6,7 @@
   background: #3d4b5690;
   top: 0;
   padding-block: fluid(30, 15);
-  z-index: 1000;
+  z-index: 100000;
 
   &__btn-bar {
     @include abs-y;

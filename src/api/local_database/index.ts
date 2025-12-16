@@ -15,8 +15,8 @@ export const setVideoToTable = async (video: Video, tableName: string): Promise<
         await executeSQL(
             `
     INSERT INTO ${name}
-    (name, video_path, channel, date, avatar, preview, created_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
+    (name, video_path, duration, channel, date, avatar, preview, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(video_path)
     DO UPDATE SET 
         name = excluded.name,
@@ -28,6 +28,7 @@ export const setVideoToTable = async (video: Video, tableName: string): Promise<
             [
                 video.name,
                 video.video_path,
+                video.duration,
                 video.channel,
                 video.date,
                 video.avatar,
