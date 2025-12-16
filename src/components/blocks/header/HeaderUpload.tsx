@@ -62,7 +62,7 @@ function HeaderUpload() {
     }
 
     const handleClear = () => {
-        if (!nameInput.current?.value) return
+        if (!nameInput.current) return
 
         setVideo('')
         setName('')
