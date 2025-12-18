@@ -57,7 +57,7 @@ function VideoRecommended() {
                 </ul>
             )}
 
-            {isLoading && <ListColumnSkeleton/>}
+            {isLoading && <ListColumnSkeleton isRecommended={true}/>}
 
             {hasMore && <button>загрузить еще</button>}
         </div>

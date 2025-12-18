@@ -25,7 +25,7 @@ export const useVideo = () => {
     const getVideo = async (path: string) => {
         try {
             dispatch(setIsLoading(true))
-            dispatch(setVideo({name: '', video: undefined, video_path: '', channel: '', date: ''}))
+            dispatch(setVideo({name: '', video: undefined, video_path: '', duration: '0', channel: '', date: ''}))
 
             const data: Video = await apiGetVideo(path)
 

@@ -39,7 +39,7 @@ function SearchPage() {
                 </ul>
             )}
 
-            {isLoading && <ListColumnSkeleton/>}
+            {isLoading && <ListColumnSkeleton isRecommended={false}/>}
 
             {hasMore && <button>Загрузить еще</button>}
         </div>

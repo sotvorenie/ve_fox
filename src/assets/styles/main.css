@@ -1161,7 +1161,19 @@ input, textarea {
   margin-bottom: 0.625rem;
 }
 .skeleton.is-column .skeleton__item {
-  column-gap: 1.25rem;
+  gap: 1.25rem;
+}
+.skeleton.is-column .skeleton__item:not(:last-child) {
+  margin-bottom: 0.625rem;
+}
+@media (width <= 90.06125rem) {
+  .skeleton.is-column.is-recommended .skeleton__item {
+    flex-direction: column;
+    gap: 0.3125rem;
+  }
+  .skeleton.is-column.is-recommended .skeleton__item:not(:last-child) {
+    margin-bottom: 1.25rem;
+  }
 }
 .skeleton.is-column .skeleton__preview {
   flex: 0 0 50%;

@@ -79,7 +79,24 @@
   &.is-column {
 
     .skeleton__item {
-      column-gap: rem(20);
+      gap: rem(20);
+
+      &:not(:last-child) {
+        margin-bottom: rem(10);
+      }
+    }
+
+    &.is-recommended {
+      .skeleton__item {
+        @include laptop {
+          flex-direction: column;
+          gap: rem(5);
+
+          &:not(:last-child) {
+            margin-bottom: rem(20);
+          }
+        }
+      }
     }
 
     .skeleton__preview {
