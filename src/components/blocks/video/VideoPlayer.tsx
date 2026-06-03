@@ -26,7 +26,6 @@ function VideoPlayer({savedTime}: Props) {
     const {video} = useVideoStore(useShallow((state) => ({ ...state })))
 
     const {
-        isMiniPlayer,
         isPlaying,
         volume,
         isShowSettings,
@@ -34,7 +33,6 @@ function VideoPlayer({savedTime}: Props) {
         currentTime,
         isSubtitlesActive,
         subtitlesText,
-        setIsMiniPlayer,
         setIsPlaying,
         setVolume,
         setDuration,

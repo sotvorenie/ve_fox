@@ -1,6 +1,7 @@
 export interface User {
     id: number
-    name: string
+    name: string,
+    avatar_url: string,
 }
 
 export interface UserWithToken {

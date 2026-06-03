@@ -8,10 +8,6 @@ function HeaderUser() {
             <div className="img-container cursor-pointer position-relative">
                 <img src={avatarImage} alt=""/>
             </div>
-
-            <div className="header__menu position-fixed">
-
-            </div>
         </div>
     )
 }

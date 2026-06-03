@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {useShallow} from "zustand/react/shallow";
 
-import {Token} from "../types/auth.ts";
+import {UserWithToken} from "../types/auth.ts";
 
 import {apiAuth, apiRegister} from "../api/auth/auth.ts";
 
@@ -10,18 +11,25 @@ import {showWarning} from "../utils/modals.ts";
 
 import LoadingIcon from "../assets/images/icons/LoadingIcon.tsx";
 
+import {useUserStore} from "../store/useUserStore.ts";
+
 function AuthPage() {
     const navigate = useNavigate();
-    const {login} = auth();
 
-    const [username, setUsername] = useState<string>('')
+    const {logIn} = useUserStore(useShallow((state) => ({ ...state })))
+
+    const [login, setLogin] = useState<string>('')
     const [password, setPassword] = useState<string>('')
+    const [name, setName] = useState<string>('')
     const [isAuth, setIsAuth] = useState<boolean>(true)
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
+    const buttonText = isAuth ? 'Войти' : 'Зарегистрироваться';
+
     const clear = () => {
-        setUsername('')
+        setLogin('')
         setPassword('')
+        setName('')
 
         document.querySelectorAll('.fields_error')?.forEach(el => el.textContent = '')
     }
@@ -30,8 +38,11 @@ function AuthPage() {
         if (onSubmit(e.nativeEvent)) {
             try {
                 setIsLoading(true)
-                const token: Token = isAuth ? await apiAuth(username, password) : await apiRegister(username, password)
-                await login(token.access_token)
+                const data: UserWithToken = isAuth ?
+                    await apiAuth(login, password)
+                    : await apiRegister(login, password, name)
+                logIn(data)
+                navigate('/')
             } catch (err: any) {
                 await showWarning(
                     'Ошибка аутентификации',
@@ -82,14 +93,15 @@ function AuthPage() {
                   }}
             >
                 <label htmlFor="login" className="auth__label position-relative">
+                    <span className="visually-hidden">Логин</span>
                     <input type="text"
                            id="login"
                            className="auth__input input w-100"
                            placeholder="Логин"
                            required
                            aria-describedby="login-error"
-                           value={username}
-                           onChange={(e) => setUsername(e.target.value)}
+                           value={login}
+                           onChange={(e) => setLogin(e.target.value)}
                            autoComplete="username"
                            onBlur={(e) => onBlur(e.nativeEvent)}
                            onInput={(e) => onInput(e.nativeEvent)}
@@ -103,6 +115,7 @@ function AuthPage() {
                     />
                 </label>
                 <label htmlFor="password" className="auth__label position-relative">
+                    <span className="visually-hidden">Пароль</span>
                     <input type="text"
                            id="password"
                            className="auth__input input w-100"
@@ -123,17 +136,42 @@ function AuthPage() {
                     />
                 </label>
 
+                {!isAuth && (
+                    <label htmlFor="name" className="auth__label position-relative">
+                        <span className="visually-hidden">Имя пользователя</span>
+                        <input type="text"
+                               id="name"
+                               className="auth__input input w-100"
+                               placeholder="Имя пользователя"
+                               required={!isAuth}
+                               aria-describedby="name-error"
+                               value={name}
+                               onChange={(e) => setName(e.target.value)}
+                               onBlur={(e) => onBlur(e.nativeEvent)}
+                               onInput={(e) => onInput(e.nativeEvent)}
+                               minLength={4}
+                               maxLength={15}
+                               readOnly={isLoading}
+                        />
+                        <span className="auth__error fields_error position-absolute"
+                              id="name-error"
+                              data-js-form-field-errors=""
+                        />
+                    </label>
+                )}
+
                 <button className="auth__submit hover-color-accent flex-center recolor-svg"
                         type="submit"
                         disabled={isLoading}
                 >
-                    {isLoading ? (<LoadingIcon/>) : isAuth ? 'Войти' : 'Зарегистрироваться'}
+                    {isLoading ? (<LoadingIcon/>) : buttonText}
                 </button>
 
-                <button className="auth__submit"
+                <button className="auth__submit hover-color-accent"
                         type="button"
                         onClick={goWithoutLogin}
-                >Войти как Гость</button>
+                >Войти как Гость
+                </button>
             </form>
 
         </div>

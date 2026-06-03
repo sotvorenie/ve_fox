@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import {Routes, Route, Navigate} from "react-router-dom";
-import { useShallow } from 'zustand/react/shallow';
+import {useShallow} from "zustand/react/shallow";
 
 import MainPage from "./pages/MainPage.tsx";
 import VideoPage from "./pages/VideoPage.tsx";
@@ -12,10 +12,10 @@ import LikedPage from "./pages/LikedPage.tsx";
 import WatchLaterPage from "./pages/WatchLaterPage.tsx";
 import AuthPage from "./pages/AuthPage.tsx";
 
-import {useAuthStore} from "./store/useAuthStore.ts";
+import {useUserStore} from "./store/useUserStore.ts";
 
 function App() {
-    const {checkMe} = useAuthStore(useShallow((state) => ({ ...state })))
+    const {checkMe} = useUserStore(useShallow((state) => ({ ...state })))
 
     useEffect(() => {
         checkMe().catch(() => {})

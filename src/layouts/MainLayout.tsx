@@ -10,9 +10,12 @@ import Header from "../components/blocks/header/Header.tsx";
 import Logo from "../assets/images/Logo.tsx";
 
 import {usePagesStore} from "../store/usePagesStore.ts";
+import {useUserStore} from "../store/useUserStore.ts";
 
 function MainLayout() {
     const navigate = useNavigate();
+
+    const {isLogged} = useUserStore(useShallow((state) => ({ ...state })))
 
     const {page} = usePagesStore(useShallow((state) => ({ ...state })))
 
@@ -45,6 +48,7 @@ function MainLayout() {
                                 className={`
                                     menu__btn w-100 flex flex-align-center recolor-svg hover-color-accent text-nowrap
                                     ${index === page && 'is-active'}
+                                    ${!isLogged && index > 0 ? 'pointer-none' : ''}
                                 `}
                                 type="button"
                                 onClick={() => handleMenuItem(index)}

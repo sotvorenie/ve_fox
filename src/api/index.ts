@@ -28,5 +28,10 @@ export const apiFetch = async (endpoint: string, options: RequestInit = {}) => {
         }
     }
 
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.detail || `Ошибка сервера: ${response.status}`);
+    }
+
     return response.json()
 }

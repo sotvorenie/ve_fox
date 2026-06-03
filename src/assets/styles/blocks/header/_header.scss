@@ -59,25 +59,9 @@
     .img-container {
       border-radius: 50%;
       aspect-ratio: 1;
-      width: fluid(55, 40);
+      width: fluid(50, 40);
       z-index: 100001;
     }
-  }
-
-  &__menu {
-    top: rem(-35);
-    right: rem(-50);
-    width: fluid(320, 280);
-    background: var(--color-dark-alt);
-    padding: rem(40) 0 rem(50) rem(20);
-    border-radius: 0 0 0 var(--radius-regular);
-    z-index: 100000;
-    opacity: 0;
-    transform: translateY(-10px);
-    visibility: hidden;
-    pointer-events: none;
-    transition: transform var(--transition-duration), opacity var(--transition-duration);
-    will-change: transform, opacity;
   }
 
   &__search {
@@ -99,7 +83,7 @@
   }
 
   &__btn {
-    width: fluid(80, 55);
+    width: fluid(65, 30);
     background: var(--color-dark-alt);
     will-change: filter;
 

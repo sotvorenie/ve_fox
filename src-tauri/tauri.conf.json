@@ -13,8 +13,7 @@
     "windows": [
       {
         "title": "veFox",
-        "minWidth": 1000,
-        "minHeight": 563,
+        "fullscreen": true,
         "url": "index.html"
       }
     ],
