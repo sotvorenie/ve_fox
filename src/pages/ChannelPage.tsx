@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 
 import {BASE_URL} from "../api/url.ts";
 
-import {Video, ResponseVideos} from "../types/video.ts";
+import {VideoForList, VideosList} from "../types/video.ts";
 import {Channel} from "../types/channel.ts";
 
 import {apiGetChannel, apiGetVideosFromChannel} from "../api/channel/channel.ts";
@@ -20,8 +20,8 @@ function ChannelPage() {
 
     const [channel, setChannel] = useState<Channel | null>(null)
 
-    const [videos, setVideos] = useState<Video[]>([])
-    const [newVideos, setNewVideos] = useState<Video[]>([])
+    const [videos, setVideos] = useState<VideoForList[]>([])
+    const [newVideos, setNewVideos] = useState<VideoForList[]>([])
 
     const [page, setPage] = useState<number>(1)
     const [total, setTotal] = useState<number>(0)
@@ -29,7 +29,7 @@ function ChannelPage() {
 
     const getChannelVideos = async () => {
         try {
-            const data: ResponseVideos = await apiGetVideosFromChannel(+id, page)
+            const data: VideosList = await apiGetVideosFromChannel(+id!, page)
 
             if (data) {
                 setVideos(data.videos)
@@ -49,7 +49,7 @@ function ChannelPage() {
 
     const getChannel = async () => {
         try {
-            const data: Channel = await apiGetChannel(+id)
+            const data: Channel = await apiGetChannel(+id!)
 
             if (data.name) {
                 setChannel(data)
