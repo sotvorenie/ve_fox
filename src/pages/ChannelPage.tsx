@@ -1,13 +1,12 @@
-import {useLocation} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 
-import {Video} from "../types/video.ts";
-import {ResponseVideos} from "../types/responseVideos.ts";
+import {BASE_URL} from "../api/url.ts";
+
+import {Video, ResponseVideos} from "../types/video.ts";
 import {Channel} from "../types/channel.ts";
 
 import {apiGetChannel, apiGetVideosFromChannel} from "../api/channel/channel.ts";
-
-import {useRouterParams} from "../composables/useRouterParams.ts";
 
 import ChannelMain from "../components/blocks/channel/ChannelMain.tsx";
 import ChannelVideos from "../components/blocks/channel/ChannelVideos.tsx";
@@ -15,15 +14,11 @@ import ChannelAbout from "../components/blocks/channel/ChannelAbout.tsx";
 import ChannelTabs from "../components/blocks/channel/ChannelTabs.tsx";
 
 function ChannelPage() {
-    const {getParam} = useRouterParams()
-
-    const location = useLocation();
+    const { id } = useParams<{ id: string }>();
 
     const [activeTab, setActiveTab] = useState(0)
 
-    const [name, setName] = useState<string>("")
-    const [avatar, setAvatar] = useState<string | null>(null)
-    const [date, setDate] = useState<string>('')
+    const [channel, setChannel] = useState<Channel | null>(null)
 
     const [videos, setVideos] = useState<Video[]>([])
     const [newVideos, setNewVideos] = useState<Video[]>([])
@@ -34,7 +29,7 @@ function ChannelPage() {
 
     const getChannelVideos = async () => {
         try {
-            const data: ResponseVideos = await apiGetVideosFromChannel(name, page)
+            const data: ResponseVideos = await apiGetVideosFromChannel(+id, page)
 
             if (data) {
                 setVideos(data.videos)
@@ -48,37 +43,28 @@ function ChannelPage() {
                 setTotal(data.total)
             }
         } catch (err) {
-
+            console.error(err)
         }
     }
 
     const getChannel = async () => {
         try {
-            const data: Channel = await apiGetChannel(name)
+            const data: Channel = await apiGetChannel(+id)
 
-            if (data.name && data.avatar) {
-                setName(data.name)
-                setAvatar(data.avatar)
-                setDate(data.date)
+            if (data.name) {
+                setChannel(data)
             }
         } catch (err) {
-
+            console.error(err)
         }
     }
 
     useEffect(() => {
-        const name = location.state?.channel?.name || getParam("channel")
-
-        setName(name)
-        setAvatar(location.state?.channel?.avatar)
-    }, []);
-
-    useEffect(() => {
-        if (name) {
-            getChannel()
-            getChannelVideos()
+        if (id) {
+            getChannel().then(() => {})
+            getChannelVideos().then(() => {})
         }
-    }, [name]);
+    }, [id])
 
     return (
         <div className="main-page__channel channel m-auto">
@@ -86,19 +72,19 @@ function ChannelPage() {
 
             <div className="channel__info flex flex-align-center">
                 <div className="channel__avatar img-container flex-center">
-                    {avatar ?
-                        <img src={avatar} alt={name}/>
-                        : <span className="text-center">{name?.[0]}</span>
+                    {channel?.avatar_url ?
+                        <img src={`${BASE_URL}${channel.avatar_url}`} alt={channel.name}/>
+                        : <span className="text-center">{channel?.name?.[0]}</span>
                     }
                 </div>
-                <p className="h3">{name}</p>
+                <p className="h3">{channel?.name}</p>
             </div>
 
             <ChannelTabs activeTab={activeTab} setActiveTab={setActiveTab}/>
 
             {activeTab === 0 && (<ChannelMain videos={newVideos}/>)}
             {activeTab === 1 && (<ChannelVideos videos={videos} hasMore={hasMore}/>)}
-            {activeTab === 2 && (<ChannelAbout total={total} date={date}/>)}
+            {activeTab === 2 && (<ChannelAbout total={total} date={channel?.date}/>)}
         </div>
     )
 }

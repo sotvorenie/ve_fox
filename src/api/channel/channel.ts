@@ -1,21 +1,20 @@
-import {url} from "../index.ts";
-
-import {ResponseVideos} from "../../types/responseVideos.ts";
 import {Channel} from "../../types/channel.ts";
+import {VideosList} from "../../types/video.ts";
 
-export const apiGetChannel = async (channel: string): Promise<Channel> => {
-    const response = await fetch(`${url}/channel/${channel}`);
+import {apiFetch} from "../index.ts";
 
-    return await response.json()
+export const apiGetChannel = async (id: number): Promise<Channel> => {
+    return await apiFetch(`/channel/${id}`)
 }
 
 export const apiGetVideosFromChannel = async (
-    channel: string,
+    id: number,
     page: number,
     isNew: boolean = true
-):Promise<ResponseVideos> => {
-    const response =
-        await fetch(`${url}/channel/${channel}/videos?page=${page}&limit=20&is_new=${isNew}`)
+):Promise<VideosList> => {
+    return await apiFetch(`/channel/${id}/videos?page=${page}&is_new=${isNew}`)
+}
 
-    return await response.json()
+export const apiGetChannels = async () => {
+    return await apiFetch('/channel/all')
 }

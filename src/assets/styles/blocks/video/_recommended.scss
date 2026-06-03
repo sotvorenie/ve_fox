@@ -1,8 +1,6 @@
 @use '../../helpers/index' as *;
 
 .recommended {
-  height: 100%;
-  width: 100%;
   overflow-y: auto;
   padding-right: fluid(40, 10);
 
@@ -34,8 +32,8 @@
       @include fluid-text(16, 12);
 
       z-index: 1001;
-      bottom: fluid(15, 5);
-      right: fluid(15, 8);
+      bottom: rem(5);
+      right: rem(8);
       background: var(--color-accent);
       border-radius: var(--radius-regular);
       padding-inline: rem(5);

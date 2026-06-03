@@ -1,11 +1,7 @@
-import {url} from "../index.ts";
+import {SearchResponse} from "../../types/search.ts";
 
-import {ResponseVideos} from "../../types/responseVideos.ts";
+import {apiFetch} from "../index.ts";
 
-export const apiGetVideoByTitle = async (title: string, page: number) => {
-    const response = await fetch(`${url}/search/?name=${title}&page=${page}`);
-
-    const data: ResponseVideos = await response.json();
-
-    return data
+export const apiSearch = async (title: string, page: number): Promise<SearchResponse> => {
+    return await apiFetch(`/search?value=${title}&page=${page}`)
 }

@@ -1,0 +1,123 @@
+@use '../../helpers/index' as *;
+
+.header {
+  width: 100%;
+  backdrop-filter: blur(52px);
+  background: #0f0f0f90;
+  top: 0;
+  padding-block: fluid(30, 15);
+  z-index: 100000;
+
+  &__btn-bar {
+    @include abs-y;
+
+    column-gap: fluid(30, 10);
+    left: fluid(50, 10);
+  }
+
+  &__logo {
+    @include fluid-square(80, 40);
+  }
+
+  &__back, &__forward {
+    column-gap: rem(10);
+    z-index: 1000;
+
+    svg {
+      @include fluid-square(40, 20);
+    }
+
+    span {
+      @include laptop {
+        display: none;
+      }
+    }
+  }
+
+  &__forward {
+    flex-direction: row-reverse;
+
+    svg {
+      rotate: 180deg;
+    }
+  }
+
+  &__avatar {
+    @include abs-y;
+
+    right: fluid(40, 20);
+
+    @include hover {
+      .header__menu {
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+        pointer-events: auto;
+      }
+    }
+
+    .img-container {
+      border-radius: 50%;
+      aspect-ratio: 1;
+      width: fluid(55, 40);
+      z-index: 100001;
+    }
+  }
+
+  &__menu {
+    top: rem(-35);
+    right: rem(-50);
+    width: fluid(320, 280);
+    background: var(--color-dark-alt);
+    padding: rem(40) 0 rem(50) rem(20);
+    border-radius: 0 0 0 var(--radius-regular);
+    z-index: 100000;
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform var(--transition-duration), opacity var(--transition-duration);
+    will-change: transform, opacity;
+  }
+
+  &__search {
+    width: fluid(800, 500);
+    height: fluid(50, 40);
+    border-radius: var(--radius-big);
+    border: var(--border-light-alt);
+    background: var(--color-dark);
+
+    & * {
+      height: 100%;
+    }
+  }
+
+  &__input {
+    border: none;
+    padding-inline: rem(20) fluid(70, 50);
+    flex-grow: 1;
+  }
+
+  &__btn {
+    width: fluid(80, 55);
+    background: var(--color-dark-alt);
+    will-change: filter;
+
+    @include hover {
+      filter: brightness(1.1);
+    }
+
+    svg {
+      width: 50%;
+    }
+  }
+
+  &__clear {
+    @include abs-y;
+
+    aspect-ratio: 1;
+    height: 100%;
+    right: fluid(80, 55);
+    z-index: 1000;
+  }
+}

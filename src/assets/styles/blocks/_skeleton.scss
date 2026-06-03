@@ -5,7 +5,6 @@
   --column-gap: 30px;
 
   .line {
-
      overflow: hidden;
     background: var(--color-dark-alt);
     position: relative;
@@ -23,10 +22,10 @@
 
     @keyframes loadSkeleton {
       0% {
-        left: -40%;
+        left: -100%;
       }
       100% {
-        left: 140%;
+        left: 200%;
       }
     }
   }
@@ -64,16 +63,6 @@
 
   &__channel {
     margin-bottom: rem(5);
-  }
-
-  &:not(.is-column) {
-    &:first-child {
-      margin-top: rem(10);
-    }
-
-    &:nth-child(2) {
-      margin-bottom: rem(10);
-    }
   }
 
   &.is-column {

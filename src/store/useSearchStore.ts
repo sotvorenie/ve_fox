@@ -1,60 +1,49 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {Video} from "../types/video.ts";
+import {create} from "zustand";
+import {ChannelForList} from "../types/channel.ts";
+import {VideoForList} from "../types/video.ts";
+import {SearchResponse} from "../types/search.ts";
+import {apiSearch} from "../api/search/search.ts";
 
 interface SearchState {
-    search: string;
+    value: string
+    page: number
+    isLoading: boolean
+    total: number
+    channels: ChannelForList[]
+    videos: VideoForList[]
+    hasMore: boolean
 
-    videos: Video[],
-
-    total: number;
-    hasMore: boolean;
-
-    isLoading: boolean;
+    setValue: (value: string) => void
+    search: () => Promise<void>
 }
 
-const initialState: SearchState = {
-    search: '',
-
-    videos: [],
-
+export const useSearchStore = create<SearchState>((set, get) => ({
+    value: '',
+    page: 0,
+    isLoading: true,
     total: 0,
+    channels: [],
+    videos: [],
     hasMore: false,
 
-    isLoading: true,
-}
-
-export const searchStore = createSlice({
-    name: "searchStore",
-
-    initialState,
-
-    reducers: {
-        setSearch: (state, action: PayloadAction<string>) => {
-            state.search = action.payload
-        },
-
-        setVideos: (state, action: PayloadAction<Video[]>) => {
-            state.videos = action.payload
-        },
-
-        setTotal: (state, action: PayloadAction<number>) => {
-            state.total = action.payload
-        },
-        setHasMore: (state, action: PayloadAction<boolean>) => {
-            state.hasMore = action.payload
-        },
-
-        setIsLoading: (state, action: PayloadAction<boolean>) => {
-            state.isLoading = action.payload
+    setValue: (value: string) => set({value}),
+    search: async () => {
+        try {
+            set({isLoading: true})
+            const data: SearchResponse = await apiSearch(get().value, get().page)
+            if (data) {
+                set({
+                    channels: data.channels,
+                    videos: data.videos,
+                    hasMore: data.has_more,
+                    total: data.total,
+                    page: data.page + 1
+                })
+            }
+        } catch (err) {
+            console.error(err)
+        } finally {
+            set({isLoading: false})
         }
     }
-})
-
-export const {
-    setSearch,
-    setVideos,
-    setTotal,
-    setHasMore,
-    setIsLoading
-} = searchStore.actions
-export default  searchStore.reducer
+}))

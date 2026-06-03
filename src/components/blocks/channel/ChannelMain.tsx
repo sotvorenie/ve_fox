@@ -1,9 +1,9 @@
 import {Video} from "../../../types/video.ts";
-import VideoItem from "../VideoItem.tsx";
+import VideoItem from "../../common/VideoItem.tsx";
 import {JSX} from "react";
 
 interface VideoProps {
-    videos: Video[];
+    readonly videos: Video[];
 }
 
 function ChannelMain({ videos }: VideoProps): JSX.Element {
@@ -12,8 +12,8 @@ function ChannelMain({ videos }: VideoProps): JSX.Element {
         <div className="channel__main">
             <p className="channel__sub-title h6">Новинки</p>
             <ul className="channel__list row">
-                {videos && videos.map((video: Video) => (
-                    <VideoItem video={video} isRow={false} key={video.video}/>
+                {videos?.map((video: Video) => (
+                    <VideoItem video={video} isRow={false} key={video.id}/>
                 ))}
             </ul>
         </div>

@@ -2,6 +2,7 @@
 
 .input {
   border: var(--border-light-alt);
+  padding: rem(15);
 
   @include hover {
     border-color: var(--color-accent);

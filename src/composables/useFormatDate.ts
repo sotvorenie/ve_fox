@@ -1,11 +1,11 @@
 import {months} from "../data/months.ts";
 
-export const useFormatDate = (str: string) => {
+export const formatDate = (str: string) => {
     if (!str) return "Неизвестно"
 
     const date = new Date(str);
 
-    if (isNaN(date.getTime())) {
+    if (Number.isNaN(date.getTime())) {
         return "Неизвестно";
     }
 

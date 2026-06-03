@@ -1,8 +1,8 @@
-import {useFormatDate} from "../../../composables/useFormatDate.ts";
+import {formatDate} from "../../../composables/useFormatDate.ts";
 
 interface Props {
-    total: number;
-    date: string;
+    readonly total: number;
+    readonly date: string | undefined;
 }
 
 function ChannelAbout({total, date}: Props) {
@@ -13,7 +13,7 @@ function ChannelAbout({total, date}: Props) {
 
             <ul className="channel__statistic">
                 <li className="channel__statistic-item">Всего видео: {total}</li>
-                <li className="channel__statistic-item">Дата создания: {useFormatDate(date)}</li>
+                <li className="channel__statistic-item">Дата создания: {formatDate(date || '')}</li>
             </ul>
         </div>
     )

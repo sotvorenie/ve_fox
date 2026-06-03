@@ -6,7 +6,7 @@ import ArrowIcon from "../../../assets/images/icons/ArrowIcon.tsx";
 import Logo from "../../../assets/images/Logo.tsx";
 
 interface Props {
-    isVideoPage?: boolean
+    readonly isVideoPage?: boolean
 }
 
 function HeaderNavigation({isVideoPage = false}: Props) {
@@ -18,21 +18,23 @@ function HeaderNavigation({isVideoPage = false}: Props) {
         <>
             {isVideoPage &&
                 <div className="header__btn-bar flex flex-align-center position-absolute">
-                    <a className="header__back flex flex-align-center recolor-svg cursor-pointer"
-                       onClick={() => navigate(-1)}
-                       title={isLaptop ? 'Назад' : ''}
+                    <button className="header__back flex flex-align-center recolor-svg cursor-pointer"
+                            onClick={() => navigate(-1)}
+                            title={isLaptop ? 'Назад' : ''}
+                            type="button"
                     >
                         <ArrowIcon/>
                         <span className="h5">Назад</span>
-                    </a>
+                    </button>
 
-                    <a className="header__forward flex flex-align-center recolor-svg cursor-pointer"
-                       onClick={() => navigate(+1)}
-                       title={isLaptop ? 'Вперед' : ''}
+                    <button className="header__forward flex flex-align-center recolor-svg cursor-pointer"
+                            onClick={() => navigate(+1)}
+                            title={isLaptop ? 'Вперед' : ''}
+                            type="button"
                     >
                         <ArrowIcon/>
                         <span className="h5">Вперед</span>
-                    </a>
+                    </button>
 
                     <Link to="/"
                           className="header__logo button-width-svg flex-center cursor-pointer"

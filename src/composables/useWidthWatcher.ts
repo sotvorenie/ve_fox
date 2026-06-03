@@ -4,7 +4,7 @@ const useWidthWatcher = (query: string): boolean => {
     const [matches, setMatches] = useState(false);
 
     useEffect(() => {
-        const media = window.matchMedia(query);
+        const media = globalThis.matchMedia(query);
 
         const updateMatches = () => {
             setMatches(media.matches);

@@ -1,55 +1,70 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {create} from "zustand";
 
-import {Video} from "../types/video.ts";
+import {Video, VideoForList, VideosList} from "../types/video.ts";
+import {apiGetRecommendedVideos} from "../api/video/video.ts";
 
 interface VideoState {
-    video: Video;
-    isLoading: boolean;
+    video: Video
+    isLoading: boolean
+    recommendedVideos: VideoForList[]
+    recommendedIsLoading: boolean
+    recommendedHasMore: boolean
+    recommendedPage: number
 
-    recommendedVideos: Video[],
-    recommendedIsLoading: boolean,
-    recommendedHasMore: boolean,
+    clearVideo: () => void
+    setVideo: (video: Video) => void
+    setIsLoading: (isLoading: boolean) => void
+    getRecommendedVideos: (id: number) => Promise<void>
 }
 
-const initialState: VideoState = {
-    video: {name: '', video: undefined, video_path: '', channel: '', date: ''},
-    isLoading: true,
+const emptyVideo: Video = {
+    id: -1,
+    name: '',
+    path: '',
+    video_url: '',
+    date: '',
+    duration: 0,
+    preview_url: '',
+    subtitle_url: '',
+    channel: {
+        id: -1,
+        name: '',
+        avatar_url: '',
+    }
+}
 
+export const useVideoStore = create<VideoState>((set, get) => ({
+    video: emptyVideo,
+    isLoading: true,
     recommendedVideos: [],
     recommendedIsLoading: true,
     recommendedHasMore: false,
-}
+    recommendedPage: 1,
 
-export const videoStore = createSlice({
-    name: "videoStore",
+    clearVideo: () => set({
+        video: emptyVideo,
+        recommendedVideos: [],
+        isLoading: true,
+        recommendedIsLoading: true,
+        recommendedHasMore: false,
+    }),
+    setVideo: (video: Video) => set({video}),
+    setIsLoading: (isLoading: boolean) => set({isLoading}),
+    getRecommendedVideos: async (id: number) => {
+        try {
+            set({recommendedIsLoading: true})
+            const data: VideosList = await apiGetRecommendedVideos(id, get().recommendedPage)
 
-    initialState,
-
-    reducers: {
-        setVideo: (state, action: PayloadAction<Video>) => {
-            state.video = action.payload
-        },
-        setIsLoading: (state, action: PayloadAction<boolean>) => {
-            state.isLoading = action.payload
-        },
-
-        setRecommendedIsLoading: (state, action: PayloadAction<boolean>) => {
-            state.recommendedIsLoading = action.payload
-        },
-        setRecommendedHasMore: (state, action: PayloadAction<boolean>) => {
-            state.recommendedHasMore = action.payload
-        },
-        setRecommendedVideos: (state, action: PayloadAction<Video[]>) => {
-            state.recommendedVideos = action.payload
+            if (data) {
+                set({
+                    recommendedVideos: data.videos,
+                    recommendedHasMore: data.has_more
+                })
+            }
+        } catch (err) {
+            console.error(err)
+        } finally {
+            set({recommendedIsLoading: false})
         }
-    }
-})
-
-export const {
-    setVideo,
-    setIsLoading,
-    setRecommendedIsLoading,
-    setRecommendedVideos,
-    setRecommendedHasMore
-} = videoStore.actions
-export default videoStore.reducer
+    },
+}))

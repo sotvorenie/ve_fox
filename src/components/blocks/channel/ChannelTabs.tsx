@@ -1,7 +1,7 @@
 
 interface Props {
-    activeTab: number;
-    setActiveTab: (activeTab: number) => void;
+    readonly activeTab: number;
+    readonly setActiveTab: (activeTab: number) => void;
 }
 
 function ChannelTabs({activeTab, setActiveTab}: Props) {
@@ -14,26 +14,22 @@ function ChannelTabs({activeTab, setActiveTab}: Props) {
             <li className={
                 activeTab === 0 ? 'channel__tab is-active hover-color-accent'
                     : 'channel__tab hover-color-accent'
-            }
-                onClick={() => handleTab(0)}
-            >
-                <button type="button">Главная</button>
+            }>
+                <button onClick={() => handleTab(0)} type="button">Главная</button>
             </li>
             <li className={
                 activeTab === 1 ? 'channel__tab is-active hover-color-accent'
                     : 'channel__tab hover-color-accent'
             }
-                onClick={() => handleTab(1)}
             >
-                <button type="button">Видео</button>
+                <button onClick={() => handleTab(1)} type="button">Видео</button>
             </li>
             <li className={
                 activeTab === 2 ? 'channel__tab is-active hover-color-accent'
                     : 'channel__tab hover-color-accent'
             }
-                onClick={() => handleTab(2)}
             >
-                <button type="button">О канале</button>
+                <button onClick={() => handleTab(2)} type="button">О канале</button>
             </li>
         </ul>
     )

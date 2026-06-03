@@ -1,10 +1,28 @@
+import {ChannelForList} from "./channel.ts";
+import {Meta} from "./meta.ts";
+
+export interface VideoForList {
+    id: number
+    name: string
+    date: string
+    duration: number
+    preview_url: string
+    subtitle_url: string
+    channel: ChannelForList
+}
+
 export interface Video {
-    name: string;
-    video: string | undefined;
-    video_path: string;
-    duration: string;
-    channel: string;
-    date: string;
-    avatar?: string;
-    preview?: string;
+    id: number
+    name: string
+    path: string
+    video_url: string
+    date: string
+    duration: number
+    preview_url: string
+    subtitle_url: string
+    channel: ChannelForList
+}
+
+export interface VideosList extends Meta {
+    videos: VideoForList[]
 }

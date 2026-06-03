@@ -1,59 +1,89 @@
 import {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
+import {useParams} from "react-router-dom";
+import { useShallow } from 'zustand/react/shallow';
 
-import {setVideoToTable} from "../api/local_database";
-import {check} from "../api/local_database/checkInfo.ts";
+import {Video} from "../types/video.ts";
 
-import {useRouterParams} from "../composables/useRouterParams.ts";
+import {apiSetToHistory} from "../api/history/history.ts";
+import {apiCheckIsLiked} from "../api/like/like.ts";
+import {apiGetSavedTime} from "../api/save_time/saveTime.ts";
+import {apiGetVideo} from "../api/video/video.ts";
 
-import Header from "../components/blocks/Header.tsx";
-import VideoVideo from "../components/blocks/video/VideoVideo.tsx";
+import Header from "../components/blocks/header/Header.tsx";
+import VideoMain from "../components/blocks/video/VideoMain.tsx";
 import VideoRecommended from "../components/blocks/video/VideoRecommended.tsx";
 
-import {useVideo} from "../hooks/useVideo.ts";
+import {useVideoStore} from "../store/useVideoStore.ts";
 
 function VideoPage() {
-    const location = useLocation();
+    const { id } = useParams<{ id: string }>();
 
-    const {getParam} = useRouterParams()
-
-    const {video, getVideo} = useVideo()
-
-    const [path, setPath] = useState<string>('');
+    const {
+        clearVideo,
+        setVideo,
+        setIsLoading,
+        getRecommendedVideos
+    } = useVideoStore(
+        useShallow((state) => ({ ...state }))
+    )
 
     const [isLiked, setIsLiked] = useState<boolean>(false)
     const [isWatchLater, setIsWatchLater] = useState<boolean>(false)
+    const [savedTime, setSavedTime] = useState<number>(0)
 
-    const updateDB = async () => {
-        const checkLike: boolean = await check(video.video_path, 'liked_videos')
-        setIsLiked(checkLike)
-        const checkWatchLater: boolean = await check(video.video_path, 'watch_later')
-        setIsWatchLater(checkWatchLater)
-        await setVideoToTable(video, 'history')
+    const getVideo = async () => {
+        try {
+            setIsLoading(true)
+            clearVideo()
+            if (id) {
+                const data: Video = await apiGetVideo(+id)
+                if (data) {
+                    setVideo(data)
+                }
+            }
+        } catch (err) {
+            console.error(err)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const updateVideo = async (id: number) => {
+        await getVideo()
+        const [_, likeRes, saveTimeRes] =
+            await Promise.all([apiSetToHistory(id),
+                                      apiCheckIsLiked(id),
+                                      apiGetSavedTime(id),
+                                      getRecommendedVideos(+id)])
+
+        setIsLiked(likeRes.is_liked)
+        setSavedTime(saveTimeRes.time)
     }
 
     useEffect(() => {
-        setPath(getParam("video_path") ?? '')
-    }, [location]);
+        if (id) {
+            updateVideo(+id).catch(() => {})
+
+        }
+    }, [id]);
 
     useEffect(() => {
-        if (path) {
-            getVideo(path)
+        return () => {
+            clearVideo()
         }
-    }, [path]);
-
-    useEffect(() => {
-        if (video.video) {
-            updateDB()
-        }
-    }, [video]);
+    }, [])
 
     return(
-        <div className="video-page">
+        <div className="video-page h-100">
             <Header isVideoPage={true}/>
 
-            <div className="video-page__content flex">
-                <VideoVideo isLiked={isLiked} setIsLiked={setIsLiked} isWatchLater={isWatchLater} setIsWatchLater={setIsWatchLater}/>
+            <div className="video-page__content flex h-100">
+                <VideoMain isLiked={isLiked}
+                           setIsLiked={setIsLiked}
+                           isWatchLater={isWatchLater}
+                           setIsWatchLater={setIsWatchLater}
+                           savedTime={savedTime}
+                />
 
                 <VideoRecommended/>
             </div>

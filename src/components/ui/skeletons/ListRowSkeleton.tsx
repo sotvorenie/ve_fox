@@ -1,6 +1,6 @@
 
 function ListRowSkeleton() {
-    const skeletonItems = [...Array(6).keys()];
+    const skeletonItems = [...new Array(6).keys()];
 
     return (
         <div className="skeleton row">
@@ -15,11 +15,8 @@ function ListRowSkeleton() {
 
                         <div style={{width:'100%'}}>
                             <div className="skeleton__name line"></div>
-                            <div className="skeleton__name line"></div>
 
                             <div className="skeleton__channel line"></div>
-
-                            <div className="skeleton__date line"></div>
                         </div>
                     </div>
                 </div>

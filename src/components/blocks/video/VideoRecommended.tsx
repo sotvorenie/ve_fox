@@ -1,54 +1,58 @@
 import {useNavigate} from "react-router-dom";
+import {useShallow} from "zustand/react/shallow";
 
-import {Video} from "../../../types/video.ts";
+import {BASE_URL} from "../../../api/url.ts";
 
-import {replaceSymbols} from "../../../composables/useRedactVideoName.ts";
-import {redactDate} from "../../../composables/useRedactDate.ts";
+import {VideoForList} from "../../../types/video.ts";
+
+import {formatVideoName} from "../../../composables/useFormatVideoName.ts";
+import {formatVideoDate} from "../../../composables/useFormatVideoDate.ts";
 
 import ListColumnSkeleton from "../../ui/skeletons/ListColumnSkeleton.tsx";
 
-import {useVideo} from "../../../hooks/useVideo.ts";
-import {formatTime} from "../../../composables/useFormatVideoTime.ts";
+import {formatVideoTime} from "../../../composables/useFormatVideoTime.ts";
+
+import {useVideoStore} from "../../../store/useVideoStore.ts";
 
 function VideoRecommended() {
     const navigate = useNavigate();
 
     const {
-        video: activeVideo,
         recommendedVideos: videos,
         recommendedIsLoading: isLoading,
+        video: activeVideo,
         recommendedHasMore: hasMore
-    } = useVideo()
+    } = useVideoStore(useShallow((state) => ({ ...state })))
 
-    const clickToVideo = (video: Video) => {
-        navigate(`/video?video_path=${video.video_path}`)
+    const clickToVideo = (video: VideoForList) => {
+        navigate(`/video/${video.id}`)
     }
 
     return (
-        <div className="recommended">
+        <div className="recommended w-100 h-100">
             {!isLoading && (
                 <ul className="recommended__list">
-                    {videos?.map((video: Video) => {
+                    {videos?.map((video: VideoForList) => {
 
-                        if (activeVideo.video === video.video) return
+                        if (activeVideo.id === video.id) return
 
                         return (
                             <li className="recommended__item flex cursor-pointer"
-                                key={video.video}
+                                key={video.id}
                                 onClick={() => clickToVideo(video)}
                             >
                                 <div className="recommended__preview img-container position-relative">
-                                    <img src={video.preview} alt={video.name} loading="lazy"/>
+                                    <img src={`${BASE_URL}${video.preview_url}`} alt={video.name} loading="lazy"/>
 
-                                    <span className="position-absolute">{formatTime(video?.duration)}</span>
+                                    <span className="position-absolute">{formatVideoTime(video?.duration)}</span>
                                 </div>
                                 <div className="recommended__info">
                                 <div className="recommended__text flex flex-column">
                             <span className="recommended__title two-lines">
-                                {replaceSymbols(video.name)}
+                                {formatVideoName(video.name)}
                             </span>
-                                        <span className="recommended__channel">{video.channel}</span>
-                                        <span className="recommended__date">{redactDate(video.date)}</span>
+                                        <span className="recommended__channel">{video.channel.name}</span>
+                                        <span className="recommended__date">{formatVideoDate(video.date)}</span>
                                     </div>
                                 </div>
                             </li>

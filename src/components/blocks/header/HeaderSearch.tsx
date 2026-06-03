@@ -1,35 +1,32 @@
 import React, {useRef} from "react";
 import {useNavigate} from "react-router-dom";
+import { useShallow } from 'zustand/react/shallow';
 
 import SearchIcon from "../../../assets/images/icons/SearchIcon.tsx";
 import CrossIcon from "../../../assets/images/icons/CrossIcon.tsx";
 
-import {useSearch} from "../../../hooks/useSearch.ts";
+import {useSearchStore} from "../../../store/useSearchStore.ts";
 
 function HeaderSearch() {
     const navigate = useNavigate();
 
-    const {
-        search,
-        setSearch,
-        getSearchVideos
-    } = useSearch();
+    const {value, setValue, search} = useSearchStore(useShallow((state) => ({ ...state })))
 
     const inputRef = useRef<HTMLInputElement>(null)
 
 
     const handleSearchText = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setSearch(event.target.value)
+        setValue(event.target.value)
     }
 
     const clearSearchName = (): void => {
-        setSearch('')
+        setValue('')
     }
 
     const handleSearch = async () => {
-        if (search) {
+        if (value) {
             navigate("/search")
-            await getSearchVideos()
+            await search()
         }
     }
 
@@ -41,7 +38,7 @@ function HeaderSearch() {
                    onKeyDown={async (e) => {
                        if (e.key === "Enter") await handleSearch()
                    }}
-                   value={search}
+                   value={value}
                    type="text"
                    placeholder="Введите запрос"
             />
@@ -54,7 +51,7 @@ function HeaderSearch() {
             >
                 <SearchIcon/>
             </button>
-            {search && (
+            {value && (
                 <button
                     className="header__clear recolor-svg button-width-svg flex-center hover-color-accent"
                     type="button"

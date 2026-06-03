@@ -1,26 +1,29 @@
 import {useEffect, useState} from "react";
+import {useShallow} from "zustand/react/shallow";
 
-import {Video} from "../../../types/video.ts";
-import {Meta} from "../../../types/meta.ts";
+import {VideoForList, VideosList} from "../../../types/video.ts";
 
-import {getVideosFromTable} from "../../../api/local_database";
+import {allApiNames} from "../../../api";
 
-import VideoItem from "../VideoItem.tsx";
+import {apiGetHistory} from "../../../api/history/history.ts";
+import {apiGetListLikes} from "../../../api/like/like.ts";
+import {apiGetListWatchLater} from "../../../api/watch_later/watchLater.ts";
+
+import VideoItem from "../../common/VideoItem.tsx";
 import ListColumnSkeleton from "../../ui/skeletons/ListColumnSkeleton.tsx";
 
-import {usePages} from "../../../hooks/usePages.ts";
+import {usePagesStore} from "../../../store/usePagesStore.ts";
 
 interface Props {
-    name: string;
-    index: number;
+    readonly name: string;
+    readonly index: number;
 }
 
 function MainPageDefault({name, index}: Props) {
-    const {setRouterPage} = usePages()
+    const {setPage} = usePagesStore(useShallow((state) => ({ ...state })))
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [page, setPage] = useState<number>(1);
-    const [videos, setVideos] = useState<Video[]>([]);
+    const [videos, setVideos] = useState<VideoForList[]>([]);
     const [hasMore, setHasMore] = useState<boolean>(false);
     const [total, setTotal] = useState<number>(0);
 
@@ -28,35 +31,49 @@ function MainPageDefault({name, index}: Props) {
         try {
             setIsLoading(true)
 
-            const items: {meta: Meta, videos: Video[]} = await getVideosFromTable(page, name)
+            let data: VideosList
 
-            const meta: Meta = items.meta
-            setVideos(items.videos)
+            switch (name) {
+                case allApiNames.history:
+                    data = await apiGetHistory()
+                    break
+                case allApiNames.like:
+                    data = await apiGetListLikes()
+                    break
+                case allApiNames.watch_later:
+                    data = await apiGetListWatchLater()
+                    break
+                default:
+                    data = await apiGetHistory()
+            }
 
-            setHasMore(meta.has_more)
-            setTotal(meta.total)
-            setPage(2)
+            if (data) {
+                setVideos(data.videos)
+                setHasMore(data.has_more)
+                setTotal(data.total)
+                setPage(data.page + 1)
+            }
         } catch (err) {
-
+            console.error(err)
         } finally {
             setIsLoading(false)
         }
     }
 
     useEffect(() => {
-        setRouterPage(index)
+        setPage(index)
 
-        getVideos()
-    }, []);
+        getVideos().catch(() => {})
+    }, [])
 
     return (
         <div className="history-page">
             <p className="total h6">Найдено {total} видео</p>
 
             {!isLoading && (
-                <ul className="video-list list-column m-auto">
-                    {videos?.map((video: Video) => (
-                        <VideoItem key={video.video_path} video={video} isRow={true}/>
+                <ul className="video-item m-auto">
+                    {videos?.map((video: VideoForList) => (
+                        <VideoItem key={video.id} video={video} isRow={true}/>
                     ))}
                 </ul>
             )}

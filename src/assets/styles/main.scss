@@ -6,22 +6,24 @@
 @use 'classes';
 
 @use 'blocks/input';
-@use 'blocks/video-list';
-@use 'blocks/header';
-@use 'blocks/main-layout';
-@use 'blocks/menu';
+@use 'blocks/video/video-item';
+@use 'blocks/layout/main-layout';
+@use 'blocks/layout/menu';
 @use 'blocks/skeleton';
-@use 'blocks/empty';
 @use 'blocks/total';
 @use 'blocks/modal';
-@use 'blocks/upload';
+@use 'blocks/toggle-button';
+@use 'blocks/loading';
 
-@use 'blocks/main/main-page';
+@use 'blocks/auth/auth';
+
+@use 'blocks/header/header';
 
 @use 'blocks/channel/channel';
 
 @use 'blocks/video/video-page';
 @use 'blocks/video/video';
 @use 'blocks/video/recommended';
+@use 'blocks/video/video-player';
 
 @use 'blocks/search/search-page';

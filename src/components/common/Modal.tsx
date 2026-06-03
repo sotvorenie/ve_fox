@@ -1,11 +1,9 @@
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { ReactNode } from "react";
 import { createPortal } from "react-dom";
 import CrossIcon from "../../assets/images/icons/CrossIcon.tsx";
 
 interface ModalProps {
-    visible: boolean;
-    setVisible: Dispatch<SetStateAction<boolean>>;
-    children: ReactNode;
+    readonly children: ReactNode;
 }
 
 function Modal({ children }: ModalProps) {

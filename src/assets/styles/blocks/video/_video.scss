@@ -4,18 +4,12 @@
   min-width: 75%;
   max-width: 75%;
 
-  &__video {
-    width: 100%;
-    aspect-ratio: 16/9;
-    margin-bottom: rem(15);
-    background: var(--color-dark-alt);
-  }
-
   &__actions {
     justify-content: space-between;
   }
 
   &__title {
+    margin-top: rem(15);
     margin-bottom: rem(10) !important;
   }
 

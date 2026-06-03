@@ -1,11 +1,11 @@
 import useWidthWatcher from "../../../composables/useWidthWatcher.ts";
 
 interface Props {
-    isRecommended: boolean;
+    readonly isRecommended: boolean;
 }
 
 function ListColumnSkeleton({isRecommended = false}: Props) {
-    const skeletonItems = [...Array(6).keys()];
+    const skeletonItems = [...new Array(6).keys()];
 
     const isLaptop: boolean = useWidthWatcher('(max-width: 1440px)')
 
@@ -19,11 +19,9 @@ function ListColumnSkeleton({isRecommended = false}: Props) {
 
                     <div style={{width: '100%'}}>
                         <div className="skeleton__name line"></div>
-                        <div className="skeleton__name line"></div>
+                        {!isLaptop && <div className="skeleton__date line"></div>}
 
-                        {!isLaptop || !isRecommended && <div className="skeleton__date line"></div>}
-
-                        {!isLaptop || !isRecommended && (
+                        {!isRecommended && (
                             <div className="flex flex-align-center">
                                 <div className="skeleton__avatar line"></div>
 

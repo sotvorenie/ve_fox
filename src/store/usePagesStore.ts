@@ -1,24 +1,13 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {create} from "zustand";
 
 interface PagesState {
     page: number
+
+    setPage: (page: number) => void
 }
 
-const initialState: PagesState = {
+export const usePagesStore = create<PagesState>((set) => ({
     page: -1,
-}
 
-export const pagesStore = createSlice({
-    name: "pagesStore",
-
-    initialState,
-
-    reducers: {
-        setRouterPage: (state, action: PayloadAction<number>) => {
-            state.page = action.payload
-        }
-    }
-})
-
-export const {setRouterPage} = pagesStore.actions
-export default pagesStore.reducer
+    setPage: (page: number) => set({page})
+}))

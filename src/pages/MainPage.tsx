@@ -1,31 +1,31 @@
 import {useEffect, useState} from "react";
+import {useShallow} from "zustand/react/shallow";
 
-import {Video} from "../types/video.ts";
-import {ResponseVideos} from "../types/responseVideos.ts";
+import {VideoForList, VideosList} from "../types/video.ts";
 
-import {apiGetAllVideos} from "../api/videos/videos.ts";
+import {apiGetAllVideos} from "../api/video/video.ts";
 
-import VideoItem from "../components/blocks/VideoItem.tsx";
+import VideoItem from "../components/common/VideoItem.tsx";
 import ListRowSkeleton from "../components/ui/skeletons/ListRowSkeleton.tsx";
 import MainEmpty from "../components/ui/empty/mainEmpty.tsx";
 
-import {usePages} from "../hooks/usePages.ts";
+import {usePagesStore} from "../store/usePagesStore.ts";
 
 function MainPage() {
-    const {setRouterPage} = usePages()
+    const {setPage: setRouterPage} = usePagesStore(useShallow((state) => ({ ...state })))
 
     const [page, setPage] = useState<number>(1)
     const [hasMore, setHasMore] = useState<boolean>(false)
-
-    const [videos, setVideos] = useState<Video[]>([])
-
+    const [videos, setVideos] = useState<VideoForList[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    const getAllVideos = async () => {
+    const seed: number = Math.random() * 2 - 1
+
+    const getAllVideos = async (): Promise<void> => {
         try {
             setIsLoading(true)
 
-            const data: ResponseVideos = await apiGetAllVideos()
+            const data: VideosList = await apiGetAllVideos(page, 21, seed)
 
             if (data) {
                 setVideos(data.videos)
@@ -33,7 +33,7 @@ function MainPage() {
                 setHasMore(data.has_more)
             }
         } catch (err) {
-
+            console.error(err)
         } finally {
             setIsLoading(false)
         }
@@ -43,15 +43,15 @@ function MainPage() {
     useEffect(() => {
         setRouterPage(0)
 
-        getAllVideos()
+        getAllVideos().then(() => {})
     }, [])
 
     return (
-        <div className="main-page__home">
+        <div className="main-page__home h-100">
             {!isLoading && (
-                <ul className="video-list list-row row">
-                    {videos?.map((video: Video) => (
-                        <VideoItem key={video.video} video={video} isRow={false}/>
+                <ul className="video-list row">
+                    {videos?.map((video: VideoForList) => (
+                        <VideoItem key={video.id} video={video} isRow={false}/>
                     ))}
                 </ul>
             )}
@@ -59,8 +59,6 @@ function MainPage() {
             {!isLoading && !videos?.length && <MainEmpty/>}
 
             {isLoading && <ListRowSkeleton/>}
-
-            <button style={{display: hasMore ? 'block' : 'none'}}>Еще</button>
         </div>
     )
 }
