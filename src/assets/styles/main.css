@@ -1542,13 +1542,13 @@ input, textarea {
   transition: background-color var(--transition-duration);
 }
 @media (any-hover: hover) {
-  .video-player__background:hover {
+  .video-player__background:hover:not(.video-player__duration) {
     background: rgba(0, 0, 0, 0.15);
     color: var(--color-accent);
   }
 }
 @media (any-hover: none) {
-  .video-player__background:active {
+  .video-player__background:active:not(.video-player__duration) {
     background: rgba(0, 0, 0, 0.15);
     color: var(--color-accent);
   }

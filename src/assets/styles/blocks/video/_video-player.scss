@@ -41,8 +41,11 @@
     transition: background-color var(--transition-duration);
 
     @include hover() {
-      background: rgba(0, 0, 0, .15);
-      color: var(--color-accent);
+
+      &:not(.video-player__duration) {
+        background: rgba(0, 0, 0, .15);
+        color: var(--color-accent);
+      }
     }
   }
 
