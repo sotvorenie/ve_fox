@@ -1625,16 +1625,6 @@ input, textarea {
 .video-player__settings-label {
   gap: 0.625rem;
 }
-.video-player__subtitles {
-  position: absolute;
-  left: 50%;
-  translate: -50%;
-  bottom: 4.375rem;
-  max-width: 80%;
-  background: rgba(61, 75, 86, 0.5019607843);
-  border-radius: var(--radius-medium);
-  padding: 0.5rem 0.625rem;
-}
 
 @media (width > 90.06125rem) {
   .search-page {

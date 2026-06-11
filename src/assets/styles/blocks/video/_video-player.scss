@@ -133,14 +133,4 @@
       gap: rem(10);
     }
   }
-
-  &__subtitles {
-    @include abs-x;
-
-    bottom: rem(70);
-    max-width: 80%;
-    background: #3d4b5680;
-    border-radius: var(--radius-medium);
-    padding: rem(8) rem(10);
-  }
 }

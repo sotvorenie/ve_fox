@@ -217,8 +217,7 @@ function VideoPlayer({savedTime}: Props) {
                    onTimeUpdate={updateTimeline}
                    onEnded={() => setIsPlaying(false)}
             >
-                <track src={video?.subtitle_url}
-                       key={video?.subtitle_url}
+                <track src=""
                        kind="captions"
                        srcLang="ru"
                        label="Русские субтитры"
