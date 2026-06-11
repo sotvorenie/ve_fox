@@ -180,6 +180,13 @@
 
   &__settings {
     opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-duration);
+
+    &.is-active {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
     &-content {
       background: #3d4b5699;

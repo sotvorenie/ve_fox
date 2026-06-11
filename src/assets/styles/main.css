@@ -1674,6 +1674,12 @@ input, textarea {
 }
 .video-player__settings {
   opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-duration);
+}
+.video-player__settings.is-active {
+  opacity: 1;
+  pointer-events: auto;
 }
 .video-player__settings-content {
   background: rgba(61, 75, 86, 0.6);

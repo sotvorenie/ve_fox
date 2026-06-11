@@ -44,6 +44,7 @@ function VideoPlayer({savedTime}: Props) {
         setCurrentTime,
         setIsShowControls,
         setIsShowSettings,
+        setIsFullscreen,
         toggleIsFullscreen,
         clearData
     } = usePlayerStore();
@@ -57,6 +58,8 @@ function VideoPlayer({savedTime}: Props) {
 
     let timer: number
     let cursorTimer: number
+
+    const settingsBtnRef = useRef<HTMLButtonElement | null>(null)
 
     // при загрузке метаданных видео
     const loadedMetadata = () => {
@@ -105,7 +108,7 @@ function VideoPlayer({savedTime}: Props) {
 
     // показ/скрытие контроллеров
     const hideControllers = () => {
-        if (!isPlaying) return
+        if (!isPlaying || isShowSettings) return
 
         setIsShowControls(false)
     }
@@ -140,6 +143,8 @@ function VideoPlayer({savedTime}: Props) {
                 toggleIsPlaying()
             } else if (e.key === 'f') {
                 toggleIsFullscreen()
+            } else if (e.code === 'Escape') {
+                setIsFullscreen(false)
             }
         }
 
@@ -159,6 +164,8 @@ function VideoPlayer({savedTime}: Props) {
 
         isPlaying ? videoRef.current.play() : videoRef.current.pause()
 
+        setIsShowControls(true)
+
         const moveCursor = () => {
             setIsShowControls(true)
 
@@ -168,7 +175,7 @@ function VideoPlayer({savedTime}: Props) {
             }, 2000)
         }
 
-        if (isPlaying) {
+        if (isPlaying && !isShowSettings) {
             timer = setTimeout(() => {
                 setIsShowControls(false)
             }, 2000)
@@ -183,7 +190,7 @@ function VideoPlayer({savedTime}: Props) {
             clearTimeout(cursorTimer)
             sectionRef.current?.removeEventListener('mousemove', moveCursor)
         }
-    }, [isPlaying])
+    }, [isPlaying, isShowSettings, isFullscreen])
 
     useEffect(() => {
         const mouseMove = (e: MouseEvent) => {
@@ -209,6 +216,25 @@ function VideoPlayer({savedTime}: Props) {
             globalThis.removeEventListener('mouseup', mouseUp)
         }
     }, [isMoving])
+
+    useEffect(() => {
+        const closeSettings = () => {
+            setIsShowSettings(false)
+        }
+
+        if (isShowSettings) {
+            const timer = setTimeout(() => {
+                globalThis.addEventListener('click', closeSettings)
+            }, 0)
+
+            return () => {
+                clearTimeout(timer)
+                globalThis.removeEventListener('click', closeSettings)
+            }
+        } else if (settingsBtnRef.current) {
+            settingsBtnRef.current.blur()
+        }
+    }, [isShowSettings])
 
     return (
         <section className={
@@ -240,27 +266,27 @@ function VideoPlayer({savedTime}: Props) {
                 />
             </video>
 
-            {(
-                <div className="video-player__settings position-absolute inset-0 z-10">
-                    <div className="video-player__settings-content position-absolute">
-                        <ul className="video-player__settings-list">
-                            <li className="video-player__settings-item">
-                                <label className="video-player__settings-label hover-color-accent flex flex-align-center">
-                                    Субтитры
+            <div className={`video-player__settings position-absolute inset-0 z-1000 ${isShowSettings ? 'is-active' : ''}`}>
+                <div
+                    className="video-player__settings-content position-absolute"
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <ul className="video-player__settings-list">
+                        <li className="video-player__settings-item">
+                            <label className="video-player__settings-label hover-color-accent flex flex-align-center">
+                                Субтитры
 
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
+                            </label>
+                        </li>
+                    </ul>
                 </div>
-            )}
+            </div>
 
             <div className={`video-player__controls position-absolute inset-0 hidden`}>
                 <VideoPlayButton
                     className={`video-player__play-btn absolute-center cursor-default is-active`}
                     isPlaying={isPlaying}
-                    setIsPlaying={(): void => {
-                    }}
+                    setIsPlaying={(): void => {}}
                 />
 
                 <div className="video-player__bottom position-absolute flex flex-column w-100 z-1000">
@@ -331,6 +357,7 @@ function VideoPlayer({savedTime}: Props) {
                                 type="button"
                                 title="Настройки"
                                 onClick={() => setIsShowSettings(true)}
+                                ref={settingsBtnRef}
                             >
                                 <SettingsIcon/>
                             </button>
