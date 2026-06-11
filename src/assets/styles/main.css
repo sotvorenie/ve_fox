@@ -165,29 +165,29 @@ svg * {
   }
 }
 @font-face {
-  font-family: "Axiforma";
-  src: url("../fonts/Axiforma-Regular.woff2") format("woff2");
+  font-family: "Montserrat";
+  src: url("../fonts/Montserrat-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Axiforma";
-  src: url("../fonts/Axiforma-Medium.woff2") format("woff2");
+  font-family: "Montserrat";
+  src: url("../fonts/Montserrat-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Axiforma";
-  src: url("../fonts/Axiforma-SemiBold.woff2") format("woff2");
+  font-family: "Montserrat";
+  src: url("../fonts/Montserrat-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Axiforma";
-  src: url("../fonts/Axiforma-Bold.woff2") format("woff2");
+  font-family: "Montserrat";
+  src: url("../fonts/Montserrat-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -206,7 +206,7 @@ svg * {
   --radius-medium: 0.75rem;
   --radius-semi-big: 1.25rem;
   --radius-big: 2rem;
-  --font-family-base: 'Axiforma', sans-serif;
+  --font-family-base: 'Montserrat', sans-serif;
   --container-width: 120rem;
   --container-padding-x: 1rem;
   --transition-duration: 0.2s;
