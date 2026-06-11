@@ -26,7 +26,7 @@ interface PlayerState {
     clearData: () => void
 }
 
-export const usePlayerStore = create<PlayerState>((set, get) => ({
+export const usePlayerStore = create<PlayerState>((set) => ({
     isPlaying: false,
     volume: 1,
     isShowSettings: false,
