@@ -90,6 +90,18 @@ function VideoPlayer({savedTime}: Props) {
         updateVideoTime(e)
     }
 
+    // +- 10 секунд
+    const setPlus10Sec = () => {
+        if (!videoRef.current) return
+
+        videoRef.current.currentTime = Math.min(videoRef.current.currentTime + 10, duration)
+    }
+    const setMinus10Sec = () => {
+        if (!videoRef.current) return
+
+        videoRef.current.currentTime = Math.max(videoRef.current.currentTime - 10, 0)
+    }
+
     useEffect(() => {
         if (!videoRef.current) return
         videoRef.current.volume = volume
@@ -159,6 +171,7 @@ function VideoPlayer({savedTime}: Props) {
                    ref={videoRef}
                    onLoadedMetadata={loadedMetadata}
                    onTimeUpdate={updateTimeline}
+                   onEnded={() => setIsPlaying(false)}
             >
                 <track src={video?.subtitle_url}
                        key={video?.subtitle_url}
@@ -236,6 +249,7 @@ function VideoPlayer({savedTime}: Props) {
                             <button className="video-player__prev-10 video-player__line-item video-player__background recolor-svg i-svg"
                                     type="button"
                                     title="На 10 секунд назад"
+                                    onClick={setMinus10Sec}
                             >
                                 <TimePrevIcon/>
                             </button>
@@ -243,6 +257,7 @@ function VideoPlayer({savedTime}: Props) {
                             <button className="video-player__next-10 video-player__line-item video-player__background recolor-svg i-svg"
                                     type="button"
                                     title="На 10 секунд вперед"
+                                    onClick={setPlus10Sec}
                             >
                                 <TimeNextIcon/>
                             </button>
