@@ -6,7 +6,6 @@ import {apiSaveTime} from "../../../api/save_time/saveTime.ts";
 import {formatVideoTime} from "../../../composables/useFormatVideoTime.ts";
 
 import VideoPlayButton from "./VideoPlayButton.tsx";
-import ToggleButton from "../../ui/ToggleButton.tsx";
 
 import SoundOnIcon from "../../../assets/images/icons/video-player/SoundOnIcon.tsx";
 import SoundOffIcon from "../../../assets/images/icons/video-player/SoundOffIcon.tsx";
@@ -33,8 +32,6 @@ function VideoPlayer({savedTime}: Props) {
         isShowSettings,
         isShowControls,
         isFullscreen,
-        isSubtitlesActive,
-        subtitlesText,
         duration,
         currentTime
     } = usePlayerStore();
@@ -45,8 +42,6 @@ function VideoPlayer({savedTime}: Props) {
         setOldVolume,
         setDuration,
         setCurrentTime,
-        setSubtitlesActive,
-        setSubtitlesText,
         setIsShowControls,
         setIsShowSettings,
         toggleIsFullscreen,
@@ -245,12 +240,6 @@ function VideoPlayer({savedTime}: Props) {
                 />
             </video>
 
-            {isSubtitlesActive && (
-                <div className="video-player__subtitles position-absolute">
-                    <span dangerouslySetInnerHTML={{__html: subtitlesText}}/>
-                </div>
-            )}
-
             {(
                 <div className="video-player__settings position-absolute inset-0 z-10">
                     <div className="video-player__settings-content position-absolute">
@@ -258,7 +247,7 @@ function VideoPlayer({savedTime}: Props) {
                             <li className="video-player__settings-item">
                                 <label className="video-player__settings-label hover-color-accent flex flex-align-center">
                                     Субтитры
-                                    <ToggleButton active={isSubtitlesActive} setActive={setSubtitlesActive}/>
+
                                 </label>
                             </li>
                         </ul>
