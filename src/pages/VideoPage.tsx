@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import { useShallow } from 'zustand/react/shallow';
 
 import {Video} from "../types/video.ts";
 
@@ -14,6 +13,7 @@ import VideoMain from "../components/blocks/video/VideoMain.tsx";
 import VideoRecommended from "../components/blocks/video/VideoRecommended.tsx";
 
 import {useVideoStore} from "../store/useVideoStore.ts";
+import {usePlayerStore} from "../store/usePlayerStore.ts";
 
 function VideoPage() {
     const { id } = useParams<{ id: string }>();
@@ -22,10 +22,9 @@ function VideoPage() {
         clearVideo,
         setVideo,
         setIsLoading,
-        getRecommendedVideos
-    } = useVideoStore(
-        useShallow((state) => ({ ...state }))
-    )
+        getRecommendedVideos,
+    } = useVideoStore()
+    const {setVolume} = usePlayerStore()
 
     const [isLiked, setIsLiked] = useState<boolean>(false)
     const [isWatchLater, setIsWatchLater] = useState<boolean>(false)
@@ -68,6 +67,9 @@ function VideoPage() {
     }, [id]);
 
     useEffect(() => {
+        const volume = JSON.parse(localStorage.getItem('volume') || '1')
+        setVolume(volume)
+
         return () => {
             clearVideo()
         }

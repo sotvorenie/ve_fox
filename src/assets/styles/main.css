@@ -1538,18 +1538,22 @@ input, textarea {
 }
 .video-player__background {
   background: rgba(0, 0, 0, 0.2);
-  border-radius: 50%;
+  border-radius: 1.25rem;
   transition: background-color var(--transition-duration);
 }
 @media (any-hover: hover) {
-  .video-player__background:hover:not(.video-player__duration) {
+  .video-player__background:hover {
     background: rgba(0, 0, 0, 0.15);
+  }
+  .video-player__background:hover:not(.video-player__duration):not(.video-player__volume) {
     color: var(--color-accent);
   }
 }
 @media (any-hover: none) {
-  .video-player__background:active:not(.video-player__duration) {
+  .video-player__background:active {
     background: rgba(0, 0, 0, 0.15);
+  }
+  .video-player__background:active:not(.video-player__duration):not(.video-player__volume) {
     color: var(--color-accent);
   }
 }
@@ -1602,6 +1606,63 @@ input, textarea {
 }
 .video-player__left, .video-player__right {
   gap: 0.625rem;
+}
+.video-player__volume {
+  transition: border-radius var(--transition-duration);
+}
+@media (any-hover: hover) {
+  .video-player__volume:hover input {
+    width: 6.25rem;
+    pointer-events: all;
+    opacity: 1;
+    margin-right: 0.625rem;
+  }
+}
+@media (any-hover: none) {
+  .video-player__volume:active input {
+    width: 6.25rem;
+    pointer-events: all;
+    opacity: 1;
+    margin-right: 0.625rem;
+  }
+}
+@media (any-hover: hover) {
+  .video-player__volume button:hover {
+    color: var(--color-accent);
+  }
+}
+@media (any-hover: none) {
+  .video-player__volume button:active {
+    color: var(--color-accent);
+  }
+}
+.video-player__volume input {
+  width: 0;
+  opacity: 0;
+  transition: width var(--transition-duration), opacity var(--transition-duration);
+  margin: 0;
+  -webkit-appearance: none;
+  background: transparent;
+}
+.video-player__volume input::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 0.3125rem;
+  background: linear-gradient(to right, var(--color-accent) 0%, var(--color-accent) var(--fill-percent), rgba(255, 255, 255, 0.25) var(--fill-percent), rgba(255, 255, 255, 0.25) 100%);
+  border-radius: var(--radius-medium);
+}
+.video-player__volume input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  margin-top: -0.25rem;
+  cursor: pointer;
+  transition: transform var(--transition-duration);
+}
+.video-player__volume input::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
 }
 .video-player__duration {
   font-size: 1rem;

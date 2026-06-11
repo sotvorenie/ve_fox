@@ -29,6 +29,7 @@ function VideoPlayer({savedTime}: Props) {
     const {
         isPlaying,
         volume,
+        oldVolume,
         isShowSettings,
         isShowControls,
         isFullscreen,
@@ -41,6 +42,7 @@ function VideoPlayer({savedTime}: Props) {
         setIsPlaying,
         toggleIsPlaying,
         setVolume,
+        setOldVolume,
         setDuration,
         setCurrentTime,
         setSubtitlesActive,
@@ -57,6 +59,9 @@ function VideoPlayer({savedTime}: Props) {
     const sectionRef = useRef<HTMLElement | null>(null)
     const videoRef = useRef<HTMLVideoElement | null>(null)
     const timelineRef = useRef<HTMLDivElement | null>(null)
+
+    let timer: number
+    let cursorTimer: number
 
     // при загрузке метаданных видео
     const loadedMetadata = () => {
@@ -115,8 +120,21 @@ function VideoPlayer({savedTime}: Props) {
         setIsShowControls(true)
     }
 
-    let timer: number
-    let cursorTimer: number
+    // изменение уровня громкости
+    const handleVolume = () => {
+        if (volume > 0) {
+            localStorage.setItem('volume', '0')
+            setOldVolume(volume)
+            setVolume(0)
+        } else {
+            localStorage.setItem('volume', JSON.stringify(oldVolume))
+            setVolume(oldVolume)
+        }
+    }
+    const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
+        localStorage.setItem('volume', JSON.stringify(e.target.value))
+        setVolume(Number.parseFloat(e.target.value))
+    }
 
     useEffect(() => {
         if (!videoRef.current) return
@@ -202,7 +220,7 @@ function VideoPlayer({savedTime}: Props) {
                     ${isShowControls ? '' : 'controls-hidden'}`
                  }
                  ref={sectionRef}
-                 aria-label="Видео- плеер"
+                 aria-label="Видео-плеер"
                  onMouseLeave={hideControllers}
                  onMouseEnter={showControllers}
         >
@@ -273,10 +291,11 @@ function VideoPlayer({savedTime}: Props) {
                                              setIsPlaying={setIsPlaying}
                             />
 
-                            <div className="video-player__volume video-player__background">
+                            <div className="video-player__volume video-player__background flex">
                                 <button className="video-player__line-item recolor-svg i-svg"
                                         type="button"
                                         title="Настройки звука"
+                                        onClick={handleVolume}
                                 >
                                     {volume > 0 ? <SoundOnIcon/> : <SoundOffIcon/>}
                                 </button>
@@ -286,7 +305,8 @@ function VideoPlayer({savedTime}: Props) {
                                        max={1}
                                        step={0.1}
                                        value={volume}
-                                       style={{display: 'none'}}
+                                       onChange={changeVolume}
+                                       style={{ '--fill-percent': `${volume * 100}%` } as React.CSSProperties}
                                 />
                             </div>
 

@@ -37,13 +37,13 @@
 
   &__background {
     background: rgba(0,0,0,.2);
-    border-radius: 50%;
+    border-radius: rem(20);
     transition: background-color var(--transition-duration);
 
     @include hover() {
+      background: rgba(0, 0, 0, .15);
 
-      &:not(.video-player__duration) {
-        background: rgba(0, 0, 0, .15);
+      &:not(.video-player__duration):not(.video-player__volume) {
         color: var(--color-accent);
       }
     }
@@ -106,6 +106,67 @@
 
   &__left, &__right {
     gap: rem(10);
+  }
+
+  &__volume {
+    transition: border-radius var(--transition-duration);
+
+    @include hover() {
+
+      input {
+        width: rem(100);
+        pointer-events: all;
+        opacity: 1;
+        margin-right: rem(10);
+      }
+    }
+
+    button {
+
+      @include hover() {
+        color: var(--color-accent);
+      }
+    }
+
+    input {
+      width: 0;
+      opacity: 0;
+      transition:
+              width var(--transition-duration),
+              opacity var(--transition-duration);
+      margin: 0;
+      -webkit-appearance: none;
+      background: transparent;
+
+      &::-webkit-slider-runnable-track {
+        width: 100%;
+        height: rem(5);
+        background: linear-gradient(
+                        to right,
+                        var(--color-accent) 0%,
+                        var(--color-accent) var(--fill-percent),
+                        rgba(255, 255, 255, 0.25) var(--fill-percent),
+                        rgba(255, 255, 255, 0.25) 100%
+        );
+        border-radius: var(--radius-medium);
+      }
+
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: rem(14);
+        height: rem(14);
+        border-radius: 50%;
+        background: var(--color-accent);
+        margin-top: rem(-4);
+        cursor: pointer;
+        transition: transform var(--transition-duration);
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
   }
 
   &__duration {
