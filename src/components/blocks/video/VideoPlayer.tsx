@@ -1,8 +1,9 @@
 import React, {useEffect, useRef, useState} from "react";
-import {useShallow} from "zustand/react/shallow";
 
 import {BASE_URL} from "../../../api/url.ts";
 import {apiSaveTime} from "../../../api/save_time/saveTime.ts";
+
+import {formatVideoTime} from "../../../composables/useFormatVideoTime.ts";
 
 import VideoPlayButton from "./VideoPlayButton.tsx";
 import ToggleButton from "../../ui/ToggleButton.tsx";
@@ -23,17 +24,22 @@ interface Props {
 }
 
 function VideoPlayer({savedTime}: Props) {
-    const {video} = useVideoStore(useShallow((state) => ({ ...state })))
+    const {video} = useVideoStore()
 
     const {
         isPlaying,
         volume,
         isShowSettings,
-        duration,
-        currentTime,
+        isShowControls,
+        isFullscreen,
         isSubtitlesActive,
         subtitlesText,
+        duration,
+        currentTime
+    } = usePlayerStore();
+    const {
         setIsPlaying,
+        toggleIsPlaying,
         setVolume,
         setDuration,
         setCurrentTime,
@@ -41,11 +47,12 @@ function VideoPlayer({savedTime}: Props) {
         setSubtitlesText,
         setIsShowControls,
         setIsShowSettings,
-        isShowControls,
-        isFullscreen,
-        setIsFullscreen,
+        toggleIsFullscreen,
         clearData
-    } = usePlayerStore(useShallow((state) => ({ ...state })))
+    } = usePlayerStore();
+
+    const [progress, setProgress] = useState<number>(0);
+    const [isMoving, setIsMoving] = useState<boolean>(false)
 
     const videoRef = useRef<HTMLVideoElement | null>(null)
     const timelineRef = useRef<HTMLDivElement | null>(null)
@@ -57,33 +64,101 @@ function VideoPlayer({savedTime}: Props) {
         setDuration(videoRef.current.duration)
     }
 
-    // обновляем css-переменную для timeline
-    const updateTimeline = (progress: number): void => {
+    // обновляем progress для timeline
+    const updateTimeline = (e: React.SyntheticEvent<HTMLVideoElement, Event>): void => {
         if (!videoRef.current || !timelineRef.current) return
+        if (isMoving) return
+
+        setCurrentTime(e.currentTarget.currentTime)
+        setProgress((e.currentTarget.currentTime / videoRef.current.duration) * 100)
+    }
+
+    // перемещение timeline
+    const updateVideoTime = (e: MouseEvent | React.MouseEvent) => {
+        if (!timelineRef.current || !videoRef.current) return
 
         const rect = timelineRef.current.getBoundingClientRect()
-        const percent = rect.left - progress
+        let percent: number = (e.clientX - rect.left) / rect.width
+        percent = Math.min(Math.max(percent, 0), 1)
+        setProgress(percent * 100)
+        videoRef.current.currentTime = percent * duration
+    }
+    const mouseDown = (e: MouseEvent | React.MouseEvent) => {
+        if (!videoRef.current || !timelineRef.current) return
+
+        setIsMoving(true)
+        updateVideoTime(e)
     }
 
     useEffect(() => {
         if (!videoRef.current) return
         videoRef.current.volume = volume
+
+        const handleKeys = (e: KeyboardEvent) => {
+            if (e.code === 'Space') {
+                toggleIsPlaying()
+            }
+        }
+
+        document.addEventListener('keydown', handleKeys)
+
+        return () => {
+            document.removeEventListener('keydown', handleKeys)
+        }
     }, [])
 
     useEffect(() => {
         clearData()
     }, [video.id])
 
+    useEffect(() => {
+        if (!videoRef.current) return
+
+        isPlaying ? videoRef.current.play() : videoRef.current.pause()
+    }, [isPlaying])
+
+    useEffect(() => {
+        const mouseMove = (e: MouseEvent) => {
+            if (!videoRef.current || !timelineRef.current) return
+            if (!isMoving) return
+
+            updateVideoTime(e)
+        }
+        const mouseUp = () => {
+            if (!videoRef.current || !timelineRef.current) return
+
+            setIsMoving(false)
+            setCurrentTime(videoRef.current.currentTime)
+        }
+
+        if (isMoving) {
+            globalThis.addEventListener('mousemove', mouseMove)
+            globalThis.addEventListener('mouseup', mouseUp)
+        }
+
+        return () => {
+            globalThis.removeEventListener('mousemove', mouseMove)
+            globalThis.removeEventListener('mouseup', mouseUp)
+        }
+    }, [isMoving]);
+
     return (
-        <section className={`video-player position-relative is-fullscreen controls-hidden`}
-             aria-label="Видео плеер"
+        <section className={
+            `video-player position-relative 
+            ${isFullscreen ? 'is-fullscreen' : ''}
+            ${isShowControls ? '' : 'controls-hidden'}`
+        }
+             aria-label="Видео- плеер"
         >
-            <button className="video-player__hidden position-absolute inset-0 z-1 cursor-default"/>
+            <button className="video-player__hidden position-absolute inset-0 z-100 cursor-pointer"
+                    onClick={toggleIsPlaying}
+            />
             <video src={`${BASE_URL}${video?.video_url}`}
                    autoPlay
                    crossOrigin="anonymous"
                    ref={videoRef}
                    onLoadedMetadata={loadedMetadata}
+                   onTimeUpdate={updateTimeline}
             >
                 <track src={video?.subtitle_url}
                        key={video?.subtitle_url}
@@ -94,9 +169,11 @@ function VideoPlayer({savedTime}: Props) {
                 />
             </video>
 
-            <div className="video-player__subtitles position-absolute">
-                <span dangerouslySetInnerHTML={{__html: subtitlesText}}/>
-            </div>
+            {isSubtitlesActive && (
+                <div className="video-player__subtitles position-absolute">
+                    <span dangerouslySetInnerHTML={{__html: subtitlesText}}/>
+                </div>
+            )}
 
             {(
                 <div className="video-player__settings position-absolute inset-0 z-10">
@@ -120,8 +197,12 @@ function VideoPlayer({savedTime}: Props) {
                     setIsPlaying={(): void => {}}
                 />
 
-                <div className="video-player__bottom position-absolute flex flex-column w-100 z-10">
-                    <div className="video-player__timeline cursor-pointer w-100" ref={timelineRef}>
+                <div className="video-player__bottom position-absolute flex flex-column w-100 z-1000">
+                    <div className="video-player__timeline cursor-pointer w-100"
+                         ref={timelineRef}
+                         style={{ '--progress': `${progress}%` } as React.CSSProperties}
+                         onMouseDown={mouseDown}
+                    >
                         <div className="video-player__timeline-inner position-relative">
                             <div className="line w-100"/>
                             <div className="thumb position-absolute"/>
@@ -167,6 +248,7 @@ function VideoPlayer({savedTime}: Props) {
                             </button>
 
                             <span className="video-player__duration video-player__line-item video-player__background">
+                                {formatVideoTime(currentTime)} / {formatVideoTime(duration)}
                             </span>
                         </div>
 
@@ -181,6 +263,7 @@ function VideoPlayer({savedTime}: Props) {
 
                             <button className="video-player__line-item video-player__background recolor-svg i-svg"
                                     type="button"
+                                    onClick={() => toggleIsFullscreen}
                             >
                                 {isFullscreen ? <ReduceIcon/> : <ExpandIcon/>}
                             </button>

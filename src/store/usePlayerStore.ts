@@ -1,8 +1,6 @@
 import {create} from "zustand";
 
 interface PlayerState {
-    isMiniPlayer: boolean
-
     isPlaying: boolean
     volume: number
     isShowSettings: boolean
@@ -13,9 +11,8 @@ interface PlayerState {
     subtitlesText: string
     isFullscreen: boolean
 
-    setIsMiniPlayer: (value: boolean) => void
-
     setIsPlaying: (value: boolean) => void
+    toggleIsPlaying: () => void
     setVolume: (volume: number) => void
     setDuration: (duration: number) => void
     setCurrentTime: (currentTime: number) => void
@@ -24,12 +21,12 @@ interface PlayerState {
     setIsShowSettings: (value: boolean) => void
     setIsShowControls: (value: boolean) => void
     setIsFullscreen: (value: boolean) => void
+    toggleIsFullscreen: (value: boolean) => void
 
     clearData: () => void
 }
 
 export const usePlayerStore = create<PlayerState>((set, get) => ({
-    isMiniPlayer: false,
     isPlaying: false,
     volume: 1,
     isShowSettings: false,
@@ -40,8 +37,8 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
     subtitlesText: "",
     isFullscreen: false,
 
-    setIsMiniPlayer: (value: boolean) => set({isMiniPlayer: value}),
     setIsPlaying: (value: boolean) => set({isPlaying: value}),
+    toggleIsPlaying: () => set((state) => ({ isPlaying: !state.isPlaying })),
     setVolume: (volume: number) => set({volume: volume}),
     setDuration: (duration: number) => set({duration: duration}),
     setCurrentTime: (currentTime: number) => set({currentTime: currentTime}),
@@ -50,12 +47,14 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
     setIsShowSettings: (value: boolean) => set({isShowSettings: value}),
     setIsShowControls: (value: boolean) => set({isShowControls: value}),
     setIsFullscreen: (value: boolean) => set({isFullscreen: value}),
+    toggleIsFullscreen: () => set((state) => ({ isFullscreen: !state.isFullscreen })),
     clearData: () => {
-        get().setIsMiniPlayer(false)
-        get().setIsPlaying(true)
-        get().setCurrentTime(0)
-        get().setSubtitlesText('')
-        get().setIsShowControls(true)
-        get().setIsShowSettings(false)
+        set({
+            isPlaying: true,
+            currentTime: 0,
+            subtitlesText: '',
+            isShowControls: true,
+            isShowSettings: false
+        })
     },
 }))

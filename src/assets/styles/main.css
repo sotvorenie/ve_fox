@@ -1611,6 +1611,9 @@ input, textarea {
   font-feature-settings: "tnum";
   white-space: nowrap;
 }
+.video-player__settings {
+  opacity: 0;
+}
 .video-player__settings-content {
   background: rgba(61, 75, 86, 0.6);
   width: fit-content;
