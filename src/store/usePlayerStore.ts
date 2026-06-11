@@ -23,7 +23,7 @@ interface PlayerState {
     setIsShowSettings: (value: boolean) => void
     setIsShowControls: (value: boolean) => void
     setIsFullscreen: (value: boolean) => void
-    toggleIsFullscreen: (value: boolean) => void
+    toggleIsFullscreen: () => void
 
     clearData: () => void
 }

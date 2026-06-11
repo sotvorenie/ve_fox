@@ -143,6 +143,8 @@ function VideoPlayer({savedTime}: Props) {
         const handleKeys = (e: KeyboardEvent) => {
             if (e.code === 'Space') {
                 toggleIsPlaying()
+            } else if (e.key === 'f') {
+                toggleIsFullscreen()
             }
         }
 
@@ -346,7 +348,7 @@ function VideoPlayer({savedTime}: Props) {
 
                             <button className="video-player__line-item video-player__background recolor-svg i-svg"
                                     type="button"
-                                    onClick={() => toggleIsFullscreen}
+                                    onClick={() => toggleIsFullscreen()}
                             >
                                 {isFullscreen ? <ReduceIcon/> : <ExpandIcon/>}
                             </button>
