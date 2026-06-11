@@ -54,6 +54,7 @@ function VideoPlayer({savedTime}: Props) {
     const [progress, setProgress] = useState<number>(0);
     const [isMoving, setIsMoving] = useState<boolean>(false)
 
+    const sectionRef = useRef<HTMLElement | null>(null)
     const videoRef = useRef<HTMLVideoElement | null>(null)
     const timelineRef = useRef<HTMLDivElement | null>(null)
 
@@ -102,6 +103,21 @@ function VideoPlayer({savedTime}: Props) {
         videoRef.current.currentTime = Math.max(videoRef.current.currentTime - 10, 0)
     }
 
+    // показ/скрытие контроллеров
+    const hideControllers = () => {
+        if (!isPlaying) return
+
+        setIsShowControls(false)
+    }
+    const showControllers = () => {
+        if (!isPlaying) return
+
+        setIsShowControls(true)
+    }
+
+    let timer: number
+    let cursorTimer: number
+
     useEffect(() => {
         if (!videoRef.current) return
         videoRef.current.volume = volume
@@ -127,6 +143,31 @@ function VideoPlayer({savedTime}: Props) {
         if (!videoRef.current) return
 
         isPlaying ? videoRef.current.play() : videoRef.current.pause()
+
+        const moveCursor = () => {
+            setIsShowControls(true)
+
+            if (cursorTimer) clearTimeout(cursorTimer)
+            cursorTimer = setTimeout(() => {
+                setIsShowControls(false)
+            }, 2000)
+        }
+
+        if (isPlaying) {
+            timer = setTimeout(() => {
+                setIsShowControls(false)
+            }, 2000)
+
+            sectionRef.current?.addEventListener('mousemove', moveCursor)
+        } else {
+            setIsShowControls(true)
+        }
+
+        return () => {
+            clearTimeout(timer)
+            clearTimeout(cursorTimer)
+            sectionRef.current?.removeEventListener('mousemove', moveCursor)
+        }
     }, [isPlaying])
 
     useEffect(() => {
@@ -152,15 +193,18 @@ function VideoPlayer({savedTime}: Props) {
             globalThis.removeEventListener('mousemove', mouseMove)
             globalThis.removeEventListener('mouseup', mouseUp)
         }
-    }, [isMoving]);
+    }, [isMoving])
 
     return (
         <section className={
-            `video-player position-relative 
-            ${isFullscreen ? 'is-fullscreen' : ''}
-            ${isShowControls ? '' : 'controls-hidden'}`
-        }
-             aria-label="Видео- плеер"
+                    `video-player position-relative 
+                    ${isFullscreen ? 'is-fullscreen' : ''}
+                    ${isShowControls ? '' : 'controls-hidden'}`
+                 }
+                 ref={sectionRef}
+                 aria-label="Видео- плеер"
+                 onMouseLeave={hideControllers}
+                 onMouseEnter={showControllers}
         >
             <button className="video-player__hidden position-absolute inset-0 z-100 cursor-pointer"
                     onClick={toggleIsPlaying}
@@ -207,13 +251,14 @@ function VideoPlayer({savedTime}: Props) {
                 <VideoPlayButton
                     className={`video-player__play-btn absolute-center cursor-default is-active`}
                     isPlaying={isPlaying}
-                    setIsPlaying={(): void => {}}
+                    setIsPlaying={(): void => {
+                    }}
                 />
 
                 <div className="video-player__bottom position-absolute flex flex-column w-100 z-1000">
                     <div className="video-player__timeline cursor-pointer w-100"
                          ref={timelineRef}
-                         style={{ '--progress': `${progress}%` } as React.CSSProperties}
+                         style={{'--progress': `${progress}%`} as React.CSSProperties}
                          onMouseDown={mouseDown}
                     >
                         <div className="video-player__timeline-inner position-relative">
@@ -246,32 +291,36 @@ function VideoPlayer({savedTime}: Props) {
                                 />
                             </div>
 
-                            <button className="video-player__prev-10 video-player__line-item video-player__background recolor-svg i-svg"
-                                    type="button"
-                                    title="На 10 секунд назад"
-                                    onClick={setMinus10Sec}
+                            <button
+                                className="video-player__prev-10 video-player__line-item video-player__background recolor-svg i-svg"
+                                type="button"
+                                title="На 10 секунд назад"
+                                onClick={setMinus10Sec}
                             >
                                 <TimePrevIcon/>
                             </button>
 
-                            <button className="video-player__next-10 video-player__line-item video-player__background recolor-svg i-svg"
-                                    type="button"
-                                    title="На 10 секунд вперед"
-                                    onClick={setPlus10Sec}
+                            <button
+                                className="video-player__next-10 video-player__line-item video-player__background recolor-svg i-svg"
+                                type="button"
+                                title="На 10 секунд вперед"
+                                onClick={setPlus10Sec}
                             >
                                 <TimeNextIcon/>
                             </button>
 
-                            <span className="video-player__duration video-player__line-item video-player__background">
+                            <span
+                                className="video-player__duration video-player__line-item video-player__background">
                                 {formatVideoTime(currentTime)} / {formatVideoTime(duration)}
                             </span>
                         </div>
 
                         <div className="video-player__right flex flex-align-center">
-                            <button className="video-player__line-settings video-player__line-item video-player__background recolor-svg i-svg z-1000"
-                                    type="button"
-                                    title="Настройки"
-                                    onClick={() => setIsShowSettings(true)}
+                            <button
+                                className="video-player__line-settings video-player__line-item video-player__background recolor-svg i-svg z-1000"
+                                type="button"
+                                title="Настройки"
+                                onClick={() => setIsShowSettings(true)}
                             >
                                 <SettingsIcon/>
                             </button>
