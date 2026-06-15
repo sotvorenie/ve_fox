@@ -14,6 +14,7 @@ import VideoRecommended from "../components/blocks/video/VideoRecommended.tsx";
 
 import {useVideoStore} from "../store/useVideoStore.ts";
 import {usePlayerStore} from "../store/usePlayerStore.ts";
+import {useUserStore} from "../store/useUserStore.ts";
 
 function VideoPage() {
     const { id } = useParams<{ id: string }>();
@@ -25,6 +26,7 @@ function VideoPage() {
         getRecommendedVideos,
     } = useVideoStore()
     const {setVolume} = usePlayerStore()
+    const {isLogged} = useUserStore()
 
     const [isLiked, setIsLiked] = useState<boolean>(false)
     const [isWatchLater, setIsWatchLater] = useState<boolean>(false)
@@ -49,14 +51,20 @@ function VideoPage() {
 
     const updateVideo = async (id: number) => {
         await getVideo()
-        const [_, likeRes, saveTimeRes] =
-            await Promise.all([apiSetToHistory(id),
-                                      apiCheckIsLiked(id),
-                                      apiGetSavedTime(id),
-                                      getRecommendedVideos(+id)])
 
-        setIsLiked(likeRes.is_liked)
-        setSavedTime(saveTimeRes.time)
+        if (isLogged) {
+            const [_, likeRes, saveTimeRes] =
+                await Promise.all([
+                    apiSetToHistory(id),
+                    apiCheckIsLiked(id),
+                    apiGetSavedTime(id)
+                ])
+
+            setIsLiked(likeRes.is_liked)
+            setSavedTime(saveTimeRes.time)
+        }
+
+        await getRecommendedVideos(+id).then()
     }
 
     useEffect(() => {

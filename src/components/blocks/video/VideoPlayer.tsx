@@ -17,6 +17,7 @@ import TimeNextIcon from "../../../assets/images/icons/video-player/TimeNextIcon
 
 import {useVideoStore} from "../../../store/useVideoStore.ts";
 import {usePlayerStore} from "../../../store/usePlayerStore.ts";
+import {useUserStore} from "../../../store/useUserStore.ts";
 
 interface Props {
     readonly savedTime: number
@@ -48,6 +49,7 @@ function VideoPlayer({savedTime}: Props) {
         toggleIsFullscreen,
         clearData
     } = usePlayerStore();
+    const {isLogged} = useUserStore();
 
     const [progress, setProgress] = useState<number>(0);
     const [isMoving, setIsMoving] = useState<boolean>(false)
@@ -56,8 +58,9 @@ function VideoPlayer({savedTime}: Props) {
     const videoRef = useRef<HTMLVideoElement | null>(null)
     const timelineRef = useRef<HTMLDivElement | null>(null)
 
-    let timer: number
+    let hideControlsTimer: number
     let cursorTimer: number
+    let saveTimeTimer: number
 
     const settingsBtnRef = useRef<HTMLButtonElement | null>(null)
 
@@ -157,6 +160,22 @@ function VideoPlayer({savedTime}: Props) {
 
     useEffect(() => {
         clearData()
+
+        if (videoRef.current) {
+            videoRef.current.currentTime = savedTime
+
+            if (saveTimeTimer) clearTimeout(saveTimeTimer)
+
+            saveTimeTimer = setInterval(() => {
+                if (isPlaying && isLogged) {
+                    apiSaveTime(video.id, videoRef.current!.currentTime).then()
+                }
+            }, 5000)
+
+            return () => {
+                clearTimeout(saveTimeTimer)
+            }
+        }
     }, [video.id])
 
     useEffect(() => {
@@ -176,7 +195,7 @@ function VideoPlayer({savedTime}: Props) {
         }
 
         if (isPlaying && !isShowSettings) {
-            timer = setTimeout(() => {
+            hideControlsTimer = setTimeout(() => {
                 setIsShowControls(false)
             }, 2000)
 
@@ -186,7 +205,7 @@ function VideoPlayer({savedTime}: Props) {
         }
 
         return () => {
-            clearTimeout(timer)
+            clearTimeout(hideControlsTimer)
             clearTimeout(cursorTimer)
             sectionRef.current?.removeEventListener('mousemove', moveCursor)
         }
