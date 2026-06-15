@@ -12,5 +12,5 @@ export const apiGetAllVideos = async (page: number = 1, limit: number = 21, seed
 }
 
 export const apiGetRecommendedVideos = async (video_id: number, page: number = 1, limit: number = 21): Promise<VideosList> => {
-    return await apiFetch(`/video/recommended/${video_id}&page=${page}&limit=${limit}`)
+    return await apiFetch(`/video/recommended/${video_id}?page=${page}&limit=${limit}`)
 }
