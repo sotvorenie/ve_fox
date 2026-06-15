@@ -236,6 +236,12 @@ function VideoPlayer({savedTime}: Props) {
         }
     }, [isShowSettings])
 
+    useEffect(() => {
+        if (!videoRef.current) return
+
+        videoRef.current.volume = volume
+    }, [volume])
+
     return (
         <section className={
                     `video-player position-relative 
