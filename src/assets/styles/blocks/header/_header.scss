@@ -6,7 +6,7 @@
   background: #0f0f0f90;
   top: 0;
   padding-block: fluid(30, 15);
-  z-index: 100000;
+  z-index: 100001;
 
   &__btn-bar {
     @include abs-y;
@@ -43,24 +43,18 @@
   }
 
   &__avatar {
-    @include abs-y;
+    top: rem(40);
+    right: rem(40);
+    border-radius: 50%;
+    aspect-ratio: 1;
+    width: fluid(50, 40);
+    z-index: 100000;
+    transition:
+            width var(--transition-duration),
+            top var(--transition-duration);
 
-    right: fluid(40, 20);
-
-    @include hover {
-      .header__menu {
-        opacity: 1;
-        transform: translateY(0);
-        visibility: visible;
-        pointer-events: auto;
-      }
-    }
-
-    .img-container {
-      border-radius: 50%;
-      aspect-ratio: 1;
-      width: fluid(50, 40);
-      z-index: 100001;
+    &.is-active {
+      width: rem(120);
     }
   }
 

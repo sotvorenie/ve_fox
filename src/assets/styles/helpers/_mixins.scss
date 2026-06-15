@@ -46,10 +46,10 @@
 }
 
 @mixin square($size) {
-  width: if(type-of($size) == 'number', $size + px, $size);
-  height: if(type-of($size) == 'number', $size + px, $size);
-  min-height: if(type-of($size) == 'number', $size + px, $size);
-  min-width: if(type-of($size) == 'number', $size + px, $size);
+  width: if(type-of($size) == 'number', $size / 16 + rem, $size);
+  height: if(type-of($size) == 'number', $size / 16 + rem, $size);
+  min-height: if(type-of($size) == 'number', $size / 16 + rem, $size);
+  min-width: if(type-of($size) == 'number', $size / 16 + rem, $size);
 }
 
 @mixin fluid-square($max, $min) {

@@ -21,11 +21,6 @@ $grid-columns: 12 !default;
 .flex { display: flex !important; }
 .flex-column { flex-direction: column !important; }
 .flex-row { flex-direction: row !important; }
-.flex-center {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-}
 .flex-between {justify-content: space-between !important;}
 .flex-around {justify-content: space-around !important;}
 .flex-wrap {flex-wrap: wrap !important;}
@@ -41,6 +36,8 @@ $grid-columns: 12 !default;
 .position-sticky {position: sticky !important;}
 .absolute-center {@include abs-center;}
 .inset-0 {inset: 0 !important;}
+
+.radius-50 {border-radius: 50% !important;}
 
 .w-100 {width: 100% !important;}
 .h-100 {height: 100% !important;}

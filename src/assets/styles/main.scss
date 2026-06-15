@@ -4,6 +4,7 @@
 @use 'utils';
 @use 'globals';
 @use 'classes';
+@use 'transitions';
 
 @use 'blocks/input';
 @use 'blocks/video/video-item';
@@ -18,6 +19,7 @@
 @use 'blocks/auth/auth';
 
 @use 'blocks/header/header';
+@use 'blocks/header/settings';
 
 @use 'blocks/channel/channel';
 
