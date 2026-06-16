@@ -1,10 +1,10 @@
-import {ComponentType, SVGProps, useState} from "react";
-import {MouseEvent} from "react";
+import {ComponentType, SVGProps, useState, MouseEvent, useEffect} from "react";
+
+import {BASE_URL} from "../../../api/url.ts";
 
 import Portal from "../../common/Portal.tsx";
 import SettingsRedactUser from "../settings/settingsRedactUser.tsx";
 
-import avatarImage from "../../../assets/images/аватар.webp";
 import SettingsIcon from "../../../assets/images/icons/video-player/SettingsIcon.tsx";
 import UploadIcon from "../../../assets/images/icons/UploadIcon.tsx";
 import FilmIcon from "../../../assets/images/icons/FilmIcon.tsx";
@@ -18,11 +18,13 @@ interface Button {
 }
 
 function HeaderUser() {
-    const {isLogged} = useUserStore()
+    const {isLogged, user} = useUserStore()
 
     const [isVisibleSettings, setIsVisibleSettings] = useState<boolean>(false);
 
     const [isVisibleRedactUser, setIsVisibleRedactUser] = useState<boolean>(false)
+
+    const [activeBtnIndex, setActiveBtnIndex] = useState<number>(-1)
 
     const settingsButtons: Button[] = [
         {
@@ -46,34 +48,47 @@ function HeaderUser() {
     const handleButton = (e: MouseEvent<HTMLButtonElement>, index: number) => {
         e.stopPropagation()
 
+        setActiveBtnIndex(prev => prev === index ? -1 : index)
+
         if (index === 2) {
             setIsVisibleRedactUser(prev => !prev)
         }
     }
 
+    useEffect(() => {
+        if (!isVisibleSettings) {
+            setIsVisibleRedactUser(false)
+        }
+    }, [isVisibleSettings])
+
     return (
         <div className={`settings ${isVisibleSettings ? 'is-active' : ''}`}>
-            <Portal selector=".main-layout__content">
+            <Portal>
                 <button
-                    className={`header__avatar img-container cursor-pointer position-absolute ${isVisibleSettings ? 'is-active' : ''}`}
+                    className={`header__avatar img-container cursor-pointer position-absolute recolor-svg flex-center ${isVisibleSettings ? 'is-active' : ''}`}
                     type="button"
                     onClick={() => setIsVisibleSettings(prev => !prev)}
+                    title={user.name}
                 >
-                    <img src={avatarImage} alt=""/>
+                    {user.avatar_url ? (<img src={`${BASE_URL}/${user.avatar_url}`} alt=""/>) : (<UserIcon/>)}
                 </button>
             </Portal>
 
-            <Portal selector=".main-layout__content">
+            <Portal>
                 <div
                     className={`settings__inner position-fixed inset-0 z-10000 tr-opacity ${isVisibleSettings ? 'is-active' : ''}`}
                     onClick={() => setIsVisibleSettings(false)}
                 >
                     {settingsButtons.map((button: Button, index: number) => {
-                        if (index === 0 && !isLogged) return
+                        if ((index === 0 || index === 2) && !isLogged) return
 
                         return (
                             <button
-                                className={`settings__btn recolor-svg button-width-svg hover-color-accent position-absolute ${isVisibleSettings ? 'is-active' : ''}`}
+                                className={
+                                    `settings__btn recolor-svg button-width-svg hover-color-accent position-absolute 
+                                    ${isVisibleSettings ? 'is-visible' : ''} 
+                                    ${index === activeBtnIndex ? 'is-active' : ''}`
+                                }
                                 key={button.title}
                                 title={button.title}
                                 type="button"
@@ -86,7 +101,7 @@ function HeaderUser() {
                         )
                     })}
 
-                    <SettingsRedactUser isVisible={isVisibleRedactUser}/>
+                    <SettingsRedactUser isVisible={isVisibleRedactUser} setIsVisible={setIsVisibleRedactUser}/>
                 </div>
             </Portal>
         </div>

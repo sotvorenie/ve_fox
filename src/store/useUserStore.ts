@@ -1,5 +1,5 @@
 import {create} from "zustand";
-import {User, UserWithToken} from "../types/auth.ts";
+import {User, UserWithToken} from "../types/user.ts";
 import {apiCheckMe} from "../api/auth/auth.ts";
 
 interface UserState {
@@ -19,7 +19,8 @@ interface UserState {
 const emptyUser: User = {
     id: -1,
     name: '',
-    avatar_url: ''
+    avatar_url: '',
+    login: ''
 }
 
 export const useUserStore = create<UserState>((set, get) => ({
@@ -45,7 +46,8 @@ export const useUserStore = create<UserState>((set, get) => ({
             user: {
                 id: -1,
                 name: '',
-                avatar_url: ''
+                avatar_url: '',
+                login: ''
             },
             isLogged: false,
             token: ''

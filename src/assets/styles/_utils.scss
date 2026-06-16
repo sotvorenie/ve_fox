@@ -105,13 +105,18 @@
   overflow: hidden;
 }
 
-.mb-10 {
+.mb-10:not(:last-child) {
   margin-bottom: rem(10);
 }
-
-.mb-not-last-10 {
-
-  &:not(:last-child) {
-    margin-bottom: rem(10);
-  }
+.mb-15:not(:last-child) {
+  margin-bottom: rem(15);
+}
+.mb-20:not(:last-child) {
+  margin-bottom: rem(20);
+}
+.mb-30:not(:last-child) {
+  margin-bottom: rem(30);
+}
+.mb-40:not(:last-child) {
+  margin-bottom: rem(40);
 }

@@ -103,10 +103,12 @@ button {
   outline: none;
   color: inherit;
   padding: 0;
-}
+  transition: opacity var(--transition-duration);
 
-button:disabled {
-  pointer-events: none;
+  &:disabled {
+    opacity: 60%;
+    pointer-events: none;
+  }
 }
 
 input, textarea {

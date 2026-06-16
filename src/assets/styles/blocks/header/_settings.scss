@@ -18,15 +18,17 @@
     transition:
             background-color var(--transition-duration),
             right var(--transition-duration),
-            top var(--transition-duration);
+            top var(--transition-duration),
+            border var(--transition-duration);
     right: rem(40);
     top: rem(30);
+    border: var(--border-light-alt);
 
     @include hover() {
       background-color: color-mix(in srgb, var(--color-light-alt), transparent 70%);
     }
 
-    &.is-active {
+    &.is-visible {
       &:nth-child(1) {
         right: rem(170);
         top: rem(20);
@@ -45,6 +47,12 @@
       }
     }
 
+    &.is-active {
+      color: var(--color-accent);
+      background-color: color-mix(in srgb, var(--color-light-alt), transparent 70%);
+      border-color: var(--color-accent);
+    }
+
     svg {
       width: 60%;
     }
@@ -55,6 +63,20 @@
     min-height: rem(100);
     max-height: 50vh;
     background-color: var(--color-dark-alt);
-    border-radius: var(--radius-big);
+    border-radius: var(--radius-semi-big);
+    padding: rem(15);
+    border: var(--border-light-alt);
+  }
+
+  &__close {
+    @include square(52);
+
+    top: rem(-15);
+    right: rem(-15);
+    background-color: var(--color-dark-alt);
+  }
+
+  &__title {
+    margin-bottom: rem(20);
   }
 }
