@@ -2,7 +2,7 @@
 
 .recommended {
   overflow-y: auto;
-  padding-right: fluid(40, 10);
+  padding-right: rem(40);
 
   &__item {
     gap: rem(10);
@@ -29,8 +29,7 @@
     border-radius: var(--radius-medium);
 
     span {
-      @include fluid-text(16, 12);
-
+      flex-shrink: rem(16);
       z-index: 1001;
       bottom: rem(5);
       right: rem(8);
@@ -43,7 +42,7 @@
   }
 
   &__title {
-    @include fluid-text(15, 13)
+    flex-shrink: rem(15);
   }
 
   &__date, &__channel {

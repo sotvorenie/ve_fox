@@ -114,7 +114,7 @@ function SettingsRedactUser({isVisible, setIsVisible}: Readonly<Props>) {
     }, [name, login])
 
     return (
-        <SettingsBlock className={isVisible ? 'is-active' : ''} setIsVisible={setIsVisible}>
+        <SettingsBlock isVisible={isVisible} setIsVisible={setIsVisible}>
             <SettingsBlock.Title>Редактирование профиля</SettingsBlock.Title>
 
             <SettingsBlock.Content className="redact-user row">

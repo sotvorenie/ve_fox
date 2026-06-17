@@ -1,35 +1,39 @@
 import React from "react";
+import {AnimatePresence, motion} from "framer-motion";
 
-import CrossIcon from "../../../assets/images/icons/CrossIcon.tsx";
+import CloseBtn from "../../ui/closeBtn.tsx";
 
 interface Props {
+    isVisible: boolean
     children: React.ReactNode;
-    className: string;
     setIsVisible: (value:boolean) => void;
 }
 
 const Title = ({ children }: { children: React.ReactNode }) => (
-    <p className="settings__title h5">{children}</p>
+    <p className="settings__title h5 mb-20">{children}</p>
 )
 
 const Content = ({ children, className }: { children: React.ReactNode, className: string }) => (
     <div className={`settings__content ${className}`}>{children}</div>
 )
 
-function SettingsBlock({children, className, setIsVisible}: Readonly<Props>) {
+function SettingsBlock({children, isVisible, setIsVisible}: Readonly<Props>) {
     return (
-        <div className={`settings__block absolute-center tr-opacity ${className}`}
-             onClick={(e) => e.stopPropagation()}
-        >
-            <button className="settings__close recolor-svg hover-color-accent position-absolute radius-50 flex-center"
-                    type="button"
-                    onClick={() => setIsVisible(false)}
-            >
-                <CrossIcon/>
-            </button>
+        <AnimatePresence>
+            {isVisible && (
+                <motion.div
+                    className={`settings__block absolute-center`}
+                    onClick={(e) => e.stopPropagation()}
+                    initial={{opacity: 0}}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                >
+                    <CloseBtn closeFunc={() => setIsVisible(false)}/>
 
-            {children}
-        </div>
+                    {children}
+                </motion.div>
+            )}
+        </AnimatePresence>
     )
 }
 

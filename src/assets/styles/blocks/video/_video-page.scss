@@ -3,8 +3,8 @@
 .video-page {
 
   &__content {
-    padding-left: fluid(60, 20);
-    column-gap: fluid(20, 10);
-    padding-bottom: fluid(120, 80);
+    padding-left: rem(60);
+    column-gap: rem(20);
+    padding-bottom: rem(120);
   }
 }

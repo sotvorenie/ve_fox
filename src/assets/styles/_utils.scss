@@ -78,6 +78,10 @@
 }
 
 .hover-color-accent {
+  transition:
+          color var(--transition-duration),
+          border-color var(--transition-duration);
+
   @include hover {
     color: var(--color-accent);
     border-color: var(--color-accent);

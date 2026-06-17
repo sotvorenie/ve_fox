@@ -2,7 +2,7 @@
 
 .menu {
   width: fit-content;
-  padding: fluid(40, 20) fluid(30, 10);
+  padding: rem(40) rem(30);
   border-right: var(--border-light-alt);
 
   &__logo {
@@ -10,7 +10,7 @@
     column-gap: rem(10);
 
     svg {
-      width: fluid(80, 50);
+      width: rem(60);
     }
   }
 

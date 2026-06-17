@@ -22,8 +22,7 @@
     margin-bottom: rem(10);
 
     span {
-      @include fluid-text(16, 12);
-
+      font-size: rem(16);
       z-index: 1001;
       bottom: 5px;
       right: rem(8);
@@ -36,12 +35,12 @@
   }
 
   &__info {
-    column-gap: fluid(15, 5);
-    row-gap: fluid(20, 10);
+    column-gap: rem(15);
+    row-gap: rem(20);
   }
 
   &__avatar {
-    @include fluid-square(50, 30);
+    @include square(50);
 
     padding: 0;
     background: var(--color-light-alt);

@@ -10,6 +10,11 @@
     }
   }
 
+  &__title {
+    border-bottom: var(--border-light);
+    padding-bottom: rem(10);
+  }
+
   &__btn {
     @include square(50);
 
@@ -59,24 +64,12 @@
   }
 
   &__block {
-    width: 40vw;
+    width: rem(750);
     min-height: rem(100);
-    max-height: 50vh;
+    //max-height: 50vh;
     background-color: var(--color-dark-alt);
     border-radius: var(--radius-semi-big);
     padding: rem(15);
     border: var(--border-light-alt);
-  }
-
-  &__close {
-    @include square(52);
-
-    top: rem(-15);
-    right: rem(-15);
-    background-color: var(--color-dark-alt);
-  }
-
-  &__title {
-    margin-bottom: rem(20);
   }
 }

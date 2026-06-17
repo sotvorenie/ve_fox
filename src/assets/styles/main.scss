@@ -15,12 +15,16 @@
 @use 'blocks/total';
 @use 'blocks/toggle-button';
 @use 'blocks/loading';
+@use 'blocks/modal';
+@use 'blocks/close-btn';
 
 @use 'blocks/auth/auth';
 
 @use 'blocks/header/header';
 @use 'blocks/header/settings';
 @use 'blocks/header/redact-user';
+@use 'blocks/header/upload-video';
+@use 'blocks/header/channels';
 
 @use 'blocks/channel/channel';
 
