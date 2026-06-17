@@ -1,4 +1,4 @@
-import {ComponentType, SVGProps, useState, MouseEvent, useEffect} from "react";
+import {ComponentType, SVGProps, useState, useEffect} from "react";
 
 import {BASE_URL} from "../../../api/url.ts";
 
