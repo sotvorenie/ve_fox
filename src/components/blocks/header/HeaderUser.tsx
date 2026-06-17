@@ -13,8 +13,10 @@ import UserIcon from "../../../assets/images/icons/UserIcon.tsx";
 import {useUserStore} from "../../../store/useUserStore.ts";
 
 interface Button {
-    title: string;
-    icon: ComponentType<SVGProps<SVGSVGElement>>;
+    title: string
+    icon: ComponentType<SVGProps<SVGSVGElement>>
+    activeElement: boolean
+    func: () => void
 }
 
 function HeaderUser() {
@@ -24,36 +26,32 @@ function HeaderUser() {
 
     const [isVisibleRedactUser, setIsVisibleRedactUser] = useState<boolean>(false)
 
-    const [activeBtnIndex, setActiveBtnIndex] = useState<number>(-1)
-
     const settingsButtons: Button[] = [
         {
             title: 'Загрузить видео',
             icon: UploadIcon,
+            activeElement: false,
+            func: () => {},
         },
         {
             title: 'Кино',
             icon: FilmIcon,
+            activeElement: false,
+            func: () => {},
         },
         {
             title: 'Редактировать профиль',
             icon: UserIcon,
+            activeElement: isVisibleRedactUser,
+            func: () => {setIsVisibleRedactUser(prev => !prev)},
         },
         {
             title: 'Настройки',
             icon: SettingsIcon,
+            activeElement: false,
+            func: () => {},
         },
     ]
-
-    const handleButton = (e: MouseEvent<HTMLButtonElement>, index: number) => {
-        e.stopPropagation()
-
-        setActiveBtnIndex(prev => prev === index ? -1 : index)
-
-        if (index === 2) {
-            setIsVisibleRedactUser(prev => !prev)
-        }
-    }
 
     useEffect(() => {
         if (!isVisibleSettings) {
@@ -87,12 +85,15 @@ function HeaderUser() {
                                 className={
                                     `settings__btn recolor-svg button-width-svg hover-color-accent position-absolute 
                                     ${isVisibleSettings ? 'is-visible' : ''} 
-                                    ${index === activeBtnIndex ? 'is-active' : ''}`
+                                    ${button.activeElement ? 'is-active' : ''}`
                                 }
                                 key={button.title}
                                 title={button.title}
                                 type="button"
-                                onClick={(e) => handleButton(e, index)}
+                                onClick={(e) => {
+                                    e.stopPropagation()
+                                    button.func()
+                                }}
                             >
                                 <div className="pointer-none flex-center">
                                     <button.icon/>
