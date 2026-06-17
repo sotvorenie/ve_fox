@@ -873,6 +873,16 @@ input, textarea {
   grid-column: 1/-1;
 }
 
+.gap-10 {
+  --column-gap: 0.625rem;
+  --row-gap: 0.625rem;
+}
+
+.gap-20 {
+  --column-gap: 1.25rem;
+  --row-gap: 1.25rem;
+}
+
 .tr-opacity {
   opacity: 0;
   transition: opacity var(--transition-duration);

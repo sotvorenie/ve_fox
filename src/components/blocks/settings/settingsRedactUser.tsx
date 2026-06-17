@@ -1,22 +1,17 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
-import {BASE_URL} from "../../../api/url.ts";
+import {apiRedactUserName} from "../../../api/user/user.ts";
 
-import {UserAvatar} from "../../../types/user.ts";
-
-import {apiRedactUserData, apiRedactUserAvatar} from "../../../api/user/user.ts";
-
-import {showConfirm, showError} from "../../../utils/modals.ts";
+import {showConfirm} from "../../../utils/modals.ts";
 
 import SettingsBlock from "./settingsBlock.tsx";
 import InputUi from "../../ui/InputUi.tsx";
 import ButtonUi from "../../ui/ButtonUi.tsx";
 
-import RedactIcon from "../../../assets/images/icons/RedactIcon.tsx";
-import UserIcon from "../../../assets/images/icons/UserIcon.tsx";
-
 import {useUserStore} from "../../../store/useUserStore.ts";
+import SettingsRedactPassword from "./settingsRedactPassword.tsx";
+import SettingsRedactAvatar from "./settingsRedactAvatar.tsx";
 
 interface Props {
     isVisible: boolean
@@ -28,29 +23,24 @@ function SettingsRedactUser({isVisible, setIsVisible}: Readonly<Props>) {
 
     const {logOut, user} = useUserStore()
 
-    const avatarInputRef = useRef<HTMLInputElement | null>(null)
-
     const [name, setName] = useState<string>("")
-    const [login, setLogin] = useState<string>("")
 
     const [isVisibleRedact, setIsVisibleRedact] = useState<boolean>(false)
-
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const handleRedact = async () => {
         const confirm = await showConfirm(
-            'Редактирование профиля',
-            'Вы действительно хотите редактировать данные профиля?'
+            'Редактирование имени пользователя',
+            'Вы действительно хотите редактировать имя пользователя?'
         )
 
         if (confirm) {
             try {
                 setIsLoading(true)
 
-                await apiRedactUserData(name, login)
+                await apiRedactUserName(name)
 
                 user.name = name
-                user.login = login
             } catch (err) {
                 console.error(err)
             } finally {
@@ -71,69 +61,20 @@ function SettingsRedactUser({isVisible, setIsVisible}: Readonly<Props>) {
         }
     }
 
-    const handleAvatar = () => {
-        if (isLoading) return
-
-        avatarInputRef.current?.click()
-    }
-
-    const updateAvatar = async () => {
-        if (!avatarInputRef.current) return
-
-        const file = avatarInputRef.current.files?.[0]
-
-        if (file) {
-            setIsLoading(true)
-
-            try {
-                const response: UserAvatar = await apiRedactUserAvatar(file)
-
-                if (response.new_avatar_url) {
-                    user.avatar_url = response.new_avatar_url
-                }
-            } catch (err) {
-                console.error(err)
-
-                await showError(
-                    'Ошибка загрузки фото',
-                    'Не удалось загрузить аватар..'
-                )
-            } finally {
-                setIsLoading(false)
-            }
-        }
-    }
-
     useEffect(() => {
         setName(user.name)
-        setLogin(user.login)
     }, [user])
 
     useEffect(() => {
-        setIsVisibleRedact(name !== user.name || login !== user.login)
-    }, [name, login])
+        setIsVisibleRedact(name !== user.name && name?.length > 0)
+    }, [name])
 
     return (
         <SettingsBlock isVisible={isVisible} setIsVisible={setIsVisible}>
             <SettingsBlock.Title>Редактирование профиля</SettingsBlock.Title>
 
             <SettingsBlock.Content className="redact-user row">
-                <div className="redact-user__img-container img-container position-relative recolor-svg col-6 aspect-1 flex-center"
-                     title="Редактировать аватар"
-                     onClick={handleAvatar}
-                >
-                    {user.avatar_url ? (<img src={`${BASE_URL}/${user.avatar_url}`} alt=""/>) : (<UserIcon/>)}
-
-                    <RedactIcon className="absolute-center tr-opacity z-1 pointer-none"/>
-
-                    <input
-                        type="file"
-                        className="visually-hidden"
-                        accept="image/*"
-                        ref={avatarInputRef}
-                        onChange={updateAvatar}
-                    />
-                </div>
+                <SettingsRedactAvatar isLoading={isLoading} setIsLoading={setIsLoading}/>
 
                 <div className="redact-user__right col-6 flex flex-column">
                     <InputUi
@@ -143,17 +84,10 @@ function SettingsRedactUser({isVisible, setIsVisible}: Readonly<Props>) {
                         visibleCounter={true}
                         value={name}
                         setValue={setName}
-                        className="mb-40"
+                        className="mb-30"
                     />
-                    <InputUi
-                        name="login"
-                        id="login"
-                        title="Логин"
-                        visibleCounter={true}
-                        value={login}
-                        setValue={setLogin}
-                        className="mb-40"
-                    />
+
+                    <SettingsRedactPassword/>
 
                     <ButtonUi
                         className="redact-user__redact w-100 mb-20"
