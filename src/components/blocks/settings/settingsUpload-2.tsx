@@ -5,14 +5,18 @@ import InputUi from "../../ui/InputUi.tsx";
 import VideoFileIcon from "../../../assets/images/icons/VideoFileIcon.tsx";
 import PhotoFileIcon from "../../../assets/images/icons/PhotoFileIcon.tsx";
 
-function SettingsUpload2() {
+interface Props {
+    className: string
+}
+
+function SettingsUpload2({className}: Readonly<Props>) {
     const videoInputRef = useRef<HTMLInputElement | null>(null);
     const previewInputRef = useRef<HTMLInputElement | null>(null);
 
     const [videoName, setVideoName] = useState<string>("")
 
     return (
-        <>
+        <div className={className}>
             <InputUi
                 className="mb-20"
                 name="video"
@@ -53,7 +57,7 @@ function SettingsUpload2() {
                     </div>
                 </button>
             </div>
-        </>
+        </div>
     )
 }
 

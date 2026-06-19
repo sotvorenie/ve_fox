@@ -92,4 +92,15 @@
       }
     }
   }
+
+  &__changed-channel {
+
+    &, &_right {
+      gap: rem(10);
+    }
+
+    &_img-container {
+      width: rem(35);
+    }
+  }
 }

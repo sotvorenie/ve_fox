@@ -11,3 +11,8 @@ export interface Channel {
     avatar_url: string
     date: string
 }
+
+export interface ChannelsListResponse {
+    channels: ChannelForList[]
+    total: number
+}

@@ -27,6 +27,21 @@ function SettingsUploadVideo({isVisible, setIsVisible}: Readonly<Props>) {
         },
     ]
 
+    const pages = [
+        {
+            key: 'page-1',
+            Component: SettingsUpload1,
+        },
+        {
+            key: 'page-2',
+            Component: SettingsUpload2,
+        },
+        {
+            key: 'page-3',
+            Component: SettingsUpload3,
+        },
+    ]
+
     return (
         <SettingsBlock isVisible={isVisible} setIsVisible={setIsVisible}>
             <SettingsBlock.Title>Загрузка видео</SettingsBlock.Title>
@@ -45,15 +60,9 @@ function SettingsUploadVideo({isVisible, setIsVisible}: Readonly<Props>) {
                     ))}
                 </div>
 
-                {activeTab === 0 && (
-                    <SettingsUpload1/>
-                )}
-                {activeTab === 1 && (
-                    <SettingsUpload2/>
-                )}
-                {activeTab === 2 && (
-                    <SettingsUpload3/>
-                )}
+                {pages?.map((Page, index) => (
+                    <Page.Component key={Page.key} className={activeTab === index ? '' : 'visually-hidden'}/>
+                ))}
 
                 <div className="row mt-auto">
                     <ButtonUi func={() => setIsVisible(false)} className='col-6'>Отмена</ButtonUi>

@@ -3,7 +3,11 @@ import {useState} from "react";
 import PlusIcon from "../../../assets/images/icons/PlusIcon.tsx";
 import CrossIcon from "../../../assets/images/icons/CrossIcon.tsx";
 
-function SettingsUpload3() {
+interface Props {
+    className: string
+}
+
+function SettingsUpload3({className}: Readonly<Props>) {
     const [videoTag, setVideoTag] = useState<string>("")
     const [tagsList, setTagsList] = useState<string[]>([])
 
@@ -22,7 +26,7 @@ function SettingsUpload3() {
     }
 
     return (
-        <div className="upload-video__tags">
+        <div className={`upload-video__tags ${className}`}>
             <div className="upload-video__tags-head flex mb-30">
                 <div className="upload-video__tags-input-wrapper position-relative w-100">
                     <input

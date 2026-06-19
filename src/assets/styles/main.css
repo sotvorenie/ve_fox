@@ -1587,18 +1587,32 @@ input, textarea {
   width: 100%;
   height: auto;
 }
-
-.channels__search {
+.upload-video__changed-channel, .upload-video__changed-channel_right {
   gap: 0.625rem;
 }
-.channels__search-btn {
-  background-color: color-mix(in srgb, var(--color-dark), transparent 60%);
-  flex: 0 0 3.75rem;
-  border-radius: var(--radius-medium);
-  border: 1px solid currentColor;
+.upload-video__changed-channel_img-container {
+  width: 2.1875rem;
 }
-.channels__search-btn svg {
-  width: 55%;
+
+.upload-modal__input {
+  padding-block: 0.625rem;
+}
+.upload-modal__list {
+  gap: 0.625rem;
+}
+.upload-modal__btn {
+  border: var(--border-light-alt);
+  border-radius: var(--radius-medium);
+  padding: 0.625rem;
+  gap: 1.25rem;
+}
+.upload-modal__btn.is-active {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  pointer-events: none;
+}
+.upload-modal__img-container {
+  width: 2.5rem;
 }
 
 .channel__banner {
