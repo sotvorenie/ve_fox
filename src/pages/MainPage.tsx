@@ -15,13 +15,15 @@ function MainPage() {
     const {setPage: setRouterPage} = usePagesStore(useShallow((state) => ({ ...state })))
 
     const [page, setPage] = useState<number>(1)
-    const [hasMore, setHasMore] = useState<boolean>(false)
+    const [hasMore, setHasMore] = useState<boolean>(true)
     const [videos, setVideos] = useState<VideoForList[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const seed: number = Math.random() * 2 - 1
 
     const getAllVideos = async (): Promise<void> => {
+        if (!hasMore) return
+
         try {
             setIsLoading(true)
 

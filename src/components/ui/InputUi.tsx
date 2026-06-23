@@ -1,5 +1,6 @@
+import React, {forwardRef} from "react";
 
-interface Props {
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string
     id: string
     title: string
@@ -11,18 +12,17 @@ interface Props {
     className?: string
 }
 
-function InputUi({
-                     name,
-                     id,
-                     title,
-                     visibleCounter = true,
-                     maxLength = 20,
-                     minLength = 0,
-                     value,
-                     setValue,
-                     className,
-}: Readonly<Props>) {
-
+const InputUi = forwardRef<HTMLInputElement, Props>(({
+    name,
+    id,
+    title,
+    visibleCounter = true,
+    maxLength = 20,
+    minLength = 0,
+    value,
+    setValue,
+    className,
+}, ref) => {
     return (
         <label className={`input position-relative ${className}`} htmlFor={id}>
             <span className="input__name input__text position-absolute">{title}</span>
@@ -35,6 +35,7 @@ function InputUi({
                    onChange={(e) => setValue(e.target.value)}
                    maxLength={maxLength}
                    minLength={minLength}
+                   ref={ref}
             />
 
             {visibleCounter && (
@@ -49,6 +50,6 @@ function InputUi({
             ></span>
         </label>
     )
-}
+})
 
 export default InputUi;

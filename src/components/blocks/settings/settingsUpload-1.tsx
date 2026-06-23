@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 import {BASE_URL} from "../../../api/url.ts";
 
@@ -6,13 +6,19 @@ import {ChannelForList, ChannelsListResponse} from "../../../types/channel.ts";
 import {Section, SectionResponse} from "../../../types/section.ts";
 import {SuccessResponse} from "../../../types/success.ts";
 
-import {apiGetChannels, apiGetChannelSections, apiCheckHasChannelSections} from "../../../api/channel/channel.ts";
+import {
+    apiGetChannels,
+    apiGetChannelSections,
+    apiCheckHasChannelSections,
+    apiCreateNewSection
+} from "../../../api/channel/channel.ts";
 
 import ButtonUi from "../../ui/ButtonUi.tsx";
 import Modal from "../../common/Modal.tsx";
 import SettingsUploadModal from "./settingsUploadModal.tsx";
 
 import LoadingIcon from "../../../assets/images/icons/LoadingIcon.tsx";
+import InputUi from "../../ui/InputUi.tsx";
 
 interface Props {
     className: string
@@ -21,16 +27,20 @@ interface Props {
 function SettingsUpload1({className}: Readonly<Props>) {
     const [isVisibleChannels, setIsVisibleChannels] = useState<boolean>(false)
     const [isVisibleSections, setIsVisibleSections] = useState<boolean>(false)
+    const [isVisibleCreateSection, setIsVisibleCreateSection] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const [channelsArray, setChannelsArray] = useState<ChannelForList[]>([])
-    const [activeChannel, setActiveChannel] = useState<ChannelForList>()
+    const [activeChannel, setActiveChannel] = useState<ChannelForList | null>()
     const [channelsTotal, setChannelsTotal] = useState<number>(0)
 
     const [hasSections, setHasSections] = useState<boolean>(false)
     const [sectionsArray, setSectionsArray] = useState<Section[]>([])
-    const [activeSection, setActiveSection] = useState<Section>()
+    const [activeSection, setActiveSection] = useState<Section | null>()
     const [sectionsTotal, setSectionsTotal] = useState<number>(0)
+
+    const [newSectionName, setNewSectionName] = useState<string>('')
+    const newSectionNameRef = useRef<HTMLInputElement>(null)
 
     const getChannels = async () => {
         try {
@@ -47,7 +57,12 @@ function SettingsUpload1({className}: Readonly<Props>) {
         }
     }
     const changeChannel = async (id: number) => {
-        const channel = channelsArray.find((c: ChannelForList) => c.id === id)
+        if (activeChannel?.id === id) {
+            setActiveChannel(null)
+            return
+        }
+
+        const channel = channelsArray.find((c: ChannelForList) => c?.id === id)
 
         if (channel) {
             setActiveChannel(channel)
@@ -69,7 +84,9 @@ function SettingsUpload1({className}: Readonly<Props>) {
 
     const getSections = async () => {
         try {
-            const response: SectionResponse = await apiGetChannelSections(activeChannel!.id)
+            if (!activeChannel?.id) return
+
+            const response: SectionResponse = await apiGetChannelSections(activeChannel.id)
 
             if (response.sections?.length) {
                 setSectionsArray(response.sections)
@@ -80,6 +97,11 @@ function SettingsUpload1({className}: Readonly<Props>) {
         }
     }
     const changeSection = (id: number) => {
+        if (activeSection?.id === id) {
+            setActiveSection(null)
+            return
+        }
+
         const section = sectionsArray.find((s: Section) => s.id === id)
 
         if (section) {
@@ -87,6 +109,40 @@ function SettingsUpload1({className}: Readonly<Props>) {
             setIsVisibleSections(false)
         }
     }
+
+    const handleCancelInCreateSection = () => {
+        setIsVisibleCreateSection(false)
+        setNewSectionName('')
+    }
+
+    const createSection = async () => {
+        try {
+            setIsLoading(true)
+
+            const section: Section = await apiCreateNewSection(activeChannel!.id, newSectionName)
+
+            setActiveSection(section)
+            setIsVisibleCreateSection(false)
+            setSectionsArray(prev => [...prev, section])
+            setHasSections(true)
+            setSectionsTotal(prev => prev + 1)
+        } catch (err) {
+            console.error(err)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const sectionTitleText = () => {
+        if (activeSection) return `Выбранный плейлист: ${activeSection.name}`
+        return hasSections ? 'Выберите плейлист или создайте новый' : 'Создайте новый плейлист'
+    }
+
+    useEffect(() => {
+        if (isVisibleCreateSection && newSectionNameRef.current) {
+            newSectionNameRef.current.focus()
+        }
+    }, [isVisibleCreateSection])
 
     return (
         <div className={className}>
@@ -119,6 +175,7 @@ function SettingsUpload1({className}: Readonly<Props>) {
                     listArr={channelsArray}
                     activeItem={activeChannel}
                     total={channelsTotal}
+                    emptyText="Список каналов пуст.."
                 />
             </Modal>
 
@@ -128,15 +185,25 @@ function SettingsUpload1({className}: Readonly<Props>) {
                 </div>
             )}
 
-            {hasSections && !isLoading && (
+            {!isLoading && activeChannel && (
                 <>
-                    <p className="mb-10 text-w500">Выберите раздел:</p>
-                    <ButtonUi
-                        func={() => setIsVisibleSections(true)}
-                        className="w-100"
-                    >
-                        {activeSection ? 'Изменить..' : 'Выбрать..'}
-                    </ButtonUi>
+                    <p className="mb-10 text-w500">{sectionTitleText()}</p>
+                    <div className="row">
+                        {hasSections && (
+                            <ButtonUi
+                                func={() => setIsVisibleSections(true)}
+                                className="col-6"
+                            >
+                                {activeSection ? 'Изменить..' : 'Выбрать..'}
+                            </ButtonUi>
+                        )}
+                        <ButtonUi
+                            func={() => setIsVisibleCreateSection(true)}
+                            className={hasSections ? 'col-6' : 'col-12'}
+                        >
+                            {activeSection ? 'Создать плейлист' : 'Создать'}
+                        </ButtonUi>
+                    </div>
                     <Modal visible={isVisibleSections} setVisible={setIsVisibleSections}>
                         <SettingsUploadModal
                             apiFunc={getSections}
@@ -144,7 +211,42 @@ function SettingsUpload1({className}: Readonly<Props>) {
                             listArr={sectionsArray}
                             activeItem={activeSection}
                             total={sectionsTotal}
+                            emptyText="Список плейлистов пуст.."
                         />
+                    </Modal>
+                    <Modal visible={isVisibleCreateSection}
+                           setVisible={setIsVisibleCreateSection}
+                           closeVisible={!isLoading}
+                    >
+                        <>
+                            <p className="mb-15 text-w500">Создать новый плейлист:</p>
+                            <InputUi
+                                ref={newSectionNameRef}
+                                className="mb-20"
+                                name="section"
+                                id="section"
+                                title="Название"
+                                value={newSectionName}
+                                setValue={setNewSectionName}
+                            />
+
+                            <div className="row gap-10">
+                                <ButtonUi
+                                    func={handleCancelInCreateSection}
+                                    className="col-6"
+                                    isLoading={isLoading}
+                                >
+                                    Отмена
+                                </ButtonUi>
+                                <ButtonUi
+                                    func={createSection}
+                                    className="col-6"
+                                    isLoading={isLoading}
+                                >
+                                    Создать плейлист
+                                </ButtonUi>
+                            </div>
+                        </>
                     </Modal>
                 </>
             )}

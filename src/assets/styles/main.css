@@ -1609,7 +1609,6 @@ input, textarea {
 .upload-modal__btn.is-active {
   color: var(--color-accent);
   border-color: var(--color-accent);
-  pointer-events: none;
 }
 .upload-modal__img-container {
   width: 2.5rem;

@@ -1,7 +1,7 @@
 export interface Section {
     id: number
     name: string
-    preview_url: string
+    channel_id: number
 }
 
 export interface SectionResponse {
