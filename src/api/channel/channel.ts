@@ -3,10 +3,10 @@ import {VideosList} from "../../types/video.ts";
 import {SectionResponse} from "../../types/section.ts";
 import {SuccessResponse} from "../../types/success.ts";
 
-import {apiFetch} from "../index.ts";
+import {apiGet} from "../index.ts";
 
 export const apiGetChannel = (id: number): Promise<Channel> => {
-    return apiFetch(`/channel/${id}`)
+    return apiGet(`/channel/${id}`)
 }
 
 export const apiGetVideosFromChannel = (
@@ -14,17 +14,17 @@ export const apiGetVideosFromChannel = (
     page: number,
     isNew: boolean = true
 ):Promise<VideosList> => {
-    return apiFetch(`/channel/${id}/videos?page=${page}&is_new=${isNew}`)
+    return apiGet(`/channel/${id}/videos?page=${page}&is_new=${isNew}`)
 }
 
 export const apiGetChannels = (): Promise<ChannelsListResponse> => {
-    return apiFetch('/channel/all')
+    return apiGet('/channel/all')
 }
 
 export const apiGetChannelSections = (channelId: number): Promise<SectionResponse> => {
-    return apiFetch(`/channel/${channelId}/sections`)
+    return apiGet(`/channel/${channelId}/sections`)
 }
 
 export const apiCheckHasChannelSections = (channelId: number): Promise<SuccessResponse> => {
-    return apiFetch(`/channel/${channelId}/has_sections`)
+    return apiGet(`/channel/${channelId}/has_sections`)
 }

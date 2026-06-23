@@ -3,8 +3,6 @@ import {useShallow} from "zustand/react/shallow";
 
 import {VideoForList, VideosList} from "../../../types/video.ts";
 
-import {allApiNames} from "../../../api";
-
 import {apiGetHistory} from "../../../api/history/history.ts";
 import {apiGetListLikes} from "../../../api/like/like.ts";
 import {apiGetListWatchLater} from "../../../api/watch_later/watchLater.ts";
@@ -34,13 +32,13 @@ function MainPageDefault({name, index}: Props) {
             let data: VideosList
 
             switch (name) {
-                case allApiNames.history:
+                case 'history':
                     data = await apiGetHistory()
                     break
-                case allApiNames.like:
+                case 'like':
                     data = await apiGetListLikes()
                     break
-                case allApiNames.watch_later:
+                case 'watch_later':
                     data = await apiGetListWatchLater()
                     break
                 default:

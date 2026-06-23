@@ -1,7 +1,7 @@
 import {SearchResponse} from "../../types/search.ts";
 
-import {apiFetch} from "../index.ts";
+import {apiGet} from "../index.ts";
 
-export const apiSearch = async (title: string, page: number): Promise<SearchResponse> => {
-    return await apiFetch(`/search?value=${title}&page=${page}`)
+export const apiSearch = (title: string, page: number): Promise<SearchResponse> => {
+    return apiGet(`/search?value=${title}&page=${page}`)
 }

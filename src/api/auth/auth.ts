@@ -1,21 +1,22 @@
-import {UserWithToken} from "../../types/auth.ts";
+import {UserWithToken} from "../../types/user.ts";
 
-import {apiFetch} from "../index.ts";
+import {apiPost, apiGet} from "../index.ts";
 
-export const apiAuth = async (login: string, password: string): Promise<UserWithToken> => {
-    return await apiFetch(`/auth/login`, {
-        method: 'POST',
-        body: JSON.stringify({ login, password })
+export const apiAuth = (login: string, password: string): Promise<UserWithToken> => {
+    return apiPost(`/auth/login`, {
+        login,
+        password
     })
 }
 
-export const apiRegister = async (login: string, password: string, name: string): Promise<UserWithToken> => {
-    return await apiFetch(`/auth/register`, {
-        method: 'POST',
-        body: JSON.stringify({ login, password, name })
+export const apiRegister = (login: string, password: string, name: string): Promise<UserWithToken> => {
+    return apiPost(`/auth/register`, {
+        login,
+        password,
+        name
     })
 }
 
-export const apiCheckMe = async (): Promise<UserWithToken> => {
-    return await apiFetch('/auth/me')
+export const apiCheckMe = (): Promise<UserWithToken> => {
+    return apiGet('/auth/me')
 }

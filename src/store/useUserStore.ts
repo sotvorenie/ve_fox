@@ -20,7 +20,6 @@ const emptyUser: User = {
     id: -1,
     name: '',
     avatar_url: '',
-    login: ''
 }
 
 export const useUserStore = create<UserState>((set, get) => ({
@@ -47,7 +46,6 @@ export const useUserStore = create<UserState>((set, get) => ({
                 id: -1,
                 name: '',
                 avatar_url: '',
-                login: ''
             },
             isLogged: false,
             token: ''
