@@ -1,9 +1,9 @@
-import {Channel, ChannelsListResponse} from "../../types/channel.ts";
-import {VideosList} from "../../types/video.ts";
-import {Section, SectionResponse} from "../../types/section.ts";
-import {SuccessResponse} from "../../types/success.ts";
+import {Channel, ChannelsListResponse} from "@/types/channel";
+import {VideosList} from "@/types/video";
+import {Section, SectionResponse} from "@/types/section";
+import {SuccessResponse} from "@/types/success";
 
-import {apiGet, apiPost} from "../index.ts";
+import {apiGet, apiPost} from "@api/index";
 
 export const apiGetChannel = (id: number): Promise<Channel> => {
     return apiGet(`/channel/${id}`)

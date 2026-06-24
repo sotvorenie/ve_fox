@@ -1,17 +1,17 @@
 import {ComponentType, SVGProps, useState, useEffect, MouseEvent} from "react";
 
-import {BASE_URL} from "@/api/url.ts";
+import {BASE_URL} from "@api/url";
 
-import Portal from "@/components/common/Portal.tsx";
-import SettingsRedactUser from "@/components/blocks/settings/settingsRedactUser.tsx";
-import UploadVideo from "@/components/blocks/settings/upload/uploadVideo.tsx";
+import Portal from "@common/Portal";
+import SettingsRedactUser from "@settings/settingsRedactUser";
+import UploadVideo from "@settings/upload/uploadVideo";
 
-import SettingsIcon from "@/assets/images/icons/video-player/SettingsIcon.tsx";
-import UploadIcon from "@/assets/images/icons/UploadIcon.tsx";
-import FilmIcon from "@/assets/images/icons/FilmIcon.tsx";
-import UserIcon from "@/assets/images/icons/UserIcon.tsx";
+import SettingsIcon from "@icons/video-player/SettingsIcon";
+import UploadIcon from "@icons/UploadIcon";
+import FilmIcon from "@icons/FilmIcon";
+import UserIcon from "@icons/UserIcon";
 
-import {useUserStore} from "@/store/useUserStore.ts";
+import {useUserStore} from "@store/useUserStore";
 
 interface Button {
     title: string

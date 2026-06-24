@@ -1,7 +1,7 @@
-import {LikeResponse} from "../../types/like.ts";
-import {VideosList} from "../../types/video.ts";
+import {LikeResponse} from "@/types/like";
+import {VideosList} from "@/types/video";
 
-import {apiGet} from "../index.ts";
+import {apiGet} from "@api/index";
 
 export const apiLike = (videoId: number): Promise<LikeResponse> => {
     return apiGet(`/like/${videoId}`)

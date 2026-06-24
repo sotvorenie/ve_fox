@@ -1,9 +1,9 @@
 import {Link, useNavigate} from "react-router-dom";
 
-import useWidthWatcher from "@/composables/useWidthWatcher.ts";
+import useWidthWatcher from "@composables/useWidthWatcher";
 
-import ArrowIcon from "@/assets/images/icons/ArrowIcon.tsx";
-import Logo from "@/assets/images/Logo.tsx";
+import ArrowIcon from "@icons/ArrowIcon";
+import Logo from "@icons/Logo";
 
 interface Props {
     readonly isVideoPage?: boolean

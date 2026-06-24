@@ -1,16 +1,16 @@
 import {useEffect, useState} from "react";
 import {useShallow} from "zustand/react/shallow";
 
-import {VideoForList, VideosList} from "@/types/video.ts";
+import {VideoForList, VideosList} from "@/types/video";
 
-import {apiGetHistory} from "@/api/history/history.ts";
-import {apiGetListLikes} from "@/api/like/like.ts";
-import {apiGetListWatchLater} from "@/api/watch_later/watchLater.ts";
+import {apiGetHistory} from "@api/history/history";
+import {apiGetListLikes} from "@api/like/like";
+import {apiGetListWatchLater} from "@api/watch_later/watchLater";
 
-import VideoItem from "@/components/common/VideoItem.tsx";
-import ListColumnSkeleton from "@/components/ui/skeletons/ListColumnSkeleton.tsx";
+import VideoItem from "@common/VideoItem";
+import ListColumnSkeleton from "@ui/skeletons/ListColumnSkeleton";
 
-import {usePagesStore} from "@/store/usePagesStore.ts";
+import {usePagesStore} from "@store/usePagesStore";
 
 interface Props {
     readonly name: string;

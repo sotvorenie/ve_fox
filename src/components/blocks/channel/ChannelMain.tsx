@@ -1,6 +1,6 @@
-import {VideoForList} from "@/types/video.ts";
+import {VideoForList} from "@/types/video";
 
-import VideoItem from "@/components/common/VideoItem.tsx";
+import VideoItem from "@common/VideoItem";
 
 interface VideoProps {
     readonly videos: VideoForList[];

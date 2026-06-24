@@ -1,6 +1,6 @@
-import {Video} from "../../types/video.ts";
+import {Video} from "@/types/video";
 
-import {apiPost} from "../index.ts";
+import {apiPost} from "@api/index";
 
 export const apiUploadVideo = (
     video: File,

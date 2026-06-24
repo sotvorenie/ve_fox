@@ -1,7 +1,7 @@
-import {SuccessResponse} from "../../types/success.ts";
-import {VideosList} from "../../types/video.ts";
+import {SuccessResponse} from "@/types/success";
+import {VideosList} from "@/types/video";
 
-import {apiGet} from "../index.ts";
+import {apiGet} from "@api/index";
 
 export const apiSetToHistory = (videoId: number): Promise<SuccessResponse> => {
     return apiGet(`/history/set_to_history/${videoId}`)

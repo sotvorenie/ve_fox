@@ -1,7 +1,7 @@
 import {useState} from "react";
 
-import PlusIcon from "@/assets/images/icons/PlusIcon.tsx";
-import CrossIcon from "@/assets/images/icons/CrossIcon.tsx";
+import PlusIcon from "@icons/PlusIcon";
+import CrossIcon from "@icons/CrossIcon";
 
 interface Props {
     className: string

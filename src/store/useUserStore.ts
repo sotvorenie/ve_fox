@@ -1,6 +1,8 @@
 import {create} from "zustand";
-import {User, UserWithToken} from "../types/user.ts";
-import {apiCheckMe} from "../api/auth/auth.ts";
+
+import {User, UserWithToken} from "@/types/user";
+
+import {apiCheckMe} from "@api/auth/auth";
 
 interface UserState {
     isLogged: boolean

@@ -1,16 +1,16 @@
 import {Link, Outlet, useNavigate} from "react-router-dom";
 import {useShallow} from "zustand/react/shallow";
 
-import {Menu} from "../types/menu.ts";
+import {Menu} from "@/types/menu";
 
-import menuItems from "../data/menuLinks.ts";
+import menuItems from "@data/menuLinks";
 
-import Header from "../components/blocks/header/Header.tsx";
+import Header from "@header/Header";
 
-import Logo from "../assets/images/Logo.tsx";
+import Logo from "@icons/Logo";
 
-import {usePagesStore} from "../store/usePagesStore.ts";
-import {useUserStore} from "../store/useUserStore.ts";
+import {usePagesStore} from "@store/usePagesStore";
+import {useUserStore} from "@store/useUserStore";
 
 function MainLayout() {
     const navigate = useNavigate();

@@ -1,9 +1,9 @@
-import {Menu} from "../types/menu.ts";
+import {Menu} from "@/types/menu";
 
-import HomeIcon from "../assets/images/icons/HomeIcon.tsx";
-import HistoryIcon from "../assets/images/icons/HistoryIcon.tsx";
-import LikeIcon from "../assets/images/icons/LikeIcon.tsx";
-import LaterIcon from "../assets/images/icons/LaterIcon.tsx";
+import HomeIcon from "@icons/HomeIcon";
+import HistoryIcon from "@icons/HistoryIcon";
+import LikeIcon from "@icons/LikeIcon";
+import LaterIcon from "@icons/LaterIcon";
 
 const menuItems: Menu[] = [
     {

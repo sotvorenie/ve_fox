@@ -1,4 +1,4 @@
-import useWidthWatcher from "@/composables/useWidthWatcher.ts";
+import useWidthWatcher from "@composables/useWidthWatcher";
 
 interface Props {
     readonly isRecommended: boolean;

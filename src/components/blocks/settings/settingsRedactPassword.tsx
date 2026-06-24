@@ -1,14 +1,14 @@
 import {useEffect, useState} from "react";
 
-import {SuccessResponse} from "@/types/success.ts";
+import {SuccessResponse} from "@/types/success";
 
-import {apiCheckUserPassword, apiRedactUserPassword} from "@/api/user/user.ts";
+import {apiCheckUserPassword, apiRedactUserPassword} from "@api/user/user";
 
-import {showError} from "@/utils/modals.ts";
+import {showError} from "@utils/modals";
 
-import ButtonUi from "@/components/ui/ButtonUi.tsx";
-import Modal from "@/components/common/Modal.tsx";
-import InputUi from "@/components/ui/InputUi.tsx";
+import ButtonUi from "@ui/ButtonUi";
+import Modal from "@common/Modal";
+import InputUi from "@ui/InputUi";
 
 function SettingsRedactPassword() {
     const [password, setPassword] = useState<string>("")

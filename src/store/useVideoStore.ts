@@ -1,7 +1,8 @@
 import {create} from "zustand";
 
-import {Video, VideoForList, VideosList} from "../types/video.ts";
-import {apiGetRecommendedVideos} from "../api/video/video.ts";
+import {Video, VideoForList, VideosList} from "@/types/video";
+
+import {apiGetRecommendedVideos} from "@api/video/video";
 
 interface VideoState {
     video: Video

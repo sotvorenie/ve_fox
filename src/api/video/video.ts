@@ -1,6 +1,6 @@
-import {Video, VideosList} from "../../types/video.ts";
+import {Video, VideosList} from "@/types/video";
 
-import {apiGet} from "../index.ts";
+import {apiGet} from "@api/index";
 
 
 export const apiGetVideo = (id: number): Promise<Video> => {

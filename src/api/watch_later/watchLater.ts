@@ -1,8 +1,8 @@
-import {SuccessResponse} from "../../types/success.ts";
-import {IsWatchLaterResponse} from "../../types/watchLater.ts";
-import {VideosList} from "../../types/video.ts";
+import {SuccessResponse} from "@/types/success";
+import {IsWatchLaterResponse} from "@/types/watchLater";
+import {VideosList} from "@/types/video";
 
-import {apiGet} from "../index.ts";
+import {apiGet} from "@api/index";
 
 export const apiCheckWatchLater = (videoId: number): Promise<IsWatchLaterResponse> => {
     return apiGet(`/watch_later/is_watch_later/${videoId}`)

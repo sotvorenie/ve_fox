@@ -1,6 +1,6 @@
-import {SearchResponse} from "../../types/search.ts";
+import {SearchResponse} from "@/types/search";
 
-import {apiGet} from "../index.ts";
+import {apiGet} from "@api/index";
 
 export const apiSearch = (title: string, page: number): Promise<SearchResponse> => {
     return apiGet(`/search?value=${title}&page=${page}`)

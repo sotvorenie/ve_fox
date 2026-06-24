@@ -1,24 +1,24 @@
 import {useEffect, useRef, useState} from "react";
 
-import {BASE_URL} from "@/api/url.ts";
+import {BASE_URL} from "@api/url";
 
-import {ChannelForList, ChannelsListResponse} from "@/types/channel.ts";
-import {Section, SectionResponse} from "@/types/section.ts";
-import {SuccessResponse} from "@/types/success.ts";
+import {ChannelForList, ChannelsListResponse} from "@/types/channel";
+import {Section, SectionResponse} from "@/types/section";
+import {SuccessResponse} from "@/types/success";
 
 import {
     apiGetChannels,
     apiGetChannelSections,
     apiCheckHasChannelSections,
     apiCreateNewSection
-} from "@/api/channel/channel.ts";
+} from "@api/channel/channel";
 
-import ButtonUi from "@/components/ui/ButtonUi.tsx";
-import Modal from "@/components/common/Modal.tsx";
-import UploadModal from "@/components/blocks/settings/upload/uploadModal.tsx";
-import InputUi from "@/components/ui/InputUi.tsx";
+import ButtonUi from "@ui/ButtonUi";
+import Modal from "@common/Modal";
+import UploadModal from "@settings/upload/uploadModal";
+import InputUi from "@ui/InputUi";
 
-import LoadingIcon from "@/assets/images/icons/LoadingIcon.tsx";
+import LoadingIcon from "@icons/LoadingIcon";
 
 interface Props {
     className: string

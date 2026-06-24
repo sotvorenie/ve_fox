@@ -1,7 +1,7 @@
-import {SuccessResponse} from "../../types/success.ts";
-import {UserAvatar} from "../../types/user.ts";
+import {SuccessResponse} from "@/types/success";
+import {UserAvatar} from "@/types/user";
 
-import {apiPost} from "../index.ts";
+import {apiPost} from "@api/index";
 
 
 export const apiRedactUserName = (name: string): Promise<SuccessResponse> => {

@@ -1,8 +1,10 @@
 import {create} from "zustand";
-import {ChannelForList} from "../types/channel.ts";
-import {VideoForList} from "../types/video.ts";
-import {SearchResponse} from "../types/search.ts";
-import {apiSearch} from "../api/search/search.ts";
+
+import {ChannelForList} from "@/types/channel";
+import {VideoForList} from "@/types/video";
+import {SearchResponse} from "@/types/search";
+
+import {apiSearch} from "@api/search/search";
 
 interface SearchState {
     value: string

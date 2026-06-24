@@ -1,9 +1,9 @@
 import {useRef} from "react";
 
-import InputUi from "@/components/ui/InputUi.tsx";
+import InputUi from "@ui/InputUi";
 
-import VideoFileIcon from "@/assets/images/icons/VideoFileIcon.tsx";
-import PhotoFileIcon from "@/assets/images/icons/PhotoFileIcon.tsx";
+import VideoFileIcon from "@icons/VideoFileIcon";
+import PhotoFileIcon from "@icons/PhotoFileIcon";
 
 interface Props {
     className: string

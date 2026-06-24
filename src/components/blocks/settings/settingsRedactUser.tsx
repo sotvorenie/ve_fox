@@ -1,18 +1,18 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
-import {apiRedactUserName} from "@/api/user/user.ts";
+import {apiRedactUserName} from "@api/user/user";
 
-import {showConfirm} from "@/utils/modals.ts";
+import {showConfirm} from "@utils/modals";
 
-import SettingsBlock from "@/components/blocks/settings/settingsBlock.tsx";
-import SettingsRedactPassword from "@/components/blocks/settings/settingsRedactPassword.tsx";
-import SettingsRedactAvatar from "@/components/blocks/settings/settingsRedactAvatar.tsx";
+import SettingsBlock from "@settings/settingsBlock";
+import SettingsRedactPassword from "@settings/settingsRedactPassword";
+import SettingsRedactAvatar from "@settings/settingsRedactAvatar";
 
-import InputUi from "@/components/ui/InputUi.tsx";
-import ButtonUi from "@/components/ui/ButtonUi.tsx";
+import InputUi from "@ui/InputUi";
+import ButtonUi from "@ui/ButtonUi";
 
-import {useUserStore} from "@/store/useUserStore.ts";
+import {useUserStore} from "@store/useUserStore";
 
 interface Props {
     isVisible: boolean

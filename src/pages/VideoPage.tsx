@@ -1,20 +1,20 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 
-import {Video} from "@/types/video.ts";
+import {Video} from "@/types/video";
 
-import {apiSetToHistory} from "@/api/history/history.ts";
-import {apiCheckIsLiked} from "@/api/like/like.ts";
-import {apiGetSavedTime} from "@/api/save_time/saveTime.ts";
-import {apiGetVideo} from "@/api/video/video.ts";
+import {apiSetToHistory} from "@api/history/history";
+import {apiCheckIsLiked} from "@api/like/like";
+import {apiGetSavedTime} from "@api/save_time/saveTime";
+import {apiGetVideo} from "@api/video/video";
 
-import Header from "@/components/blocks/header/Header.tsx";
-import VideoMain from "@/components/blocks/video/VideoMain.tsx";
-import VideoRecommended from "@/components/blocks/video/VideoRecommended.tsx";
+import Header from "@header/Header";
+import VideoMain from "@video/VideoMain";
+import VideoRecommended from "@video/VideoRecommended";
 
-import {useVideoStore} from "@/store/useVideoStore.ts";
-import {usePlayerStore} from "@/store/usePlayerStore.ts";
-import {useUserStore} from "@/store/useUserStore.ts";
+import {useVideoStore} from "@store/useVideoStore";
+import {usePlayerStore} from "@store/usePlayerStore";
+import {useUserStore} from "@store/useUserStore";
 
 function VideoPage() {
     const { id } = useParams<{ id: string }>();

@@ -1,4 +1,4 @@
-import MainPageDefault from "@/components/blocks/pages/MainPageDefault.tsx";
+import MainPageDefault from "@/components/blocks/pages/MainPageDefault";
 
 function HistoryPage() {
 

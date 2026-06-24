@@ -1,23 +1,23 @@
 import React, {useEffect, useRef, useState} from "react";
 
-import {BASE_URL} from "@/api/url.ts";
-import {apiSaveTime} from "@/api/save_time/saveTime.ts";
+import {BASE_URL} from "@api/url";
+import {apiSaveTime} from "@api/save_time/saveTime";
 
-import {formatVideoTime} from "@/composables/useFormatVideoTime.ts";
+import {formatVideoTime} from "@composables/useFormatVideoTime";
 
-import VideoPlayButton from "@/components/blocks/video/VideoPlayButton.tsx";
+import VideoPlayButton from "@video/VideoPlayButton";
 
-import SoundOnIcon from "@/assets/images/icons/video-player/SoundOnIcon.tsx";
-import SoundOffIcon from "@/assets/images/icons/video-player/SoundOffIcon.tsx";
-import SettingsIcon from "@/assets/images/icons/video-player/SettingsIcon.tsx";
-import ExpandIcon from "@/assets/images/icons/video-player/ExpandIcon.tsx";
-import ReduceIcon from "@/assets/images/icons/video-player/ReduceIcon.tsx";
-import TimePrevIcon from "@/assets/images/icons/video-player/TimePrevIcon.tsx";
-import TimeNextIcon from "@/assets/images/icons/video-player/TimeNextIcon.tsx";
+import SoundOnIcon from "@icons/video-player/SoundOnIcon";
+import SoundOffIcon from "@icons/video-player/SoundOffIcon";
+import SettingsIcon from "@icons/video-player/SettingsIcon";
+import ExpandIcon from "@icons/video-player/ExpandIcon";
+import ReduceIcon from "@icons/video-player/ReduceIcon";
+import TimePrevIcon from "@icons/video-player/TimePrevIcon";
+import TimeNextIcon from "@icons/video-player/TimeNextIcon";
 
-import {useVideoStore} from "@/store/useVideoStore.ts";
-import {usePlayerStore} from "@/store/usePlayerStore.ts";
-import {useUserStore} from "@/store/useUserStore.ts";
+import {useVideoStore} from "@store/useVideoStore";
+import {usePlayerStore} from "@store/usePlayerStore";
+import {useUserStore} from "@store/useUserStore";
 
 interface Props {
     readonly savedTime: number

@@ -2,15 +2,15 @@ import {useEffect} from "react";
 import {Link} from "react-router-dom";
 import { useShallow } from 'zustand/react/shallow';
 
-import {ChannelForList} from "@/types/channel.ts";
-import {VideoForList} from "@/types/video.ts";
+import {ChannelForList} from "@/types/channel";
+import {VideoForList} from "@/types/video";
 
 
-import VideoItem from "@/components/common/VideoItem.tsx";
-import ListColumnSkeleton from "@/components/ui/skeletons/ListColumnSkeleton.tsx";
+import VideoItem from "@common/VideoItem";
+import ListColumnSkeleton from "@ui/skeletons/ListColumnSkeleton";
 
-import {useSearchStore} from "@/store/useSearchStore.ts";
-import {usePagesStore} from "@/store/usePagesStore.ts";
+import {useSearchStore} from "@store/useSearchStore";
+import {usePagesStore} from "@store/usePagesStore";
 
 function SearchPage() {
     const {

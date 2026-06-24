@@ -1,18 +1,18 @@
 import {useState} from "react";
 
-import {Video} from "@/types/video.ts";
-import {ChannelForList} from "@/types/channel.ts";
-import {Section} from "@/types/section.ts";
+import {Video} from "@/types/video";
+import {ChannelForList} from "@/types/channel";
+import {Section} from "@/types/section";
 
-import {apiUploadVideo} from "@/api/upload/upload.ts";
+import {apiUploadVideo} from "@api/upload/upload";
 
-import SettingsBlock from "@/components/blocks/settings/settingsBlock.tsx";
-import Upload1 from "@/components/blocks/settings/upload/upload-1.tsx";
-import Upload2 from "@/components/blocks/settings/upload/upload-2.tsx";
-import Upload3 from "@/components/blocks/settings/upload/upload-3.tsx";
-import ButtonUi from "@/components/ui/ButtonUi.tsx";
+import SettingsBlock from "@settings/settingsBlock";
+import Upload1 from "@settings/upload/upload-1";
+import Upload2 from "@settings/upload/upload-2";
+import Upload3 from "@settings/upload/upload-3";
+import ButtonUi from "@ui/ButtonUi";
 
-import LoadingIcon from "@/assets/images/icons/LoadingIcon.tsx";
+import LoadingIcon from "@icons/LoadingIcon";
 
 interface Props {
     isVisible: boolean

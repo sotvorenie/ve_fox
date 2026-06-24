@@ -1,4 +1,4 @@
-import {months} from "../data/months.ts";
+import {months} from "@data/months";
 
 export const formatDate = (str: string) => {
     if (!str) return "Неизвестно"

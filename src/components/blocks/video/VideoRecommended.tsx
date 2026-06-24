@@ -1,18 +1,18 @@
 import {useNavigate} from "react-router-dom";
 import {useShallow} from "zustand/react/shallow";
 
-import {BASE_URL} from "@/api/url.ts";
+import {BASE_URL} from "@api/url";
 
-import {VideoForList} from "@/types/video.ts";
+import {VideoForList} from "@/types/video";
 
-import {formatVideoName} from "@/composables/useFormatVideoName.ts";
-import {formatVideoDate} from "@/composables/useFormatVideoDate.ts";
+import {formatVideoName} from "@composables/useFormatVideoName";
+import {formatVideoDate} from "@composables/useFormatVideoDate";
 
-import ListColumnSkeleton from "@/components/ui/skeletons/ListColumnSkeleton.tsx";
+import ListColumnSkeleton from "@ui/skeletons/ListColumnSkeleton";
 
-import {formatVideoTime} from "@/composables/useFormatVideoTime.ts";
+import {formatVideoTime} from "@composables/useFormatVideoTime";
 
-import {useVideoStore} from "@/store/useVideoStore.ts";
+import {useVideoStore} from "@store/useVideoStore";
 
 function VideoRecommended() {
     const navigate = useNavigate();

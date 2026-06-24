@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
 
-import {BASE_URL} from "@/api/url.ts";
+import {BASE_URL} from "@api/url";
 
-import LoadingIcon from "@/assets/images/icons/LoadingIcon.tsx";
-import EmptyIcon from "@/assets/images/icons/EmptyIcon.tsx";
+import LoadingIcon from "@icons/LoadingIcon";
+import EmptyIcon from "@icons/EmptyIcon";
 
 interface Props {
     apiFunc: () => Promise<void>
