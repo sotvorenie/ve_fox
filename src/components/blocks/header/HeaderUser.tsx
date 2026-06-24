@@ -1,17 +1,17 @@
 import {ComponentType, SVGProps, useState, useEffect, MouseEvent} from "react";
 
-import {BASE_URL} from "../../../api/url.ts";
+import {BASE_URL} from "@/api/url.ts";
 
-import Portal from "../../common/Portal.tsx";
-import SettingsRedactUser from "../settings/settingsRedactUser.tsx";
-import SettingsUploadVideo from "../settings/settingsUploadVideo.tsx";
+import Portal from "@/components/common/Portal.tsx";
+import SettingsRedactUser from "@/components/blocks/settings/settingsRedactUser.tsx";
+import UploadVideo from "@/components/blocks/settings/upload/uploadVideo.tsx";
 
-import SettingsIcon from "../../../assets/images/icons/video-player/SettingsIcon.tsx";
-import UploadIcon from "../../../assets/images/icons/UploadIcon.tsx";
-import FilmIcon from "../../../assets/images/icons/FilmIcon.tsx";
-import UserIcon from "../../../assets/images/icons/UserIcon.tsx";
+import SettingsIcon from "@/assets/images/icons/video-player/SettingsIcon.tsx";
+import UploadIcon from "@/assets/images/icons/UploadIcon.tsx";
+import FilmIcon from "@/assets/images/icons/FilmIcon.tsx";
+import UserIcon from "@/assets/images/icons/UserIcon.tsx";
 
-import {useUserStore} from "../../../store/useUserStore.ts";
+import {useUserStore} from "@/store/useUserStore.ts";
 
 interface Button {
     title: string
@@ -114,7 +114,7 @@ function HeaderUser() {
 
                     <SettingsRedactUser isVisible={isVisibleRedactUser} setIsVisible={setIsVisibleRedactUser}/>
 
-                    <SettingsUploadVideo isVisible={isVisibleUploadVideo} setIsVisible={setIsVisibleUploadVideo}/>
+                    <UploadVideo isVisible={isVisibleUploadVideo} setIsVisible={setIsVisibleUploadVideo}/>
                 </div>
             </Portal>
         </div>

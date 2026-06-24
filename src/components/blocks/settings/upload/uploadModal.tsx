@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
 
-import {BASE_URL} from "../../../api/url.ts";
+import {BASE_URL} from "@/api/url.ts";
 
-import LoadingIcon from "../../../assets/images/icons/LoadingIcon.tsx";
-import EmptyIcon from "../../../assets/images/icons/EmptyIcon.tsx";
+import LoadingIcon from "@/assets/images/icons/LoadingIcon.tsx";
+import EmptyIcon from "@/assets/images/icons/EmptyIcon.tsx";
 
 interface Props {
     apiFunc: () => Promise<void>
@@ -14,7 +14,7 @@ interface Props {
     emptyText: string
 }
 
-function SettingsUploadModal({
+function UploadModal({
                                  apiFunc = async () => {},
                                  changeFunc = () => {},
                                  listArr = [],
@@ -98,4 +98,4 @@ function SettingsUploadModal({
     )
 }
 
-export default SettingsUploadModal;
+export default UploadModal;

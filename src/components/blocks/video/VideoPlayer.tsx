@@ -1,23 +1,23 @@
 import React, {useEffect, useRef, useState} from "react";
 
-import {BASE_URL} from "../../../api/url.ts";
-import {apiSaveTime} from "../../../api/save_time/saveTime.ts";
+import {BASE_URL} from "@/api/url.ts";
+import {apiSaveTime} from "@/api/save_time/saveTime.ts";
 
-import {formatVideoTime} from "../../../composables/useFormatVideoTime.ts";
+import {formatVideoTime} from "@/composables/useFormatVideoTime.ts";
 
-import VideoPlayButton from "./VideoPlayButton.tsx";
+import VideoPlayButton from "@/components/blocks/video/VideoPlayButton.tsx";
 
-import SoundOnIcon from "../../../assets/images/icons/video-player/SoundOnIcon.tsx";
-import SoundOffIcon from "../../../assets/images/icons/video-player/SoundOffIcon.tsx";
-import SettingsIcon from "../../../assets/images/icons/video-player/SettingsIcon.tsx";
-import ExpandIcon from "../../../assets/images/icons/video-player/ExpandIcon.tsx";
-import ReduceIcon from "../../../assets/images/icons/video-player/ReduceIcon.tsx";
-import TimePrevIcon from "../../../assets/images/icons/video-player/TimePrevIcon.tsx";
-import TimeNextIcon from "../../../assets/images/icons/video-player/TimeNextIcon.tsx";
+import SoundOnIcon from "@/assets/images/icons/video-player/SoundOnIcon.tsx";
+import SoundOffIcon from "@/assets/images/icons/video-player/SoundOffIcon.tsx";
+import SettingsIcon from "@/assets/images/icons/video-player/SettingsIcon.tsx";
+import ExpandIcon from "@/assets/images/icons/video-player/ExpandIcon.tsx";
+import ReduceIcon from "@/assets/images/icons/video-player/ReduceIcon.tsx";
+import TimePrevIcon from "@/assets/images/icons/video-player/TimePrevIcon.tsx";
+import TimeNextIcon from "@/assets/images/icons/video-player/TimeNextIcon.tsx";
 
-import {useVideoStore} from "../../../store/useVideoStore.ts";
-import {usePlayerStore} from "../../../store/usePlayerStore.ts";
-import {useUserStore} from "../../../store/useUserStore.ts";
+import {useVideoStore} from "@/store/useVideoStore.ts";
+import {usePlayerStore} from "@/store/usePlayerStore.ts";
+import {useUserStore} from "@/store/useUserStore.ts";
 
 interface Props {
     readonly savedTime: number

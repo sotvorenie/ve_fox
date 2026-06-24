@@ -2,16 +2,16 @@ import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useShallow} from "zustand/react/shallow";
 
-import {UserWithToken} from "../types/auth.ts";
+import {UserWithToken} from "@/types/user.ts";
 
-import {apiAuth, apiRegister} from "../api/auth/auth.ts";
+import {apiAuth, apiRegister} from "@/api/auth/auth.ts";
 
-import {onSubmit, onBlur, onInput} from "../composables/useFormValidation.ts";
-import {showWarning} from "../utils/modals.ts";
+import {onSubmit, onBlur, onInput} from "@/composables/useFormValidation.ts";
+import {showWarning} from "@/utils/modals.ts";
 
-import LoadingIcon from "../assets/images/icons/LoadingIcon.tsx";
+import LoadingIcon from "@/assets/images/icons/LoadingIcon.tsx";
 
-import {useUserStore} from "../store/useUserStore.ts";
+import {useUserStore} from "@/store/useUserStore.ts";
 
 function AuthPage() {
     const navigate = useNavigate();

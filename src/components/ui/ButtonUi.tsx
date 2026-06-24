@@ -1,6 +1,6 @@
 import React from "react";
 
-import LoadingIcon from "../../assets/images/icons/LoadingIcon.tsx";
+import LoadingIcon from "@/assets/images/icons/LoadingIcon.tsx";
 
 interface Props {
     isLoading?: boolean

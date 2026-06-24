@@ -2,17 +2,17 @@ import {useEffect} from "react";
 import {Routes, Route, Navigate} from "react-router-dom";
 import {useShallow} from "zustand/react/shallow";
 
-import MainPage from "./pages/MainPage.tsx";
-import VideoPage from "./pages/VideoPage.tsx";
-import MainLayout from "./layouts/MainLayout.tsx";
-import SearchPage from "./pages/SearchPage.tsx";
-import ChannelPage from "./pages/ChannelPage.tsx";
-import HistoryPage from "./pages/HistoryPage.tsx";
-import LikedPage from "./pages/LikedPage.tsx";
-import WatchLaterPage from "./pages/WatchLaterPage.tsx";
-import AuthPage from "./pages/AuthPage.tsx";
+import MainPage from "@/pages/MainPage.tsx";
+import VideoPage from "@/pages/VideoPage.tsx";
+import MainLayout from "@/layouts/MainLayout.tsx";
+import SearchPage from "@/pages/SearchPage.tsx";
+import ChannelPage from "@/pages/ChannelPage.tsx";
+import HistoryPage from "@/pages/HistoryPage.tsx";
+import LikedPage from "@/pages/LikedPage.tsx";
+import WatchLaterPage from "@/pages/WatchLaterPage.tsx";
+import AuthPage from "@/pages/AuthPage.tsx";
 
-import {useUserStore} from "./store/useUserStore.ts";
+import {useUserStore} from "@/store/useUserStore.ts";
 
 function App() {
     const {checkMe} = useUserStore(useShallow((state) => ({ ...state })))

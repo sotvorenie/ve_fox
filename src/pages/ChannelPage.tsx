@@ -1,17 +1,17 @@
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 
-import {BASE_URL} from "../api/url.ts";
+import {BASE_URL} from "@/api/url.ts";
 
-import {VideoForList, VideosList} from "../types/video.ts";
-import {Channel} from "../types/channel.ts";
+import {VideoForList, VideosList} from "@/types/video.ts";
+import {Channel} from "@/types/channel.ts";
 
-import {apiGetChannel, apiGetVideosFromChannel} from "../api/channel/channel.ts";
+import {apiGetChannel, apiGetVideosFromChannel} from "@/api/channel/channel.ts";
 
-import ChannelMain from "../components/blocks/channel/ChannelMain.tsx";
-import ChannelVideos from "../components/blocks/channel/ChannelVideos.tsx";
-import ChannelAbout from "../components/blocks/channel/ChannelAbout.tsx";
-import ChannelTabs from "../components/blocks/channel/ChannelTabs.tsx";
+import ChannelMain from "@/components/blocks/channel/ChannelMain.tsx";
+import ChannelVideos from "@/components/blocks/channel/ChannelVideos.tsx";
+import ChannelAbout from "@/components/blocks/channel/ChannelAbout.tsx";
+import ChannelTabs from "@/components/blocks/channel/ChannelTabs.tsx";
 
 function ChannelPage() {
     const { id } = useParams<{ id: string }>();

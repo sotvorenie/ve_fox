@@ -1,17 +1,17 @@
 import {useRef} from "react";
 
-import {BASE_URL} from "../../../api/url.ts";
+import {BASE_URL} from "@/api/url.ts";
 
-import {UserAvatar} from "../../../types/user.ts";
+import {UserAvatar} from "@/types/user.ts";
 
-import {apiRedactUserAvatar} from "../../../api/user/user.ts";
+import {apiRedactUserAvatar} from "@/api/user/user.ts";
 
-import {showError} from "../../../utils/modals.ts";
+import {showError} from "@/utils/modals.ts";
 
-import UserIcon from "../../../assets/images/icons/UserIcon.tsx";
-import RedactIcon from "../../../assets/images/icons/RedactIcon.tsx";
+import UserIcon from "@/assets/images/icons/UserIcon.tsx";
+import RedactIcon from "@/assets/images/icons/RedactIcon.tsx";
 
-import {useUserStore} from "../../../store/useUserStore.ts";
+import {useUserStore} from "@/store/useUserStore.ts";
 
 interface Props {
     isLoading: boolean

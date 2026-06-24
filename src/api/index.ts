@@ -34,9 +34,18 @@ export const apiPost = async <T>(
     url: string,
     data?: any,
     config?: any,
-    signal?: AbortSignal
+    signal?: AbortSignal,
+    onUploadProgress?: (percent: number) => void
 ): Promise<T> => {
-    const finalConfig = { ...config, signal }
+    const finalConfig = {
+        ...config,
+        signal,
+        onUploadProgress: (progressEvent: any) => {
+            if (!progressEvent.total) return
+            const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+            onUploadProgress?.(percent)
+        },
+    }
     const res = await client.post(url, data, finalConfig)
     return res.data as T
 }

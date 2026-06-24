@@ -2,10 +2,10 @@ import React, {useRef} from "react";
 import {useNavigate} from "react-router-dom";
 import { useShallow } from 'zustand/react/shallow';
 
-import SearchIcon from "../../../assets/images/icons/SearchIcon.tsx";
-import CrossIcon from "../../../assets/images/icons/CrossIcon.tsx";
+import SearchIcon from "@/assets/images/icons/SearchIcon.tsx";
+import CrossIcon from "@/assets/images/icons/CrossIcon.tsx";
 
-import {useSearchStore} from "../../../store/useSearchStore.ts";
+import {useSearchStore} from "@/store/useSearchStore.ts";
 
 function HeaderSearch() {
     const navigate = useNavigate();

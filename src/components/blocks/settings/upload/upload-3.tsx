@@ -1,28 +1,28 @@
 import {useState} from "react";
 
-import PlusIcon from "../../../assets/images/icons/PlusIcon.tsx";
-import CrossIcon from "../../../assets/images/icons/CrossIcon.tsx";
+import PlusIcon from "@/assets/images/icons/PlusIcon.tsx";
+import CrossIcon from "@/assets/images/icons/CrossIcon.tsx";
 
 interface Props {
     className: string
+    tags: string[]
+    setTags: (tags: any) => void
 }
 
-function SettingsUpload3({className}: Readonly<Props>) {
+function Upload3({className, tags, setTags}: Readonly<Props>) {
     const [videoTag, setVideoTag] = useState<string>("")
-    const [tagsList, setTagsList] = useState<string[]>([])
 
     const addTag = () => {
-        const newTag = videoTag.trim()
+        const newTag: string = videoTag.trim()
 
         if (!newTag) return
 
-
-        setTagsList(prev => [videoTag, ...prev])
+        setTags((prev: string[]) => [newTag, ...prev])
         setVideoTag('')
     }
 
     const removeTag = (index: number) => {
-        setTagsList(prev => prev.filter((_, i) => i !== index))
+        setTags((prev: string[]) => prev.filter((_, i) => i !== index))
     }
 
     return (
@@ -56,9 +56,9 @@ function SettingsUpload3({className}: Readonly<Props>) {
                 </button>
             </div>
 
-            {tagsList?.length > 0 && (
+            {tags?.length > 0 && (
                 <ul className="upload-video__tags-list flex flex-wrap">
-                    {tagsList.map((tag: string, index: number) => (
+                    {tags.map((tag: string, index: number) => (
                         <li key={`${tag}-${index}`}
                             className="upload-video__tags-item flex flex-align-center"
                         >
@@ -78,4 +78,4 @@ function SettingsUpload3({className}: Readonly<Props>) {
     )
 }
 
-export default SettingsUpload3;
+export default Upload3;

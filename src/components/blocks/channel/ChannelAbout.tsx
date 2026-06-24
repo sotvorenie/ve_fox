@@ -1,4 +1,4 @@
-import {formatDate} from "../../../composables/useFormatDate.ts";
+import {formatDate} from "@/composables/useFormatDate.ts";
 
 interface Props {
     readonly total: number;

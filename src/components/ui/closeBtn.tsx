@@ -1,4 +1,4 @@
-import CrossIcon from "../../assets/images/icons/CrossIcon.tsx";
+import CrossIcon from "@/assets/images/icons/CrossIcon.tsx";
 
 interface Props {
     closeFunc: () => void

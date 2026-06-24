@@ -1,12 +1,12 @@
-import {VideoForList} from "../../../types/video.ts";
-import VideoItem from "../../common/VideoItem.tsx";
-import {JSX} from "react";
+import {VideoForList} from "@/types/video.ts";
+
+import VideoItem from "@/components/common/VideoItem.tsx";
 
 interface VideoProps {
     readonly videos: VideoForList[];
 }
 
-function ChannelMain({ videos }: VideoProps): JSX.Element {
+function ChannelMain({ videos }: VideoProps) {
 
     return (
         <div className="channel__main">

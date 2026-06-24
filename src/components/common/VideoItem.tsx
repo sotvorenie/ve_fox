@@ -1,13 +1,13 @@
 import React from "react";
 import {Link, useNavigate} from "react-router-dom";
 
-import {VideoForList} from "../../types/video.ts";
+import {VideoForList} from "@/types/video.ts";
 
-import {BASE_URL} from "../../api/url.ts";
+import {BASE_URL} from "@/api/url.ts";
 
-import {formatVideoName} from "../../composables/useFormatVideoName.ts";
-import {formatVideoDate} from "../../composables/useFormatVideoDate.ts";
-import {formatVideoTime} from "../../composables/useFormatVideoTime.ts";
+import {formatVideoName} from "@/composables/useFormatVideoName.ts";
+import {formatVideoDate} from "@/composables/useFormatVideoDate.ts";
+import {formatVideoTime} from "@/composables/useFormatVideoTime.ts";
 
 interface Props {
     readonly video: VideoForList;

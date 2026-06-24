@@ -1,8 +1,8 @@
 import React from "react";
 import {AnimatePresence, motion} from "framer-motion";
 
-import CloseBtn from "../ui/closeBtn";
-import Portal from "./Portal.tsx";
+import CloseBtn from "@/components/ui/closeBtn";
+import Portal from "@/components/common/Portal.tsx";
 
 interface ModalProps {
     visible: boolean;

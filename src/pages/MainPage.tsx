@@ -1,15 +1,15 @@
 import {useEffect, useState} from "react";
 import {useShallow} from "zustand/react/shallow";
 
-import {VideoForList, VideosList} from "../types/video.ts";
+import {VideoForList, VideosList} from "@/types/video.ts";
 
-import {apiGetAllVideos} from "../api/video/video.ts";
+import {apiGetAllVideos} from "@/api/video/video.ts";
 
-import VideoItem from "../components/common/VideoItem.tsx";
-import ListRowSkeleton from "../components/ui/skeletons/ListRowSkeleton.tsx";
-import MainEmpty from "../components/ui/empty/mainEmpty.tsx";
+import VideoItem from "@/components/common/VideoItem.tsx";
+import ListRowSkeleton from "@/components/ui/skeletons/ListRowSkeleton.tsx";
+import MainEmpty from "@/components/ui/empty/mainEmpty.tsx";
 
-import {usePagesStore} from "../store/usePagesStore.ts";
+import {usePagesStore} from "@/store/usePagesStore.ts";
 
 function MainPage() {
     const {setPage: setRouterPage} = usePagesStore(useShallow((state) => ({ ...state })))

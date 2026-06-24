@@ -2,14 +2,14 @@ import {Dispatch, SetStateAction, useState} from "react";
 import {Link} from "react-router-dom";
 import { useShallow } from 'zustand/react/shallow';
 
-import {BASE_URL} from "../../../api/url.ts";
-import {apiLike} from "../../../api/like/like.ts";
+import {BASE_URL} from "@/api/url.ts";
+import {apiLike} from "@/api/like/like.ts";
 
-import VideoPlayer from "./VideoPlayer.tsx";
+import VideoPlayer from "@/components/blocks/video/VideoPlayer.tsx";
 
-import LikeIcon from "../../../assets/images/icons/LikeIcon.tsx";
+import LikeIcon from "@/assets/images/icons/LikeIcon.tsx";
 
-import {useVideoStore} from "../../../store/useVideoStore.ts";
+import {useVideoStore} from "@/store/useVideoStore.ts";
 
 interface Props {
     readonly isLiked: boolean,

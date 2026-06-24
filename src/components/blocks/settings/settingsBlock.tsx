@@ -1,7 +1,7 @@
 import React from "react";
 import {AnimatePresence, motion} from "framer-motion";
 
-import CloseBtn from "../../ui/closeBtn.tsx";
+import CloseBtn from "@/components/ui/closeBtn.tsx";
 
 interface Props {
     isVisible: boolean

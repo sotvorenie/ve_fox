@@ -1,42 +1,44 @@
 import {useEffect, useRef, useState} from "react";
 
-import {BASE_URL} from "../../../api/url.ts";
+import {BASE_URL} from "@/api/url.ts";
 
-import {ChannelForList, ChannelsListResponse} from "../../../types/channel.ts";
-import {Section, SectionResponse} from "../../../types/section.ts";
-import {SuccessResponse} from "../../../types/success.ts";
+import {ChannelForList, ChannelsListResponse} from "@/types/channel.ts";
+import {Section, SectionResponse} from "@/types/section.ts";
+import {SuccessResponse} from "@/types/success.ts";
 
 import {
     apiGetChannels,
     apiGetChannelSections,
     apiCheckHasChannelSections,
     apiCreateNewSection
-} from "../../../api/channel/channel.ts";
+} from "@/api/channel/channel.ts";
 
-import ButtonUi from "../../ui/ButtonUi.tsx";
-import Modal from "../../common/Modal.tsx";
-import SettingsUploadModal from "./settingsUploadModal.tsx";
+import ButtonUi from "@/components/ui/ButtonUi.tsx";
+import Modal from "@/components/common/Modal.tsx";
+import UploadModal from "@/components/blocks/settings/upload/uploadModal.tsx";
+import InputUi from "@/components/ui/InputUi.tsx";
 
-import LoadingIcon from "../../../assets/images/icons/LoadingIcon.tsx";
-import InputUi from "../../ui/InputUi.tsx";
+import LoadingIcon from "@/assets/images/icons/LoadingIcon.tsx";
 
 interface Props {
     className: string
+    activeChannel: ChannelForList | null
+    setActiveChannel: (channel: ChannelForList | null) => void
+    activeSection: Section | null
+    setActiveSection: (section: Section | null) => void
 }
 
-function SettingsUpload1({className}: Readonly<Props>) {
+function Upload1({className, activeChannel, setActiveChannel, activeSection, setActiveSection}: Readonly<Props>) {
     const [isVisibleChannels, setIsVisibleChannels] = useState<boolean>(false)
     const [isVisibleSections, setIsVisibleSections] = useState<boolean>(false)
     const [isVisibleCreateSection, setIsVisibleCreateSection] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const [channelsArray, setChannelsArray] = useState<ChannelForList[]>([])
-    const [activeChannel, setActiveChannel] = useState<ChannelForList | null>()
     const [channelsTotal, setChannelsTotal] = useState<number>(0)
 
     const [hasSections, setHasSections] = useState<boolean>(false)
     const [sectionsArray, setSectionsArray] = useState<Section[]>([])
-    const [activeSection, setActiveSection] = useState<Section | null>()
     const [sectionsTotal, setSectionsTotal] = useState<number>(0)
 
     const [newSectionName, setNewSectionName] = useState<string>('')
@@ -169,7 +171,7 @@ function SettingsUpload1({className}: Readonly<Props>) {
                 {activeChannel ? 'Изменить..' : 'Выбрать'}
             </ButtonUi>
             <Modal visible={isVisibleChannels} setVisible={setIsVisibleChannels}>
-                <SettingsUploadModal
+                <UploadModal
                     apiFunc={getChannels}
                     changeFunc={changeChannel}
                     listArr={channelsArray}
@@ -205,7 +207,7 @@ function SettingsUpload1({className}: Readonly<Props>) {
                         </ButtonUi>
                     </div>
                     <Modal visible={isVisibleSections} setVisible={setIsVisibleSections}>
-                        <SettingsUploadModal
+                        <UploadModal
                             apiFunc={getSections}
                             changeFunc={changeSection}
                             listArr={sectionsArray}
@@ -234,7 +236,7 @@ function SettingsUpload1({className}: Readonly<Props>) {
                                 <ButtonUi
                                     func={handleCancelInCreateSection}
                                     className="col-6"
-                                    isLoading={isLoading}
+                                    isDisabled={isLoading}
                                 >
                                     Отмена
                                 </ButtonUi>
@@ -254,4 +256,4 @@ function SettingsUpload1({className}: Readonly<Props>) {
     )
 }
 
-export default SettingsUpload1;
+export default Upload1;

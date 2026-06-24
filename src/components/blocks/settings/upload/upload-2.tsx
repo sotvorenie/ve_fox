@@ -1,19 +1,23 @@
-import {useRef, useState} from "react";
+import {useRef} from "react";
 
-import InputUi from "../../ui/InputUi.tsx";
+import InputUi from "@/components/ui/InputUi.tsx";
 
-import VideoFileIcon from "../../../assets/images/icons/VideoFileIcon.tsx";
-import PhotoFileIcon from "../../../assets/images/icons/PhotoFileIcon.tsx";
+import VideoFileIcon from "@/assets/images/icons/VideoFileIcon.tsx";
+import PhotoFileIcon from "@/assets/images/icons/PhotoFileIcon.tsx";
 
 interface Props {
     className: string
+    video: File | null
+    setVideo: (video: File | null) => void
+    preview: File | null
+    setPreview: (preview: File | null) => void
+    title: string
+    setTitle: (title: string) => void
 }
 
-function SettingsUpload2({className}: Readonly<Props>) {
+function Upload2({className, video, setVideo, preview, setPreview, title, setTitle}: Readonly<Props>) {
     const videoInputRef = useRef<HTMLInputElement | null>(null);
     const previewInputRef = useRef<HTMLInputElement | null>(null);
-
-    const [videoName, setVideoName] = useState<string>("")
 
     return (
         <div className={className}>
@@ -22,8 +26,8 @@ function SettingsUpload2({className}: Readonly<Props>) {
                 name="video"
                 id="video"
                 title="Название видео"
-                value={videoName}
-                setValue={setVideoName}
+                value={title}
+                setValue={setTitle}
                 maxLength={100}
             />
 
@@ -61,4 +65,4 @@ function SettingsUpload2({className}: Readonly<Props>) {
     )
 }
 
-export default SettingsUpload2;
+export default Upload2;
