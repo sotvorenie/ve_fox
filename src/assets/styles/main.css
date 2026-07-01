@@ -1682,6 +1682,9 @@ input, textarea {
   text-shadow: 0 0 0.3125rem var(--color-dark);
   border: var(--border-dark-alt);
 }
+.recommended__preview img {
+  object-fit: contain;
+}
 .recommended__title {
   flex-shrink: 0.9375rem;
 }
