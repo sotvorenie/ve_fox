@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {Routes, Route, Navigate} from "react-router-dom";
 import {useShallow} from "zustand/react/shallow";
 
@@ -17,9 +17,26 @@ import {useUserStore} from "@store/useUserStore";
 function App() {
     const {checkMe} = useUserStore(useShallow((state) => ({ ...state })))
 
+    const [isLoading, setIsLoading] = useState(true)
+
+    const checkUser = async () => {
+        try {
+            setIsLoading(true)
+            await checkMe()
+        } catch (err) {
+            console.error(err)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
     useEffect(() => {
-        checkMe().catch(() => {})
-    }, []);
+        checkUser().then()
+    }, [])
+
+    if (isLoading) {
+        return <></>
+    }
 
   return (
       <main className="main">

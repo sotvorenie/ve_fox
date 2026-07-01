@@ -1,10 +1,10 @@
 import {LikeResponse} from "@/types/like";
 import {VideosList} from "@/types/video";
 
-import {apiGet} from "@api/index";
+import {apiGet, apiPost} from "@api/index";
 
 export const apiLike = (videoId: number): Promise<LikeResponse> => {
-    return apiGet(`/like/${videoId}`)
+    return apiPost(`/like/${videoId}`)
 }
 
 export const apiCheckIsLiked = (videoId: number): Promise<LikeResponse> => {
