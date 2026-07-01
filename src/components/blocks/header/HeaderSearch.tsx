@@ -1,5 +1,5 @@
 import React, {useRef} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 
 import SearchIcon from "@icons/SearchIcon";
 import CrossIcon from "@icons/CrossIcon";
@@ -7,7 +7,8 @@ import CrossIcon from "@icons/CrossIcon";
 import {useSearchStore} from "@store/useSearchStore";
 
 function HeaderSearch() {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+    const location = useLocation()
 
     const {value, setValue, search} = useSearchStore()
 
@@ -23,10 +24,7 @@ function HeaderSearch() {
     }
 
     const handleSearch = async () => {
-        if (value) {
-            navigate("/search")
-            await search()
-        }
+        location.pathname === '/search' ? await search() : navigate("/search")
     }
 
     return (

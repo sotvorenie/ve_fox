@@ -20,10 +20,10 @@ import {usePlayerStore} from "@store/usePlayerStore";
 import {useUserStore} from "@store/useUserStore";
 
 interface Props {
-    readonly savedTime: number
+    savedTime: number
 }
 
-function VideoPlayer({savedTime}: Props) {
+function VideoPlayer({savedTime}: Readonly<Props>) {
     const {video} = useVideoStore()
 
     const {

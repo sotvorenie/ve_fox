@@ -13,9 +13,9 @@ import {apiDeleteFromWatchLater, apiSetWatchLater} from "@api/watch_later/watchL
 
 interface Props {
     isLiked: boolean
-    setIsLiked: (value: any) => boolean
+    setIsLiked: (value: any) => void
     isWatchLater: boolean
-    setIsWatchLater: (value: any) => boolean
+    setIsWatchLater: (value: any) => void
     savedTime: number
 }
 

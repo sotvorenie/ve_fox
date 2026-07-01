@@ -21,7 +21,7 @@ interface SearchState {
 
 export const useSearchStore = create<SearchState>((set, get) => ({
     value: '',
-    page: 0,
+    page: 1,
     isLoading: true,
     total: 0,
     channels: [],
@@ -29,10 +29,12 @@ export const useSearchStore = create<SearchState>((set, get) => ({
     hasMore: false,
 
     setValue: (value: string) => set({value}),
-    search: async () => {
+    search: async (page: number = 1) => {
+        if (!get().value.trim()) return
+
         try {
             set({isLoading: true})
-            const data: SearchResponse = await apiSearch(get().value, get().page)
+            const data: SearchResponse = await apiSearch(get().value, page)
             if (data) {
                 set({
                     channels: data.channels,

@@ -1304,6 +1304,7 @@ input, textarea {
   background: rgba(15, 15, 15, 0.5647058824);
   top: 0;
   padding-block: 1.875rem;
+  z-index: 1002;
 }
 .header__btn-bar {
   position: absolute;
@@ -2038,6 +2039,19 @@ input, textarea {
   height: 3.125rem;
   min-height: 3.125rem;
   min-width: 3.125rem;
+}
+
+.search-page__channels {
+  gap: 1.5625rem;
+}
+.search-page__channel a {
+  gap: 1.25rem;
+}
+.search-page__channel-avatar {
+  width: 8rem;
+  height: 8rem;
+  min-height: 8rem;
+  min-width: 8rem;
 }
 
 /*# sourceMappingURL=main.css.map */
