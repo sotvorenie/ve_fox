@@ -1,5 +1,4 @@
 import {useNavigate} from "react-router-dom";
-import {useShallow} from "zustand/react/shallow";
 
 import {BASE_URL} from "@api/url";
 
@@ -22,7 +21,7 @@ function VideoRecommended() {
         recommendedIsLoading: isLoading,
         video: activeVideo,
         recommendedHasMore: hasMore
-    } = useVideoStore(useShallow((state) => ({ ...state })))
+    } = useVideoStore()
 
     const clickToVideo = (video: VideoForList) => {
         navigate(`/video/${video.id}`)

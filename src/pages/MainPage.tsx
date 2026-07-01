@@ -1,5 +1,4 @@
 import {useEffect, useState} from "react";
-import {useShallow} from "zustand/react/shallow";
 
 import {VideoForList, VideosList} from "@/types/video";
 
@@ -12,7 +11,7 @@ import MainEmpty from "@ui/empty/mainEmpty";
 import {usePagesStore} from "@store/usePagesStore";
 
 function MainPage() {
-    const {setPage: setRouterPage} = usePagesStore(useShallow((state) => ({ ...state })))
+    const {setPage: setRouterPage} = usePagesStore()
 
     const [page, setPage] = useState<number>(1)
     const [hasMore, setHasMore] = useState<boolean>(true)

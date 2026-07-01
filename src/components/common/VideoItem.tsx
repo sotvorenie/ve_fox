@@ -25,10 +25,10 @@ function VideoItem({video, isRow = false}: Props) {
     }
 
     return (
-        <Link to={`/video/${video.id}`}
-              className="video-item col-4"
-        >
-            <li className={isRow ? 'video-item__row-item flex flex-align-start w-100' : 'w-100'}>
+        <li className="video-item col-4">
+            <Link to={`/video/${video.id}`}
+                  className={isRow ? 'video-item__row-item flex flex-align-start w-100' : 'w-100 flex flex-column'}
+            >
                 <div className="video-item__preview img-container position-relative">
                     <img src={`${BASE_URL}${video.preview_url}`} alt={video.name} loading="lazy"/>
 
@@ -67,7 +67,8 @@ function VideoItem({video, isRow = false}: Props) {
                         >
                             <div className="video-item__avatar img-container">
                                 {video.channel.avatar_url ?
-                                    (<img src={`${BASE_URL}${video.channel.avatar_url}`} alt={video.channel.name}/>) :
+                                    (<img src={`${BASE_URL}${video.channel.avatar_url}`}
+                                          alt={video.channel.name}/>) :
                                     (<span>{video.channel.name.slice(0, 1)}</span>)
                                 }
                             </div>
@@ -75,8 +76,8 @@ function VideoItem({video, isRow = false}: Props) {
                         </button>
                     }
                 </div>
-            </li>
-        </Link>
+            </Link>
+        </li>
     )
 }
 

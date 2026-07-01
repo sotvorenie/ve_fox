@@ -1,5 +1,4 @@
 import {useEffect, useState} from "react";
-import {useShallow} from "zustand/react/shallow";
 
 import {VideoForList, VideosList} from "@/types/video";
 
@@ -18,12 +17,13 @@ interface Props {
 }
 
 function MainPageDefault({name, index}: Props) {
-    const {setPage} = usePagesStore(useShallow((state) => ({ ...state })))
+    const {setPage} = usePagesStore()
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [videos, setVideos] = useState<VideoForList[]>([]);
     const [hasMore, setHasMore] = useState<boolean>(false);
     const [total, setTotal] = useState<number>(0);
+    const [responsePage, setResponsePage] = useState<number>(1);
 
     const getVideos = async () => {
         try {
@@ -33,23 +33,23 @@ function MainPageDefault({name, index}: Props) {
 
             switch (name) {
                 case 'history':
-                    data = await apiGetHistory()
+                    data = await apiGetHistory(responsePage)
                     break
-                case 'like':
-                    data = await apiGetListLikes()
+                case 'liked':
+                    data = await apiGetListLikes(responsePage)
                     break
                 case 'watch_later':
-                    data = await apiGetListWatchLater()
+                    data = await apiGetListWatchLater(responsePage)
                     break
                 default:
-                    data = await apiGetHistory()
+                    data = await apiGetHistory(responsePage)
             }
 
             if (data) {
                 setVideos(data.videos)
                 setHasMore(data.has_more)
                 setTotal(data.total)
-                setPage(data.page + 1)
+                setResponsePage(data.page + 1)
             }
         } catch (err) {
             console.error(err)
@@ -58,18 +58,25 @@ function MainPageDefault({name, index}: Props) {
         }
     }
 
-    useEffect(() => {
-        setPage(index)
+    const clearData = () => {
+        setVideos([])
+        setHasMore(false)
+        setTotal(0)
+        setResponsePage(1)
+    }
 
+    useEffect(() => {
+        clearData()
+        setPage(index)
         getVideos().catch(() => {})
     }, [])
 
     return (
-        <div className="history-page">
+        <div className="margin-center-page">
             <p className="total h6">Найдено {total} видео</p>
 
             {!isLoading && (
-                <ul className="video-item m-auto">
+                <ul className="w-100">
                     {videos?.map((video: VideoForList) => (
                         <VideoItem key={video.id} video={video} isRow={true}/>
                     ))}

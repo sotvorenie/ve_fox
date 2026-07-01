@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {useShallow} from "zustand/react/shallow";
 
 import {UserWithToken} from "@/types/user";
 
@@ -16,7 +15,7 @@ import {useUserStore} from "@store/useUserStore";
 function AuthPage() {
     const navigate = useNavigate();
 
-    const {logIn} = useUserStore(useShallow((state) => ({ ...state })))
+    const {logIn} = useUserStore()
 
     const [login, setLogin] = useState<string>('')
     const [password, setPassword] = useState<string>('')

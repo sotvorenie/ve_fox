@@ -1,6 +1,5 @@
 import {useEffect} from "react";
 import {Link} from "react-router-dom";
-import { useShallow } from 'zustand/react/shallow';
 
 import {ChannelForList} from "@/types/channel";
 import {VideoForList} from "@/types/video";
@@ -20,8 +19,8 @@ function SearchPage() {
         videos,
         hasMore,
         search
-    } = useSearchStore(useShallow((state) => ({ ...state })))
-    const {setPage} = usePagesStore(useShallow((state) => ({ ...state })))
+    } = useSearchStore()
+    const {setPage} = usePagesStore()
 
     useEffect(() => {
         if (!videos?.length) {
@@ -31,7 +30,7 @@ function SearchPage() {
     }, []);
 
     return (
-        <div className="search-page">
+        <div className="margin-center-page">
             <p className="total h6">Найдено {total} видео</p>
 
             {!isLoading && (

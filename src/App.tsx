@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import {Routes, Route, Navigate} from "react-router-dom";
-import {useShallow} from "zustand/react/shallow";
 
 import MainPage from "@pages/MainPage";
 import VideoPage from "@pages/VideoPage";
@@ -15,7 +14,7 @@ import AuthPage from "@pages/AuthPage";
 import {useUserStore} from "@store/useUserStore";
 
 function App() {
-    const {checkMe} = useUserStore(useShallow((state) => ({ ...state })))
+    const {checkMe} = useUserStore()
 
     const [isLoading, setIsLoading] = useState(true)
 

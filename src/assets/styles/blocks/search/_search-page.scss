@@ -1,9 +1,0 @@
-@use '../../helpers/index' as *;
-
-.search-page {
-
-  @include laptop-above {
-    width: 80%;
-    margin: auto;
-  }
-}

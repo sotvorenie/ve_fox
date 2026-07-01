@@ -1,6 +1,5 @@
 import React, {useRef} from "react";
 import {useNavigate} from "react-router-dom";
-import { useShallow } from 'zustand/react/shallow';
 
 import SearchIcon from "@icons/SearchIcon";
 import CrossIcon from "@icons/CrossIcon";
@@ -10,7 +9,7 @@ import {useSearchStore} from "@store/useSearchStore";
 function HeaderSearch() {
     const navigate = useNavigate();
 
-    const {value, setValue, search} = useSearchStore(useShallow((state) => ({ ...state })))
+    const {value, setValue, search} = useSearchStore()
 
     const inputRef = useRef<HTMLInputElement>(null)
 

@@ -1,11 +1,11 @@
 import useWidthWatcher from "@composables/useWidthWatcher";
 
 interface Props {
-    readonly isRecommended: boolean;
+    isRecommended: boolean
 }
 
-function ListColumnSkeleton({isRecommended = false}: Props) {
-    const skeletonItems = [...new Array(6).keys()];
+function ListColumnSkeleton({isRecommended = false}: Readonly<Props>) {
+    const skeletonItems = [...new Array(isRecommended ? 6 : 2).keys()]
 
     const isLaptop: boolean = useWidthWatcher('(max-width: 1440px)')
 

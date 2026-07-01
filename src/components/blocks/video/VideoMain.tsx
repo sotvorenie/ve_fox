@@ -1,6 +1,5 @@
 import {useState} from "react";
 import {Link} from "react-router-dom";
-import { useShallow } from 'zustand/react/shallow';
 
 import {BASE_URL} from "@api/url";
 import {apiLike} from "@api/like/like";
@@ -21,7 +20,7 @@ interface Props {
 }
 
 function VideoMain({isLiked, setIsLiked, isWatchLater, setIsWatchLater, savedTime}: Readonly<Props>) {
-    const {video} = useVideoStore(useShallow((state) => ({ ...state })))
+    const {video} = useVideoStore()
 
     const [likeIsActive, setLikeIsActive] = useState<boolean>(true)
     const [watchLaterIsActive, setWatchLaterIsActive] = useState<boolean>(true)

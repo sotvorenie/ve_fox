@@ -981,7 +981,6 @@ input, textarea {
 @media (any-hover: hover) {
   .video-item:hover {
     background: rgba(254, 121, 113, 0.5019607843);
-    color: inherit;
   }
   .video-item:hover .video-item__preview {
     border-radius: 0;
@@ -990,7 +989,6 @@ input, textarea {
 @media (any-hover: none) {
   .video-item:active {
     background: rgba(254, 121, 113, 0.5019607843);
-    color: inherit;
   }
   .video-item:active .video-item__preview {
     border-radius: 0;
@@ -1001,6 +999,7 @@ input, textarea {
   aspect-ratio: 16/9;
   margin-bottom: 0.625rem;
   background: var(--color-dark-alt);
+  color: var(--color-light) !important;
 }
 .video-item__preview span {
   font-size: 1rem;
@@ -1019,6 +1018,9 @@ input, textarea {
 .video-item__info {
   column-gap: 0.9375rem;
   row-gap: 1.25rem;
+}
+.video-item__title {
+  color: var(--color-light) !important;
 }
 .video-item__avatar {
   width: 3.125rem;
@@ -1256,6 +1258,11 @@ input, textarea {
 .close-btn svg {
   width: 100%;
   height: auto;
+}
+
+.margin-center-page {
+  width: 80%;
+  margin: auto;
 }
 
 .auth__header {
@@ -1877,13 +1884,6 @@ input, textarea {
 }
 .video-player__settings-label {
   gap: 0.625rem;
-}
-
-@media (width > 90.06125rem) {
-  .search-page {
-    width: 80%;
-    margin: auto;
-  }
 }
 
 .upload-video {

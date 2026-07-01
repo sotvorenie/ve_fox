@@ -17,6 +17,7 @@
 @use 'blocks/loading';
 @use 'blocks/modal';
 @use 'blocks/close-btn';
+@use 'blocks/margin-center-page';
 
 @use 'blocks/auth/auth';
 
@@ -30,8 +31,6 @@
 @use 'blocks/video/video';
 @use 'blocks/video/recommended';
 @use 'blocks/video/video-player';
-
-@use 'blocks/search/search-page';
 
 @use 'blocks/upload/upload-video';
 @use 'blocks/upload/upload-modal';

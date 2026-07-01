@@ -1,5 +1,4 @@
 import {Link, Outlet, useNavigate} from "react-router-dom";
-import {useShallow} from "zustand/react/shallow";
 
 import {Menu} from "@/types/menu";
 
@@ -15,9 +14,8 @@ import {useUserStore} from "@store/useUserStore";
 function MainLayout() {
     const navigate = useNavigate();
 
-    const {isLogged} = useUserStore(useShallow((state) => ({ ...state })))
-
-    const {page} = usePagesStore(useShallow((state) => ({ ...state })))
+    const {isLogged} = useUserStore()
+    const {page} = usePagesStore()
 
     const pages: string[] = [
         "/",
@@ -27,7 +25,7 @@ function MainLayout() {
     ]
 
     const handleMenuItem = (index: number): void => {
-        navigate(pages[index]);
+        navigate(pages[index])
     }
 
     return (
