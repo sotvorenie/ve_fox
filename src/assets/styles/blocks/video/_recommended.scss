@@ -27,6 +27,7 @@
     aspect-ratio: 16/9;
     flex: 0 0 50%;
     border-radius: var(--radius-medium);
+    background: var(--color-dark-alt);
 
     span {
       flex-shrink: rem(16);

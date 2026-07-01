@@ -1670,6 +1670,7 @@ input, textarea {
   aspect-ratio: 16/9;
   flex: 0 0 50%;
   border-radius: var(--radius-medium);
+  background: var(--color-dark-alt);
 }
 .recommended__preview span {
   flex-shrink: 1rem;

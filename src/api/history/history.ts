@@ -1,10 +1,10 @@
 import {SuccessResponse} from "@/types/success";
 import {VideosList} from "@/types/video";
 
-import {apiGet} from "@api/index";
+import {apiGet, apiPost} from "@api/index";
 
 export const apiSetToHistory = (videoId: number): Promise<SuccessResponse> => {
-    return apiGet(`/history/set_to_history/${videoId}`)
+    return apiPost(`/history/set/${videoId}`)
 }
 
 export const apiGetHistory = (page: number = 1, limit: number = 21): Promise<VideosList> => {

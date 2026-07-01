@@ -161,21 +161,21 @@ function VideoPlayer({savedTime}: Props) {
     useEffect(() => {
         clearData()
 
-        if (videoRef.current) {
-            videoRef.current.currentTime = savedTime
-
-            if (saveTimeTimer) clearTimeout(saveTimeTimer)
-
-            saveTimeTimer = setInterval(() => {
-                if (isPlaying && isLogged) {
-                    apiSaveTime(video.id, videoRef.current!.currentTime).then()
-                }
-            }, 5000)
-
-            return () => {
-                clearTimeout(saveTimeTimer)
-            }
-        }
+        // if (videoRef.current) {
+        //     videoRef.current.currentTime = savedTime
+        //
+        //     if (saveTimeTimer) clearTimeout(saveTimeTimer)
+        //
+        //     saveTimeTimer = setInterval(() => {
+        //         if (isPlaying && isLogged) {
+        //             apiSaveTime(video.id, videoRef.current!.currentTime).then()
+        //         }
+        //     }, 5000)
+        //
+        //     return () => {
+        //         clearTimeout(saveTimeTimer)
+        //     }
+        // }
     }, [video.id])
 
     useEffect(() => {
