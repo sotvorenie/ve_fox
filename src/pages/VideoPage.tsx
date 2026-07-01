@@ -7,6 +7,7 @@ import {apiSetToHistory} from "@api/history/history";
 import {apiCheckIsLiked} from "@api/like/like";
 import {apiGetSavedTime} from "@api/save_time/saveTime";
 import {apiGetVideo} from "@api/video/video";
+import {apiCheckWatchLater} from "@api/watch_later/watchLater.ts";
 
 import Header from "@header/Header";
 import VideoMain from "@video/VideoMain";
@@ -53,15 +54,17 @@ function VideoPage() {
         await getVideo()
 
         if (isLogged) {
-            const [_, likeRes, saveTimeRes] =
+            const [_, likeRes, saveTimeRes, watchLaterRes] =
                 await Promise.all([
                     apiSetToHistory(id),
                     apiCheckIsLiked(id),
-                    apiGetSavedTime(id)
+                    apiGetSavedTime(id),
+                    apiCheckWatchLater(id)
                 ])
 
             setIsLiked(likeRes.is_liked)
             setSavedTime(saveTimeRes.time)
+            setIsWatchLater(watchLaterRes.is_watch_later)
         }
 
         await getRecommendedVideos(+id).then()

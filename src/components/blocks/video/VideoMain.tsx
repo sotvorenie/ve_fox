@@ -1,4 +1,4 @@
-import {Dispatch, SetStateAction, useState} from "react";
+import {useState} from "react";
 import {Link} from "react-router-dom";
 import { useShallow } from 'zustand/react/shallow';
 
@@ -10,16 +10,17 @@ import VideoPlayer from "@video/VideoPlayer";
 import LikeIcon from "@icons/LikeIcon";
 
 import {useVideoStore} from "@store/useVideoStore";
+import {apiDeleteFromWatchLater, apiSetWatchLater} from "@api/watch_later/watchLater.ts";
 
 interface Props {
-    readonly isLiked: boolean,
-    readonly setIsLiked: Dispatch<SetStateAction<boolean>>;
-    readonly isWatchLater: boolean;
-    readonly setIsWatchLater: Dispatch<SetStateAction<boolean>>;
-    readonly savedTime: number;
+    isLiked: boolean
+    setIsLiked: (value: any) => boolean
+    isWatchLater: boolean
+    setIsWatchLater: (value: any) => boolean
+    savedTime: number
 }
 
-function VideoMain({isLiked, setIsLiked, isWatchLater, setIsWatchLater, savedTime}: Props) {
+function VideoMain({isLiked, setIsLiked, isWatchLater, setIsWatchLater, savedTime}: Readonly<Props>) {
     const {video} = useVideoStore(useShallow((state) => ({ ...state })))
 
     const [likeIsActive, setLikeIsActive] = useState<boolean>(true)
@@ -32,16 +33,21 @@ function VideoMain({isLiked, setIsLiked, isWatchLater, setIsWatchLater, savedTim
         await apiLike(video.id)
         setLikeIsActive(true)
 
-        setIsLiked(prev => !prev)
+        setIsLiked((prev: any) => !prev)
     }
     const handleWatchLater = async () => {
         if (!watchLaterIsActive) return
 
-        setWatchLaterIsActive(false)
-        // await removeVideoFromTable(video.video_path, 'watch_later')
-        setWatchLaterIsActive(true)
+        try {
+            setWatchLaterIsActive(false)
 
-        setIsWatchLater(prev => !prev)
+            isWatchLater ? await apiDeleteFromWatchLater(video.id) : await apiSetWatchLater(video.id)
+            setIsWatchLater((prev: any) => !prev)
+        } catch (err) {
+            console.error(err)
+        } finally {
+            setWatchLaterIsActive(true)
+        }
     }
 
     return (
