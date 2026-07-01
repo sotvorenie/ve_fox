@@ -37,6 +37,9 @@ function Upload3({className, tags, setTags}: Readonly<Props>) {
                         placeholder="Введите тег.."
                         value={videoTag}
                         onChange={(e) => setVideoTag(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") addTag()
+                        }}
                         ref={inputRef}
                     />
 
