@@ -39,6 +39,7 @@
       "@channel/*": ["src/components/blocks/channel/*"],
       "@header/*": ["src/components/blocks/header/*"],
       "@settings/*": ["src/components/blocks/settings/*"],
+      "@upload/*": ["src/components/blocks/upload/*"],
       "@video/*": ["src/components/blocks/video/*"]
     }
   },

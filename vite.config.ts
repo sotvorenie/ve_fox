@@ -25,6 +25,7 @@ export default defineConfig(async () => ({
             "@channel": path.resolve(__dirname, "./src/components/blocks/channel"),
             "@header": path.resolve(__dirname, "./src/components/blocks/header"),
             "@settings": path.resolve(__dirname, "./src/components/blocks/settings"),
+            "@upload": path.resolve(__dirname, "./src/components/blocks/upload"),
             "@video": path.resolve(__dirname, "./src/components/blocks/video"),
         },
     },

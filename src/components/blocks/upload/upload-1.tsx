@@ -15,7 +15,7 @@ import {
 
 import ButtonUi from "@ui/ButtonUi";
 import Modal from "@common/Modal";
-import UploadModal from "@settings/upload/uploadModal";
+import UploadModal from "@upload/uploadModal";
 import InputUi from "@ui/InputUi";
 
 import LoadingIcon from "@icons/LoadingIcon";

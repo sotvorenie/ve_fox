@@ -7,11 +7,11 @@ import {Section} from "@/types/section";
 import {apiUploadVideo} from "@api/upload/upload";
 
 import SettingsBlock from "@settings/settingsBlock";
-import Upload1 from "@settings/upload/upload-1";
-import Upload2 from "@settings/upload/upload-2";
-import Upload3 from "@settings/upload/upload-3";
-import UploadLoading from "@settings/upload/uploadLoading.tsx";
-import UploadNewVideo from "@settings/upload/uploadNewVideo.tsx";
+import Upload1 from "@upload/upload-1";
+import Upload2 from "@upload/upload-2";
+import Upload3 from "@upload/upload-3";
+import UploadLoading from "@upload/uploadLoading.tsx";
+import UploadNewVideo from "@upload/uploadNewVideo.tsx";
 
 import ButtonUi from "@ui/ButtonUi";
 

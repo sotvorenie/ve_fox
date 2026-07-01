@@ -4,7 +4,7 @@ import {BASE_URL} from "@api/url";
 
 import Portal from "@common/Portal";
 import SettingsRedactUser from "@settings/settingsRedactUser";
-import UploadVideo from "@settings/upload/uploadVideo";
+import UploadVideo from "@upload/uploadVideo";
 
 import SettingsIcon from "@icons/video-player/SettingsIcon";
 import UploadIcon from "@icons/UploadIcon";
