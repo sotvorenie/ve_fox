@@ -1000,6 +1000,7 @@ input, textarea {
   border-radius: var(--radius-medium);
   aspect-ratio: 16/9;
   margin-bottom: 0.625rem;
+  background: var(--color-dark-alt);
 }
 .video-item__preview span {
   font-size: 1rem;
@@ -1011,6 +1012,9 @@ input, textarea {
   padding-inline: 0.3125rem;
   text-shadow: 0 0 0.3125rem var(--color-dark);
   border: var(--border-dark-alt);
+}
+.video-item__preview img {
+  object-fit: contain;
 }
 .video-item__info {
   column-gap: 0.9375rem;

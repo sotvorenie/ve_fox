@@ -28,7 +28,7 @@ function VideoItem({video, isRow = false}: Props) {
         <Link to={`/video/${video.id}`}
               className="video-item col-4"
         >
-            <li className={isRow ? 'video-item__row-item flex flex-align-start' : ''}>
+            <li className={isRow ? 'video-item__row-item flex flex-align-start w-100' : 'w-100'}>
                 <div className="video-item__preview img-container position-relative">
                     <img src={`${BASE_URL}${video.preview_url}`} alt={video.name} loading="lazy"/>
 
