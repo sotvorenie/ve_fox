@@ -1502,6 +1502,9 @@ input, textarea {
 .redact-user__redact {
   margin-top: auto;
 }
+.redact-user__login {
+  background: red;
+}
 
 .channel__banner {
   width: 100%;

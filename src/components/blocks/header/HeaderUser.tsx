@@ -91,7 +91,7 @@ function HeaderUser() {
 
                 >
                     {settingsButtons.map((button: Button, index: number) => {
-                        if ((index === 0 || index === 2) && !isLogged) return
+                        if (index === 0 && !isLogged) return
 
                         return (
                             <button

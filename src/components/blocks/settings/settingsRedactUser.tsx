@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 import {apiRedactUserName} from "@api/user/user";
 
@@ -22,12 +22,14 @@ interface Props {
 function SettingsRedactUser({isVisible, setIsVisible}: Readonly<Props>) {
     const navigate = useNavigate();
 
-    const {logOut, user} = useUserStore()
+    const {logOut, user, isLogged} = useUserStore()
 
     const [name, setName] = useState<string>("")
 
     const [isVisibleRedact, setIsVisibleRedact] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
+
+    const titleText = () => isLogged ? 'Редактирование профиля' : 'Необходима авторизация'
 
     const handleRedact = async () => {
         const confirm = await showConfirm(
@@ -70,43 +72,58 @@ function SettingsRedactUser({isVisible, setIsVisible}: Readonly<Props>) {
         setIsVisibleRedact(name !== user.name && name?.length > 0)
     }, [name])
 
+    const renderIfIsLogged = () => (
+        <>
+            <SettingsRedactAvatar isLoading={isLoading} setIsLoading={setIsLoading}/>
+
+            <div className="redact-user__right col-6 flex flex-column">
+                <InputUi
+                    name="name"
+                    id="name"
+                    title="Имя пользователя"
+                    visibleCounter={true}
+                    value={name}
+                    setValue={setName}
+                    className="mb-30"
+                />
+
+                <SettingsRedactPassword/>
+
+                <ButtonUi
+                    className="redact-user__redact w-100 mb-20"
+                    func={handleRedact}
+                    isDisabled={!isVisibleRedact}
+                    isLoading={isLoading}
+                >
+                    Редактировать
+                </ButtonUi>
+
+                <ButtonUi
+                    className="redact-user__logout w-100"
+                    func={handleLogout}
+                    isLoading={isLoading}
+                >
+                    Выйти
+                </ButtonUi>
+            </div>
+        </>
+    )
+
+    const renderIfNotIsLogged = () => (
+        <>
+            <span className="col-3"></span>
+            <Link to="/auth" className="col-5">
+                <ButtonUi func={() => {}} className="w-100">Войти</ButtonUi>
+            </Link>
+        </>
+    )
+
     return (
         <SettingsBlock isVisible={isVisible} setIsVisible={setIsVisible}>
-            <SettingsBlock.Title>Редактирование профиля</SettingsBlock.Title>
+            <SettingsBlock.Title>{titleText()}</SettingsBlock.Title>
 
             <SettingsBlock.Content className="redact-user row">
-                <SettingsRedactAvatar isLoading={isLoading} setIsLoading={setIsLoading}/>
-
-                <div className="redact-user__right col-6 flex flex-column">
-                    <InputUi
-                        name="name"
-                        id="name"
-                        title="Имя пользователя"
-                        visibleCounter={true}
-                        value={name}
-                        setValue={setName}
-                        className="mb-30"
-                    />
-
-                    <SettingsRedactPassword/>
-
-                    <ButtonUi
-                        className="redact-user__redact w-100 mb-20"
-                        func={handleRedact}
-                        isDisabled={!isVisibleRedact}
-                        isLoading={isLoading}
-                    >
-                        Редактировать
-                    </ButtonUi>
-
-                    <ButtonUi
-                        className="redact-user__logout w-100"
-                        func={handleLogout}
-                        isLoading={isLoading}
-                    >
-                        Выйти
-                    </ButtonUi>
-                </div>
+                {isLogged ? renderIfIsLogged() : renderIfNotIsLogged()}
             </SettingsBlock.Content>
         </SettingsBlock>
     )

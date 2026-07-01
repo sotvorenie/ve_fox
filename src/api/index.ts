@@ -14,6 +14,10 @@ client.interceptors.request.use((config) => {
 client.interceptors.response.use(
     response => response,
     error => {
+        if (error.response?.data?.detail) {
+            error.message = error.response.data.detail;
+        }
+
         if (error.response?.status === 401) {
             localStorage.removeItem('token')
 
