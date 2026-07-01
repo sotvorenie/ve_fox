@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useRef, useState} from "react";
 
 import PlusIcon from "@icons/PlusIcon";
 import CrossIcon from "@icons/CrossIcon";
@@ -11,6 +11,7 @@ interface Props {
 
 function Upload3({className, tags, setTags}: Readonly<Props>) {
     const [videoTag, setVideoTag] = useState<string>("")
+    const inputRef = useRef<HTMLInputElement | null>(null)
 
     const addTag = () => {
         const newTag: string = videoTag.trim()
@@ -19,6 +20,7 @@ function Upload3({className, tags, setTags}: Readonly<Props>) {
 
         setTags((prev: string[]) => [newTag, ...prev])
         setVideoTag('')
+        inputRef.current?.focus()
     }
 
     const removeTag = (index: number) => {
@@ -35,6 +37,7 @@ function Upload3({className, tags, setTags}: Readonly<Props>) {
                         placeholder="Введите тег.."
                         value={videoTag}
                         onChange={(e) => setVideoTag(e.target.value)}
+                        ref={inputRef}
                     />
 
                     {videoTag?.length > 0 && (
