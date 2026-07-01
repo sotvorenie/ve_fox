@@ -1,0 +1,25 @@
+@use '../../helpers/index' as *;
+
+.upload-loading {
+
+  &__text {
+    top: 30%;
+  }
+
+  &__fox {
+    color: var(--color-accent);
+    bottom: 0;
+    left: clamp(0%, var(--progress) - #{rem(80)}, calc(100% - #{rem(80)}));
+    width: rem(80);
+  }
+
+  &__forest {
+
+    &-sent {
+      bottom: 0;
+      filter: brightness(0) invert(1);
+      clip-path: inset(0 calc(100% - var(--progress)) 0 0);
+      transition: clip-path var(--transition-duration);
+    }
+  }
+}

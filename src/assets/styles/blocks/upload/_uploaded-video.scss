@@ -1,0 +1,31 @@
+@use '../../helpers/index' as *;
+
+.uploaded-video {
+
+  &__preview {
+    height: rem(300);
+    margin-bottom: rem(10);
+    background: var(--color-dark);
+
+    .img-container {
+      aspect-ratio: 16/9;
+    }
+  }
+
+  &__name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-wrap: break-word;
+    margin-bottom: rem(15);
+  }
+
+  &__channel {
+    gap: rem(10);
+
+    &-avatar {
+      @include square(50);
+    }
+  }
+}

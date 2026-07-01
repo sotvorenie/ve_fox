@@ -10,9 +10,10 @@ import SettingsBlock from "@settings/settingsBlock";
 import Upload1 from "@settings/upload/upload-1";
 import Upload2 from "@settings/upload/upload-2";
 import Upload3 from "@settings/upload/upload-3";
-import ButtonUi from "@ui/ButtonUi";
+import UploadLoading from "@settings/upload/uploadLoading.tsx";
+import UploadNewVideo from "@settings/upload/uploadNewVideo.tsx";
 
-import LoadingIcon from "@icons/LoadingIcon";
+import ButtonUi from "@ui/ButtonUi";
 
 interface Props {
     isVisible: boolean
@@ -24,7 +25,8 @@ function UploadVideo({isVisible, setIsVisible}: Readonly<Props>) {
 
     const [activeTab, setActiveTab] = useState<number>(0)
     const [progress, setProgress] = useState<number>(0)
-    const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [newVideo, setNewVideo] = useState<Video | null>(null)
 
     const [video, setVideo] = useState<File | null>(null)
     const [preview, setPreview] = useState<File | null>(null)
@@ -51,7 +53,7 @@ function UploadVideo({isVisible, setIsVisible}: Readonly<Props>) {
         try {
             setIsLoading(true)
 
-            const newVideo: Video = await apiUploadVideo(
+            const response: Video = await apiUploadVideo(
                 video,
                 title,
                 tags,
@@ -62,7 +64,7 @@ function UploadVideo({isVisible, setIsVisible}: Readonly<Props>) {
                 (percent) => setProgress(percent)
             )
 
-            setIsVisible(false)
+            setNewVideo(response)
         } catch (err) {
             console.error(err)
         } finally {
@@ -70,66 +72,66 @@ function UploadVideo({isVisible, setIsVisible}: Readonly<Props>) {
         }
     }
 
+    const renderUploadVideo = () => (
+        <>
+            <div className="upload-video__tabs flex flex-between mb-30">
+                {tabs?.map((tab, index) => (
+                    <button
+                        className={`upload-video__tab hover-color-accent text-w500 ${activeTab === index ? 'is-active pointer-none' : ''}`}
+                        key={tab.title}
+                        type="button"
+                        onClick={() => setActiveTab(index)}
+                    >
+                        {tab.title}
+                    </button>
+                ))}
+            </div>
+
+            <Upload1 className={activeTab === 0 ? '' : 'visually-hidden'}
+                     activeChannel={activeChannel}
+                     setActiveChannel={setActiveChannel}
+                     activeSection={activeSection}
+                     setActiveSection={setActiveSection}
+            />
+            <Upload2 className={activeTab === 1 ? '' : 'visually-hidden'}
+                     video={video}
+                     setVideo={setVideo}
+                     preview={preview}
+                     setPreview={setPreview}
+                     title={title}
+                     setTitle={setTitle}
+            />
+            <Upload3 className={activeTab === 2 ? '' : 'visually-hidden'}
+                     tags={tags}
+                     setTags={setTags}
+            />
+        </>
+    )
+
     return (
         <SettingsBlock isVisible={isVisible} setIsVisible={setIsVisible}>
             <SettingsBlock.Title>Загрузка видео</SettingsBlock.Title>
 
             <SettingsBlock.Content className="upload-video flex flex-column">
-                {!isLoading && (
-                    <>
-                        <div className="upload-video__tabs flex flex-between mb-30">
-                            {tabs?.map((tab, index) => (
-                                <button
-                                    className={`upload-video__tab hover-color-accent text-w500 ${activeTab === index ? 'is-active pointer-none' : ''}`}
-                                    key={tab.title}
-                                    type="button"
-                                    onClick={() => setActiveTab(index)}
-                                >
-                                    {tab.title}
-                                </button>
-                            ))}
-                        </div>
+                {!isLoading && (newVideo ? <UploadNewVideo newVideo={newVideo}/> : renderUploadVideo())}
 
-                        <Upload1 className={activeTab === 0 ? '' : 'visually-hidden'}
-                                 activeChannel={activeChannel}
-                                 setActiveChannel={setActiveChannel}
-                                 activeSection={activeSection}
-                                 setActiveSection={setActiveSection}
-                        />
-                        <Upload2 className={activeTab === 1 ? '' : 'visually-hidden'}
-                                 video={video}
-                                 setVideo={setVideo}
-                                 preview={preview}
-                                 setPreview={setPreview}
-                                 title={title}
-                                 setTitle={setTitle}
-                        />
-                        <Upload3 className={activeTab === 2 ? '' : 'visually-hidden'}
-                                 tags={tags}
-                                 setTags={setTags}
-                        />
-                    </>
+                {isLoading && <UploadLoading progress={progress}/>}
+
+                {!newVideo && (
+                    <div className="row mt-auto">
+                        <ButtonUi func={() => setIsVisible(false)}
+                                  className='col-6'
+                        >
+                            Отмена
+                        </ButtonUi>
+                        <ButtonUi func={uploadVideo}
+                                  className='col-6'
+                                  isLoading={isLoading}
+                        >
+                            Загрузить
+                        </ButtonUi>
+                    </div>
                 )}
-
-                {isLoading && (
-                    <span className="recolor-svg absolute-center">
-                        <LoadingIcon size={64}/>
-                    </span>
-                )}
-
-                <div className="row mt-auto">
-                    <ButtonUi func={() => setIsVisible(false)}
-                              className='col-6'
-                    >
-                        Отмена
-                    </ButtonUi>
-                    <ButtonUi func={uploadVideo}
-                              className='col-6'
-                              isLoading={isLoading}
-                    >
-                        Загрузить
-                    </ButtonUi>
-                </div>
             </SettingsBlock.Content>
         </SettingsBlock>
     )

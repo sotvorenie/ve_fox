@@ -19,6 +19,15 @@ function Upload2({className, video, setVideo, preview, setPreview, title, setTit
     const videoInputRef = useRef<HTMLInputElement | null>(null);
     const previewInputRef = useRef<HTMLInputElement | null>(null);
 
+    const changeVideo = () => {
+        if (!videoInputRef.current?.files?.[0]) return
+        setVideo(videoInputRef.current.files[0])
+    }
+    const changePreview = () => {
+        if (!previewInputRef.current?.files?.[0]) return
+        setPreview(previewInputRef.current.files[0])
+    }
+
     return (
         <div className={className}>
             <InputUi
@@ -33,31 +42,49 @@ function Upload2({className, video, setVideo, preview, setPreview, title, setTit
 
             <div className="row">
                 <button className="upload-video__file flex-center recolor-svg hover-color-accent col-6"
-                        type="button">
+                        type="button"
+                        onClick={() => videoInputRef.current?.click()}
+                >
                     <input
                         type="file"
                         accept="video/*"
                         ref={videoInputRef}
                         className="visually-hidden"
+                        onChange={changeVideo}
                     />
 
                     <div className="upload-video__file-info">
-                        <VideoFileIcon/>
-                        <p>Загрузить видео</p>
+                        {video ? (
+                            <div>{video.name}</div>
+                        ) : (
+                            <>
+                                <VideoFileIcon/>
+                                <p>Загрузить видео</p>
+                            </>
+                        )}
                     </div>
                 </button>
                 <button className="upload-video__file flex-center recolor-svg hover-color-accent col-6"
-                        type="button">
+                        type="button"
+                        onClick={() => previewInputRef.current?.click()}
+                >
                     <input
                         type="file"
                         accept="image/*"
                         ref={previewInputRef}
                         className="visually-hidden"
+                        onChange={changePreview}
                     />
 
                     <div className="upload-video__file-info">
-                        <PhotoFileIcon/>
-                        <p>Загрузить Превью</p>
+                        {preview ? (
+                            <div>{preview.name}</div>
+                        ) : (
+                            <>
+                                <PhotoFileIcon/>
+                                <p>Загрузить Превью</p>
+                            </>
+                        )}
                     </div>
                 </button>
             </div>

@@ -23,8 +23,6 @@
 @use 'blocks/header/header';
 @use 'blocks/header/settings';
 @use 'blocks/header/redact-user';
-@use 'blocks/header/upload-video';
-@use 'blocks/header/upload-modal';
 
 @use 'blocks/channel/channel';
 
@@ -34,3 +32,8 @@
 @use 'blocks/video/video-player';
 
 @use 'blocks/search/search-page';
+
+@use 'blocks/upload/upload-video';
+@use 'blocks/upload/upload-modal';
+@use 'blocks/upload/upload-loading';
+@use 'blocks/upload/uploaded-video';

@@ -79,7 +79,7 @@ function UploadModal({
                                 >
                                     {item.avatar_url && (
                                         <div className="upload-modal__img-container img-container radius-50">
-                                            <img src={`${BASE_URL}/${item.avatar_url}`} alt={item.name}/>
+                                            <img src={`${BASE_URL}${item.avatar_url}`} alt={item.name}/>
                                         </div>
                                     )}
 
