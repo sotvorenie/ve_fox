@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {BASE_URL} from "@api/url";
 import {apiLike} from "@api/like/like";
 
-import VideoPlayer from "@video/VideoPlayer";
+import VideoPlayer from "@video/video-player/VideoPlayer";
 
 import LikeIcon from "@icons/LikeIcon";
 
