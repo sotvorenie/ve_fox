@@ -60,7 +60,7 @@ function App() {
                         await apiSaveTime(video.id, currentTime).then()
                     }
 
-                    // await getCurrentWindow().destroy()
+                    await getCurrentWindow().destroy()
                 }
             })
         }
