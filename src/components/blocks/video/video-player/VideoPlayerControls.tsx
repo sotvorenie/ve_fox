@@ -1,21 +1,39 @@
-import React from "react";
-
-import {formatVideoTime} from "@composables/useFormatVideoTime.ts";
+import React, {useRef, forwardRef, useImperativeHandle} from "react";
 
 import VideoPlayButton from "@video/VideoPlayButton.tsx";
 
-import SoundOnIcon from "@icons/video-player/SoundOnIcon.tsx";
-import SoundOffIcon from "@icons/video-player/SoundOffIcon.tsx";
-import TimePrevIcon from "@icons/video-player/TimePrevIcon.tsx";
-import TimeNextIcon from "@icons/video-player/TimeNextIcon.tsx";
-import SettingsIcon from "@icons/video-player/SettingsIcon.tsx";
-import ReduceIcon from "@icons/video-player/ReduceIcon.tsx";
-import ExpandIcon from "@icons/video-player/ExpandIcon.tsx";
+import VideoPlayerLeftButtons from "@video/video-player/VideoPlayerLeftButtons.tsx";
+import VideoPlayerRightButtons from "@video/video-player/VideoPlayerRightButtons.tsx";
 
 import {usePlayerStore} from "@store/usePlayerStore.ts";
 
-function VideoPlayerControls() {
+interface Props {
+    setIsShowSettings: (value: any) => void
+    setIsMoving: (value: any) => void
+    progress: number
+    updateVideoTime: (value: any) => void
+    videoRef: React.RefObject<HTMLVideoElement | null>
+}
+export interface ControlsHandles {
+    timeline: HTMLDivElement | null;
+}
+
+const VideoPlayerControls = forwardRef<ControlsHandles, Props>((props, ref) => {
+    const { videoRef, progress, setIsMoving, updateVideoTime, setIsShowSettings } = props
+    
+    const timelineRef = useRef<HTMLDivElement>(null);
+    useImperativeHandle(ref, () => ({
+        timeline: timelineRef.current
+    }), [])
+
     const {isPlaying} = usePlayerStore()
+
+    const mouseDown = (e: MouseEvent | React.MouseEvent) => {
+        if (!videoRef.current || !timelineRef.current) return
+
+        setIsMoving(true)
+        updateVideoTime(e)
+    }
 
     return (
         <div className={`video-player__controls position-absolute inset-0 hidden`}>
@@ -39,77 +57,13 @@ function VideoPlayerControls() {
                 </div>
 
                 <div className="video-player__line flex flex-align-center flex-between">
-                    <div className="video-player__left flex flex-align-center">
-                        <VideoPlayButton className="video-player__line-play video-player__line-item"
-                                         isPlaying={isPlaying}
-                                         setIsPlaying={setIsPlaying}
-                        />
+                    <VideoPlayerLeftButtons videoRef={videoRef}/>
 
-                        <div className="video-player__volume video-player__background flex">
-                            <button className="video-player__line-item recolor-svg i-svg"
-                                    type="button"
-                                    title="Настройки звука"
-                                    onClick={handleVolume}
-                            >
-                                {volume > 0 ? <SoundOnIcon/> : <SoundOffIcon/>}
-                            </button>
-
-                            <input type="range"
-                                   min={0}
-                                   max={1}
-                                   step={0.1}
-                                   value={volume}
-                                   onChange={changeVolume}
-                                   style={{'--fill-percent': `${volume * 100}%`} as React.CSSProperties}
-                            />
-                        </div>
-
-                        <button
-                            className="video-player__prev-10 video-player__line-item video-player__background recolor-svg i-svg"
-                            type="button"
-                            title="На 10 секунд назад"
-                            onClick={setMinus10Sec}
-                        >
-                            <TimePrevIcon/>
-                        </button>
-
-                        <button
-                            className="video-player__next-10 video-player__line-item video-player__background recolor-svg i-svg"
-                            type="button"
-                            title="На 10 секунд вперед"
-                            onClick={setPlus10Sec}
-                        >
-                            <TimeNextIcon/>
-                        </button>
-
-                        <span
-                            className="video-player__duration video-player__line-item video-player__background">
-                                {formatVideoTime(currentTime)} / {formatVideoTime(duration)}
-                            </span>
-                    </div>
-
-                    <div className="video-player__right flex flex-align-center">
-                        <button
-                            className="video-player__line-settings video-player__line-item video-player__background recolor-svg i-svg z-1000"
-                            type="button"
-                            title="Настройки"
-                            onClick={() => setIsShowSettings(true)}
-                            ref={settingsBtnRef}
-                        >
-                            <SettingsIcon/>
-                        </button>
-
-                        <button className="video-player__line-item video-player__background recolor-svg i-svg"
-                                type="button"
-                                onClick={() => toggleIsFullscreen()}
-                        >
-                            {isFullscreen ? <ReduceIcon/> : <ExpandIcon/>}
-                        </button>
-                    </div>
+                    <VideoPlayerRightButtons setIsShowSettings={setIsShowSettings}/>
                 </div>
             </div>
         </div>
     )
-}
+})
 
 export default VideoPlayerControls;

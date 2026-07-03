@@ -4,22 +4,12 @@ import {BASE_URL} from "@api/url";
 
 import {apiSaveTime} from "@api/save_time/saveTime";
 
-import {formatVideoTime} from "@composables/useFormatVideoTime";
-
-import VideoPlayButton from "@video/VideoPlayButton";
-
-import SoundOnIcon from "@icons/video-player/SoundOnIcon";
-import SoundOffIcon from "@icons/video-player/SoundOffIcon";
-import SettingsIcon from "@icons/video-player/SettingsIcon";
-import ExpandIcon from "@icons/video-player/ExpandIcon";
-import ReduceIcon from "@icons/video-player/ReduceIcon";
-import TimePrevIcon from "@icons/video-player/TimePrevIcon";
-import TimeNextIcon from "@icons/video-player/TimeNextIcon";
+import VideoPlayerSettings from "@video/video-player/VideoPlayerSettings.tsx";
+import VideoPlayerControls, {ControlsHandles} from "@video/video-player/VideoPlayerControls.tsx";
 
 import {useVideoStore} from "@store/useVideoStore";
 import {usePlayerStore} from "@store/usePlayerStore";
 import {useUserStore} from "@store/useUserStore";
-import VideoPlayerSettings from "@video/video-player/VideoPlayerSettings.tsx";
 
 interface Props {
     savedTime: number
@@ -31,18 +21,14 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
     const {
         isPlaying,
         volume,
-        oldVolume,
         isShowSettings,
         isShowControls,
         isFullscreen,
         duration,
-        currentTime
     } = usePlayerStore();
     const {
         setIsPlaying,
         toggleIsPlaying,
-        setVolume,
-        setOldVolume,
         setDuration,
         setCurrentTime,
         setIsShowControls,
@@ -53,12 +39,12 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
     } = usePlayerStore();
     const {isLogged} = useUserStore();
 
-    const [progress, setProgress] = useState<number>(0);
     const [isMoving, setIsMoving] = useState<boolean>(false)
+    const [progress, setProgress] = useState<number>(0);
 
     const sectionRef = useRef<HTMLElement | null>(null)
     const videoRef = useRef<HTMLVideoElement | null>(null)
-    const timelineRef = useRef<HTMLDivElement | null>(null)
+    const timelineRef = useRef<ControlsHandles>(null)
 
     const hideControlsTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
     const cursorTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -77,7 +63,7 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
 
     // обновляем progress для timeline
     const updateTimeline = (e: React.SyntheticEvent<HTMLVideoElement, Event>): void => {
-        if (!videoRef.current || !timelineRef.current) return
+        if (!videoRef.current || !timelineRef.current?.timeline) return
         if (isMoving) return
 
         setCurrentTime(e.currentTarget.currentTime)
@@ -86,31 +72,13 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
 
     // перемещение timeline
     const updateVideoTime = (e: MouseEvent | React.MouseEvent) => {
-        if (!timelineRef.current || !videoRef.current) return
+        if (!timelineRef.current?.timeline || !videoRef.current) return
 
-        const rect = timelineRef.current.getBoundingClientRect()
+        const rect = timelineRef.current.timeline.getBoundingClientRect()
         let percent: number = (e.clientX - rect.left) / rect.width
         percent = Math.min(Math.max(percent, 0), 1)
         setProgress(percent * 100)
         videoRef.current.currentTime = percent * duration
-    }
-    const mouseDown = (e: MouseEvent | React.MouseEvent) => {
-        if (!videoRef.current || !timelineRef.current) return
-
-        setIsMoving(true)
-        updateVideoTime(e)
-    }
-
-    // +- 10 секунд
-    const setPlus10Sec = () => {
-        if (!videoRef.current) return
-
-        videoRef.current.currentTime = Math.min(videoRef.current.currentTime + 10, duration)
-    }
-    const setMinus10Sec = () => {
-        if (!videoRef.current) return
-
-        videoRef.current.currentTime = Math.max(videoRef.current.currentTime - 10, 0)
     }
 
     // показ/скрытие контроллеров
@@ -123,22 +91,6 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
         if (!isPlaying) return
 
         setIsShowControls(true)
-    }
-
-    // изменение уровня громкости
-    const handleVolume = () => {
-        if (volume > 0) {
-            localStorage.setItem('volume', '0')
-            setOldVolume(volume)
-            setVolume(0)
-        } else {
-            localStorage.setItem('volume', JSON.stringify(oldVolume))
-            setVolume(oldVolume)
-        }
-    }
-    const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
-        localStorage.setItem('volume', JSON.stringify(e.target.value))
-        setVolume(Number.parseFloat(e.target.value))
     }
 
     useEffect(() => {
@@ -219,13 +171,13 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
 
     useEffect(() => {
         const mouseMove = (e: MouseEvent) => {
-            if (!videoRef.current || !timelineRef.current) return
+            if (!videoRef.current || !timelineRef.current?.timeline) return
             if (!isMoving) return
 
             updateVideoTime(e)
         }
         const mouseUp = () => {
-            if (!videoRef.current || !timelineRef.current) return
+            if (!videoRef.current || !timelineRef.current?.timeline) return
 
             setIsMoving(false)
             setCurrentTime(videoRef.current.currentTime)
@@ -291,6 +243,8 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
             <button className="video-player__hidden position-absolute inset-0 z-100 cursor-pointer"
                     onClick={toggleIsPlaying}
             />
+
+            {/*eslint-disable jsx-a11y/media-has-caption*/}
             <video src={`${BASE_URL}${video?.video_url}`}
                    autoPlay
                    crossOrigin="anonymous"
@@ -299,106 +253,25 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
                    onTimeUpdate={updateTimeline}
                    onEnded={() => setIsPlaying(false)}
             >
-                <track src=""
-                       kind="captions"
-                       srcLang="ru"
-                       label="Русские субтитры"
-                       default
-                />
+                {video.subtitle_url && (
+                    <track src={video.subtitle_url}
+                           kind="captions"
+                           srcLang="ru"
+                           label="Русские субтитры"
+                           default
+                    />
+                )}
             </video>
 
             <VideoPlayerSettings isShowSettings={isShowSettings}/>
 
-            <div className={`video-player__controls position-absolute inset-0 hidden`}>
-                <VideoPlayButton
-                    className={`video-player__play-btn absolute-center cursor-default is-active`}
-                    isPlaying={isPlaying}
-                    setIsPlaying={(): void => {}}
-                />
-
-                <div className="video-player__bottom position-absolute flex flex-column w-100 z-1000">
-                    <div className="video-player__timeline cursor-pointer w-100"
-                         ref={timelineRef}
-                         style={{'--progress': `${progress}%`} as React.CSSProperties}
-                         onMouseDown={mouseDown}
-                    >
-                        <div className="video-player__timeline-inner position-relative">
-                            <div className="line w-100"/>
-                            <div className="thumb position-absolute"/>
-                        </div>
-                    </div>
-
-                    <div className="video-player__line flex flex-align-center flex-between">
-                        <div className="video-player__left flex flex-align-center">
-                            <VideoPlayButton className="video-player__line-play video-player__line-item"
-                                             isPlaying={isPlaying}
-                                             setIsPlaying={setIsPlaying}
-                            />
-
-                            <div className="video-player__volume video-player__background flex">
-                                <button className="video-player__line-item recolor-svg i-svg"
-                                        type="button"
-                                        title="Настройки звука"
-                                        onClick={handleVolume}
-                                >
-                                    {volume > 0 ? <SoundOnIcon/> : <SoundOffIcon/>}
-                                </button>
-
-                                <input type="range"
-                                       min={0}
-                                       max={1}
-                                       step={0.1}
-                                       value={volume}
-                                       onChange={changeVolume}
-                                       style={{ '--fill-percent': `${volume * 100}%` } as React.CSSProperties}
-                                />
-                            </div>
-
-                            <button
-                                className="video-player__prev-10 video-player__line-item video-player__background recolor-svg i-svg"
-                                type="button"
-                                title="На 10 секунд назад"
-                                onClick={setMinus10Sec}
-                            >
-                                <TimePrevIcon/>
-                            </button>
-
-                            <button
-                                className="video-player__next-10 video-player__line-item video-player__background recolor-svg i-svg"
-                                type="button"
-                                title="На 10 секунд вперед"
-                                onClick={setPlus10Sec}
-                            >
-                                <TimeNextIcon/>
-                            </button>
-
-                            <span
-                                className="video-player__duration video-player__line-item video-player__background">
-                                {formatVideoTime(currentTime)} / {formatVideoTime(duration)}
-                            </span>
-                        </div>
-
-                        <div className="video-player__right flex flex-align-center">
-                            <button
-                                className="video-player__line-settings video-player__line-item video-player__background recolor-svg i-svg z-1000"
-                                type="button"
-                                title="Настройки"
-                                onClick={() => setIsShowSettings(true)}
-                                ref={settingsBtnRef}
-                            >
-                                <SettingsIcon/>
-                            </button>
-
-                            <button className="video-player__line-item video-player__background recolor-svg i-svg"
-                                    type="button"
-                                    onClick={() => toggleIsFullscreen()}
-                            >
-                                {isFullscreen ? <ReduceIcon/> : <ExpandIcon/>}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <VideoPlayerControls setIsShowSettings={setIsShowSettings}
+                                 progress={progress}
+                                 setIsMoving={setIsMoving}
+                                 updateVideoTime={updateVideoTime}
+                                 videoRef={videoRef}
+                                 ref={timelineRef}
+            />
         </section>
     )
 }
