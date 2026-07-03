@@ -2,10 +2,12 @@ import React, {useRef, forwardRef, useImperativeHandle} from "react";
 
 import VideoPlayButton from "@video/VideoPlayButton.tsx";
 
-import VideoPlayerLeftButtons from "@video/video-player/VideoPlayerLeftButtons.tsx";
-import VideoPlayerRightButtons from "@video/video-player/VideoPlayerRightButtons.tsx";
+import VideoPlayerButtons from "@video/video-player/VideoPlayerButtons.tsx";
 
 import {usePlayerStore} from "@store/usePlayerStore.ts";
+import SettingsIcon from "@icons/video-player/SettingsIcon.tsx";
+import ReduceIcon from "@icons/video-player/ReduceIcon.tsx";
+import ExpandIcon from "@icons/video-player/ExpandIcon.tsx";
 
 interface Props {
     setIsShowSettings: (value: any) => void
@@ -15,18 +17,25 @@ interface Props {
     videoRef: React.RefObject<HTMLVideoElement | null>
 }
 export interface ControlsHandles {
-    timeline: HTMLDivElement | null;
+    timeline: HTMLDivElement | null
+    settingsBtn: HTMLButtonElement | null
 }
 
 const VideoPlayerControls = forwardRef<ControlsHandles, Props>((props, ref) => {
     const { videoRef, progress, setIsMoving, updateVideoTime, setIsShowSettings } = props
     
-    const timelineRef = useRef<HTMLDivElement>(null);
+    const timelineRef = useRef<HTMLDivElement>(null)
+    const settingsBtnRef = useRef<HTMLButtonElement | null>(null)
     useImperativeHandle(ref, () => ({
-        timeline: timelineRef.current
+        timeline: timelineRef.current,
+        settingsBtn: settingsBtnRef.current,
     }), [])
 
-    const {isPlaying} = usePlayerStore()
+    const {
+        isPlaying,
+        isFullscreen
+    } = usePlayerStore()
+    const {toggleIsFullscreen} = usePlayerStore()
 
     const mouseDown = (e: MouseEvent | React.MouseEvent) => {
         if (!videoRef.current || !timelineRef.current) return
@@ -57,9 +66,26 @@ const VideoPlayerControls = forwardRef<ControlsHandles, Props>((props, ref) => {
                 </div>
 
                 <div className="video-player__line flex flex-align-center flex-between">
-                    <VideoPlayerLeftButtons videoRef={videoRef}/>
+                    <VideoPlayerButtons videoRef={videoRef}/>
 
-                    <VideoPlayerRightButtons setIsShowSettings={setIsShowSettings}/>
+                    <div className="video-player__right flex flex-align-center">
+                        <button
+                            className="video-player__line-settings video-player__line-item video-player__background recolor-svg i-svg z-1000"
+                            type="button"
+                            title="Настройки"
+                            onClick={() => setIsShowSettings(true)}
+                            ref={settingsBtnRef}
+                        >
+                            <SettingsIcon/>
+                        </button>
+
+                        <button className="video-player__line-item video-player__background recolor-svg i-svg"
+                                type="button"
+                                onClick={() => toggleIsFullscreen()}
+                        >
+                            {isFullscreen ? <ReduceIcon/> : <ExpandIcon/>}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

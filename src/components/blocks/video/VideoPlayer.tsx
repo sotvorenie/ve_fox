@@ -44,15 +44,13 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
 
     const sectionRef = useRef<HTMLElement | null>(null)
     const videoRef = useRef<HTMLVideoElement | null>(null)
-    const timelineRef = useRef<ControlsHandles>(null)
+    const controlsRef = useRef<ControlsHandles>(null)
 
     const hideControlsTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
     const cursorTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
     const saveTimeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
     const isPlayingRef = useRef(isPlaying)
-
-    const settingsBtnRef = useRef<HTMLButtonElement | null>(null)
 
     // при загрузке метаданных видео
     const loadedMetadata = () => {
@@ -63,7 +61,7 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
 
     // обновляем progress для timeline
     const updateTimeline = (e: React.SyntheticEvent<HTMLVideoElement, Event>): void => {
-        if (!videoRef.current || !timelineRef.current?.timeline) return
+        if (!videoRef.current || !controlsRef.current?.timeline) return
         if (isMoving) return
 
         setCurrentTime(e.currentTarget.currentTime)
@@ -72,9 +70,9 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
 
     // перемещение timeline
     const updateVideoTime = (e: MouseEvent | React.MouseEvent) => {
-        if (!timelineRef.current?.timeline || !videoRef.current) return
+        if (!controlsRef.current?.timeline || !videoRef.current) return
 
-        const rect = timelineRef.current.timeline.getBoundingClientRect()
+        const rect = controlsRef.current.timeline.getBoundingClientRect()
         let percent: number = (e.clientX - rect.left) / rect.width
         percent = Math.min(Math.max(percent, 0), 1)
         setProgress(percent * 100)
@@ -171,13 +169,13 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
 
     useEffect(() => {
         const mouseMove = (e: MouseEvent) => {
-            if (!videoRef.current || !timelineRef.current?.timeline) return
+            if (!videoRef.current || !controlsRef.current?.timeline) return
             if (!isMoving) return
 
             updateVideoTime(e)
         }
         const mouseUp = () => {
-            if (!videoRef.current || !timelineRef.current?.timeline) return
+            if (!videoRef.current || !controlsRef.current?.timeline) return
 
             setIsMoving(false)
             setCurrentTime(videoRef.current.currentTime)
@@ -208,8 +206,8 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
                 clearTimeout(timer)
                 globalThis.removeEventListener('click', closeSettings)
             }
-        } else if (settingsBtnRef.current) {
-            settingsBtnRef.current.blur()
+        } else if (controlsRef.current?.settingsBtn) {
+            controlsRef.current.settingsBtn.blur()
         }
     }, [isShowSettings])
 
@@ -270,7 +268,7 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
                                  setIsMoving={setIsMoving}
                                  updateVideoTime={updateVideoTime}
                                  videoRef={videoRef}
-                                 ref={timelineRef}
+                                 ref={controlsRef}
             />
         </section>
     )

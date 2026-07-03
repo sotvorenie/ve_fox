@@ -15,7 +15,7 @@ interface Props {
     videoRef: React.RefObject<HTMLVideoElement | null>
 }
 
-function VideoPlayerLeftButtons({videoRef}: Readonly<Props>) {
+function VideoPlayerButtons({videoRef}: Readonly<Props>) {
     const {
         isPlaying,
         volume,
@@ -109,4 +109,4 @@ function VideoPlayerLeftButtons({videoRef}: Readonly<Props>) {
     )
 }
 
-export default VideoPlayerLeftButtons;
+export default VideoPlayerButtons;
