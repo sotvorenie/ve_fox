@@ -97,14 +97,6 @@ function HeaderUser() {
                     onClick={() => setIsVisibleSettings(false)}
 
                 >
-                    <button className="settings__off position-absolute recolor-svg hover-color-accent button-width-svg"
-                            type="button"
-                            title="Выйти из приложения"
-                            onClick={handleCloseApp}
-                    >
-                        <OffIcon/>
-                    </button>
-
                     {settingsButtons.map((button: Button, index: number) => {
                         if (index === 0 && !isLogged) return
 
@@ -118,7 +110,9 @@ function HeaderUser() {
                                 key={button.title}
                                 title={button.title}
                                 type="button"
-                                onClick={(e) => {handleButton(e, button)}}
+                                onClick={(e) => {
+                                    handleButton(e, button)
+                                }}
                             >
                                 <div className="pointer-none flex-center">
                                     <button.icon/>
@@ -126,6 +120,14 @@ function HeaderUser() {
                             </button>
                         )
                     })}
+
+                    <button className="settings__off position-absolute recolor-svg hover-color-accent button-width-svg"
+                            type="button"
+                            title="Выйти из приложения"
+                            onClick={handleCloseApp}
+                    >
+                        <OffIcon/>
+                    </button>
 
                     <SettingsRedactUser isVisible={isVisibleRedactUser} setIsVisible={setIsVisibleRedactUser}/>
 

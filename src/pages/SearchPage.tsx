@@ -18,7 +18,6 @@ function SearchPage() {
         total,
         channels,
         videos,
-        hasMore,
         search
     } = useSearchStore()
     const {setPage} = usePagesStore()

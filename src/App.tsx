@@ -1,7 +1,9 @@
 import {useEffect, useState} from "react";
-import {Routes, Route, Navigate} from "react-router-dom";
+import {Routes, Route, Navigate, useLocation, matchPath} from "react-router-dom";
 import { listen } from '@tauri-apps/api/event';
 import { getCurrentWindow } from '@tauri-apps/api/window';
+
+import {apiSaveTime} from "@api/save_time/saveTime.ts";
 
 import {showConfirm} from "@utils/modals.ts";
 
@@ -16,8 +18,12 @@ import WatchLaterPage from "@pages/WatchLaterPage";
 import AuthPage from "@pages/AuthPage";
 
 import {useUserStore} from "@store/useUserStore";
+import {useVideoStore} from "@store/useVideoStore.ts";
+import {usePlayerStore} from "@store/usePlayerStore.ts";
 
 function App() {
+    const location = useLocation();
+
     const {checkMe} = useUserStore()
 
     const [isLoading, setIsLoading] = useState(true)
@@ -46,7 +52,16 @@ function App() {
                     'Выход из приложения',
                     'Вы действительно хотите выйти?'
                 )
-                if (check) await getCurrentWindow().destroy()
+                if (check) {
+                    const isVideoPage = matchPath({path: '/video/:id'}, location.pathname)
+                    if (isVideoPage) {
+                        const video = useVideoStore.getState().video
+                        const currentTime = usePlayerStore.getState().currentTime
+                        await apiSaveTime(video.id, currentTime).then()
+                    }
+
+                    // await getCurrentWindow().destroy()
+                }
             })
         }
 

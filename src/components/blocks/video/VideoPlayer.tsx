@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 
 import {BASE_URL} from "@api/url";
+
 import {apiSaveTime} from "@api/save_time/saveTime";
 
 import {formatVideoTime} from "@composables/useFormatVideoTime";
@@ -18,6 +19,7 @@ import TimeNextIcon from "@icons/video-player/TimeNextIcon";
 import {useVideoStore} from "@store/useVideoStore";
 import {usePlayerStore} from "@store/usePlayerStore";
 import {useUserStore} from "@store/useUserStore";
+import VideoPlayerSettings from "@video/video-player/VideoPlayerSettings.tsx";
 
 interface Props {
     savedTime: number
@@ -58,9 +60,11 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
     const videoRef = useRef<HTMLVideoElement | null>(null)
     const timelineRef = useRef<HTMLDivElement | null>(null)
 
-    let hideControlsTimer: number
-    let cursorTimer: number
-    let saveTimeTimer: number
+    const hideControlsTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+    const cursorTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+    const saveTimeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+    const isPlayingRef = useRef(isPlaying)
 
     const settingsBtnRef = useRef<HTMLButtonElement | null>(null)
 
@@ -161,21 +165,21 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
     useEffect(() => {
         clearData()
 
-        // if (videoRef.current) {
-        //     videoRef.current.currentTime = savedTime
-        //
-        //     if (saveTimeTimer) clearTimeout(saveTimeTimer)
-        //
-        //     saveTimeTimer = setInterval(() => {
-        //         if (isPlaying && isLogged) {
-        //             apiSaveTime(video.id, videoRef.current!.currentTime).then()
-        //         }
-        //     }, 5000)
-        //
-        //     return () => {
-        //         clearTimeout(saveTimeTimer)
-        //     }
-        // }
+        if (videoRef.current) {
+            const timerTime: number = video.duration >= 600 ? 60000 : 30000
+
+            if (saveTimeTimer.current) clearTimeout(saveTimeTimer.current)
+
+            saveTimeTimer.current = setInterval(() => {
+                if (isPlayingRef.current && isLogged) {
+                    apiSaveTime(video.id, videoRef.current!.currentTime).then()
+                }
+            }, timerTime)
+
+            return () => {
+                if (saveTimeTimer.current) clearTimeout(saveTimeTimer.current)
+            }
+        }
     }, [video.id])
 
     useEffect(() => {
@@ -188,14 +192,14 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
         const moveCursor = () => {
             setIsShowControls(true)
 
-            if (cursorTimer) clearTimeout(cursorTimer)
-            cursorTimer = setTimeout(() => {
+            if (cursorTimer.current) clearTimeout(cursorTimer.current)
+            cursorTimer.current = setTimeout(() => {
                 setIsShowControls(false)
             }, 2000)
         }
 
         if (isPlaying && !isShowSettings) {
-            hideControlsTimer = setTimeout(() => {
+            hideControlsTimer.current = setTimeout(() => {
                 setIsShowControls(false)
             }, 2000)
 
@@ -205,8 +209,10 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
         }
 
         return () => {
-            clearTimeout(hideControlsTimer)
-            clearTimeout(cursorTimer)
+            if (hideControlsTimer.current && cursorTimer.current) {
+                clearTimeout(hideControlsTimer.current)
+                clearTimeout(cursorTimer.current)
+            }
             sectionRef.current?.removeEventListener('mousemove', moveCursor)
         }
     }, [isPlaying, isShowSettings, isFullscreen])
@@ -261,6 +267,16 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
         videoRef.current.volume = volume
     }, [volume])
 
+    useEffect(() => {
+        isPlayingRef.current = isPlaying
+    }, [isPlaying])
+
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.currentTime = savedTime
+        }
+    }, [savedTime])
+
     return (
         <section className={
                     `video-player position-relative 
@@ -291,21 +307,7 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
                 />
             </video>
 
-            <div className={`video-player__settings position-absolute inset-0 z-1000 ${isShowSettings ? 'is-active' : ''}`}>
-                <div
-                    className="video-player__settings-content position-absolute"
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    <ul className="video-player__settings-list">
-                        <li className="video-player__settings-item">
-                            <label className="video-player__settings-label hover-color-accent flex flex-align-center">
-                                Субтитры
-
-                            </label>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <VideoPlayerSettings isShowSettings={isShowSettings}/>
 
             <div className={`video-player__controls position-absolute inset-0 hidden`}>
                 <VideoPlayButton
