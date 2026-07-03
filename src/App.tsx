@@ -1,5 +1,9 @@
 import {useEffect, useState} from "react";
 import {Routes, Route, Navigate} from "react-router-dom";
+import { listen } from '@tauri-apps/api/event';
+import { getCurrentWindow } from '@tauri-apps/api/window';
+
+import {showConfirm} from "@utils/modals.ts";
 
 import MainPage from "@pages/MainPage";
 import VideoPage from "@pages/VideoPage";
@@ -32,6 +36,27 @@ function App() {
     useEffect(() => {
         checkUser().then()
     }, [])
+
+    useEffect(() => {
+        let unListen: () => void
+
+        const initListener = async () => {
+            unListen = await listen('request-close', async () => {
+                const check = await showConfirm(
+                    'Выход из приложения',
+                    'Вы действительно хотите выйти?'
+                )
+                if (check) await getCurrentWindow().destroy()
+            })
+        }
+
+        initListener().then()
+
+        return () => {
+            if (unListen) unListen()
+        }
+    }, [])
+
 
     if (isLoading) {
         return <></>

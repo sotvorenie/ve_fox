@@ -1,4 +1,5 @@
 import {ComponentType, SVGProps, useState, useEffect, MouseEvent} from "react";
+import { emit } from '@tauri-apps/api/event';
 
 import {BASE_URL} from "@api/url";
 
@@ -10,6 +11,7 @@ import SettingsIcon from "@icons/video-player/SettingsIcon";
 import UploadIcon from "@icons/UploadIcon";
 import FilmIcon from "@icons/FilmIcon";
 import UserIcon from "@icons/UserIcon";
+import OffIcon from "@icons/OffIcon.tsx";
 
 import {useUserStore} from "@store/useUserStore";
 
@@ -67,6 +69,11 @@ function HeaderUser() {
         if (!button.activeElement) button.func()
     }
 
+    const handleCloseApp = (e: MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation()
+        emit('request-close').then()
+    }
+
     useEffect(() => {
         if (!isVisibleSettings) closeAllBlock()
     }, [isVisibleSettings])
@@ -90,6 +97,14 @@ function HeaderUser() {
                     onClick={() => setIsVisibleSettings(false)}
 
                 >
+                    <button className="settings__off position-absolute recolor-svg hover-color-accent button-width-svg"
+                            type="button"
+                            title="Выйти из приложения"
+                            onClick={handleCloseApp}
+                    >
+                        <OffIcon/>
+                    </button>
+
                     {settingsButtons.map((button: Button, index: number) => {
                         if (index === 0 && !isLogged) return
 

@@ -1467,6 +1467,14 @@ input, textarea {
   padding: 0.9375rem;
   border: var(--border-light-alt);
 }
+.settings__off {
+  width: 3.75rem;
+  height: 3.75rem;
+  min-height: 3.75rem;
+  min-width: 3.75rem;
+  top: 1.25rem;
+  left: 1.25rem;
+}
 
 .redact-user {
   --column-gap: 1.25rem;

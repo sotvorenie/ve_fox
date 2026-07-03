@@ -72,4 +72,11 @@
     padding: rem(15);
     border: var(--border-light-alt);
   }
+
+  &__off {
+    @include square(60);
+
+    top: rem(20);
+    left: rem(20);
+  }
 }
