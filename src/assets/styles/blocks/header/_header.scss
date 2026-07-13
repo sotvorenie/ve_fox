@@ -104,4 +104,13 @@
     right: rem(70);
     z-index: 1000;
   }
+
+  &__burger-btn {
+    @include square(64);
+  }
+
+  &__aside {
+    top: 0;
+    left: 0;
+  }
 }

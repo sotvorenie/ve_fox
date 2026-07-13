@@ -14,7 +14,7 @@ function Header({isVideoPage = false}: Props) {
             `header flex flex-align-center flex-justify-center 
             ${!isVideoPage && "position-sticky"}`
         }>
-            <HeaderNavigation isVideoPage={isVideoPage}/>
+            {isVideoPage && <HeaderNavigation/>}
 
             <HeaderSearch/>
 

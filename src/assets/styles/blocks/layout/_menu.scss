@@ -4,6 +4,24 @@
   width: fit-content;
   padding: rem(40) rem(30);
   border-right: var(--border-light-alt);
+  background: var(--color-dark);
+
+  &.is-absolute {
+    transition: transform var(--transition-duration);
+
+    &:not(.is-active) {
+      transform: translateX(-100%);
+    }
+  }
+
+  &__close {
+    gap: rem(10);
+    margin-bottom: rem(50);
+
+    svg {
+      @include square(32);
+    }
+  }
 
   &__logo {
     margin-bottom: rem(50);
