@@ -10,6 +10,7 @@ import Logo from "@icons/Logo";
 
 import {usePagesStore} from "@store/usePagesStore";
 import {useUserStore} from "@store/useUserStore";
+import Snowfall from "@ui/winter/Snowfall.tsx";
 
 function MainLayout() {
     const navigate = useNavigate();
@@ -28,8 +29,16 @@ function MainLayout() {
         navigate(pages[index])
     }
 
+    const isWinter = () => {
+        const month = new Date().getMonth() + 1
+
+        return month === 12 || month < 3
+    }
+
     return (
         <div className="main-layout flex h-100">
+            {isWinter() && <Snowfall/>}
+
             <aside className="main-layout__menu menu h-100">
                 <Link to="/"
                       className="menu__logo button-width-svg flex flex-align-center"
