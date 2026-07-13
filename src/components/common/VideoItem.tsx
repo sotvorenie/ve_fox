@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 
 import {VideoForList} from "@/types/video";
@@ -9,6 +9,8 @@ import {formatVideoName} from "@composables/useFormatVideoName";
 import {formatVideoDate} from "@composables/useFormatVideoDate";
 import {formatVideoTime} from "@composables/useFormatVideoTime";
 
+import VideoMenu from "@video/VideoMenu.tsx";
+
 interface Props {
     readonly video: VideoForList;
     readonly isRow: boolean;
@@ -16,6 +18,8 @@ interface Props {
 
 function VideoItem({video, isRow = false}: Props) {
     const navigate = useNavigate();
+
+    const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false)
 
     const handleChannel = (event: React.MouseEvent): void => {
         event.stopPropagation()
@@ -33,6 +37,8 @@ function VideoItem({video, isRow = false}: Props) {
                     <img src={`${BASE_URL}${video.preview_url}`} alt={video.name} loading="lazy"/>
 
                     <span className="position-absolute">{formatVideoTime(video.duration)}</span>
+
+                    <VideoMenu id={video.id} isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu}/>
                 </div>
                 <div className={isRow ? 'video-item__info flex flex-column' : 'video-item__info flex'}>
                     {!isRow &&

@@ -1,3 +1,4 @@
+import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 import {BASE_URL} from "@api/url";
@@ -7,11 +8,45 @@ import {VideoForList} from "@/types/video";
 import {formatVideoName} from "@composables/useFormatVideoName";
 import {formatVideoDate} from "@composables/useFormatVideoDate";
 
+import VideoMenu from "@video/VideoMenu.tsx";
 import ListColumnSkeleton from "@ui/skeletons/ListColumnSkeleton";
 
 import {formatVideoTime} from "@composables/useFormatVideoTime";
 
 import {useVideoStore} from "@store/useVideoStore";
+
+interface VideoProps {
+    video: VideoForList
+    onClick: () => void
+}
+
+function RecommendedVideo({video, onClick}: Readonly<VideoProps>) {
+    const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
+
+    return (
+        <li className="recommended__item flex cursor-pointer"
+            key={video.id}
+            onClick={onClick}
+        >
+            <div className="recommended__preview img-container position-relative">
+                <img src={`${BASE_URL}${video.preview_url}`} alt={video.name} loading="lazy"/>
+
+                <span className="position-absolute">{formatVideoTime(video?.duration)}</span>
+
+                <VideoMenu id={video.id} isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} isSmall/>
+            </div>
+            <div className="recommended__info">
+                <div className="recommended__text flex flex-column">
+                            <span className="recommended__title two-lines">
+                                {formatVideoName(video.name)}
+                            </span>
+                    <span className="recommended__channel">{video.channel.name}</span>
+                    <span className="recommended__date">{formatVideoDate(video.date)}</span>
+                </div>
+            </div>
+        </li>
+    )
+}
 
 function VideoRecommended() {
     const navigate = useNavigate();
@@ -32,30 +67,8 @@ function VideoRecommended() {
             {!isLoading && (
                 <ul className="recommended__list">
                     {videos?.map((video: VideoForList) => {
-
                         if (activeVideo.id === video.id) return
-
-                        return (
-                            <li className="recommended__item flex cursor-pointer"
-                                key={video.id}
-                                onClick={() => clickToVideo(video)}
-                            >
-                                <div className="recommended__preview img-container position-relative">
-                                    <img src={`${BASE_URL}${video.preview_url}`} alt={video.name} loading="lazy"/>
-
-                                    <span className="position-absolute">{formatVideoTime(video?.duration)}</span>
-                                </div>
-                                <div className="recommended__info">
-                                <div className="recommended__text flex flex-column">
-                            <span className="recommended__title two-lines">
-                                {formatVideoName(video.name)}
-                            </span>
-                                        <span className="recommended__channel">{video.channel.name}</span>
-                                        <span className="recommended__date">{formatVideoDate(video.date)}</span>
-                                    </div>
-                                </div>
-                            </li>
-                        )
+                        return <RecommendedVideo video={video} onClick={() => clickToVideo(video)}/>
                     })}
                 </ul>
             )}

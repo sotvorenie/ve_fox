@@ -8,7 +8,6 @@
 
 @use 'blocks/input';
 @use 'blocks/button';
-@use 'blocks/video/video-item';
 @use 'blocks/layout/main-layout';
 @use 'blocks/layout/menu';
 @use 'blocks/skeleton';
@@ -27,6 +26,8 @@
 
 @use 'blocks/channel/channel';
 
+@use 'blocks/video/video-item';
+@use 'blocks/video/video-menu';
 @use 'blocks/video/video-page';
 @use 'blocks/video/video';
 @use 'blocks/video/recommended';
