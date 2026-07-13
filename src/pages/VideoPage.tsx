@@ -71,11 +71,8 @@ function VideoPage() {
     }
 
     useEffect(() => {
-        if (id) {
-            updateVideo(+id).catch(() => {})
-
-        }
-    }, [id]);
+        if (id) updateVideo(+id).catch(() => {})
+    }, [id])
 
     useEffect(() => {
         const volume = JSON.parse(localStorage.getItem('volume') || '1')

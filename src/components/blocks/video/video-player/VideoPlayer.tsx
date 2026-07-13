@@ -128,6 +128,7 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
 
             return () => {
                 if (saveTimeTimer.current) clearTimeout(saveTimeTimer.current)
+                if (video.id >= 0) apiSaveTime(video.id, usePlayerStore.getState().currentTime).then()
             }
         }
     }, [video.id])
