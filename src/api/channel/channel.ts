@@ -12,9 +12,11 @@ export const apiGetChannel = (id: number): Promise<Channel> => {
 export const apiGetVideosFromChannel = (
     id: number,
     page: number,
-    isNew: boolean = true
+    limit: number = 21,
+    isNew: boolean = true,
+    isPopular: boolean = false
 ):Promise<VideosList> => {
-    return apiGet(`/channel/${id}/videos?page=${page}&is_new=${isNew}`)
+    return apiGet(`/channel/${id}/videos?page=${page}&limit=${limit}&is_new=${isNew}&is_popular=${isPopular}`)
 }
 
 export const apiGetChannels = (): Promise<ChannelsListResponse> => {

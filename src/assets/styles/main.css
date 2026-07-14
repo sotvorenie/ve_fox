@@ -1523,14 +1523,48 @@ input, textarea {
 .channel__tab button {
   padding: 0.625rem 1.25rem;
 }
+.channel__list {
+  row-gap: 0.9375rem !important;
+}
 .channel__about {
   padding-left: 0.9375rem;
 }
-.channel__sub-title {
-  margin-bottom: 0.9375rem;
-}
 .channel__statistic-item:not(:last-child) {
   margin-bottom: 0.625rem;
+}
+.channel__arrow {
+  width: 2.8125rem;
+  height: 2.8125rem;
+  min-height: 2.8125rem;
+  min-width: 2.8125rem;
+  background: var(--color-dark-alt);
+  transition: filter var(--transition-duration);
+  border: var(--border-light-alt);
+  top: calc(7.625rem - 2.8125rem / 2);
+}
+@media (any-hover: hover) {
+  .channel__arrow:hover {
+    filter: brightness(1.4);
+  }
+}
+@media (any-hover: none) {
+  .channel__arrow:active {
+    filter: brightness(1.4);
+  }
+}
+.channel__arrow.prev {
+  left: -0.625rem;
+  rotate: -90deg;
+}
+.channel__arrow.next {
+  right: -0.625rem;
+  rotate: 90deg;
+}
+.channel__arrow[disabled] {
+  display: none !important;
+}
+.channel__arrow svg {
+  width: 60%;
 }
 
 .video-item {

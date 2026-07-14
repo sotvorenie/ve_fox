@@ -47,7 +47,7 @@ function VideoItem({video, isRow = false, showAvatar = true, isSmall = false, cl
                     <VideoMenu id={video.id} isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu}/>
 
                     {!!(video.saved_time) && (
-                        <div className="video-item__timeline w-100 position-absolute">
+                        <div className="video-item__timeline w-100 position-absolute bottom-0">
                             <div className="h-100"
                                  style={{'width': `${video.saved_time / video.duration * 100}%`}}
                             />

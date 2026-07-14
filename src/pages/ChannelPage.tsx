@@ -22,12 +22,13 @@ function ChannelPage() {
 
     const [videos, setVideos] = useState<VideoForList[]>([])
     const [newVideos, setNewVideos] = useState<VideoForList[]>([])
+    const [popularVideos, setPopularVideos] = useState<VideoForList[]>([])
 
     const [page, setPage] = useState<number>(1)
     const [total, setTotal] = useState<number>(0)
     const [hasMore, setHasMore] = useState<boolean>(false)
 
-    const getChannelVideos = async () => {
+    const getNewChannelVideos = async () => {
         try {
             const data: VideosList = await apiGetVideosFromChannel(+id!, page)
 
@@ -35,13 +36,23 @@ function ChannelPage() {
                 setVideos(data.videos)
 
                 if (page === 1) {
-                    setNewVideos(data.videos?.slice(0, 3))
+                    setNewVideos(data.videos?.slice(0, 8))
                 }
 
                 setPage(page + 1)
                 setHasMore(data.has_more)
                 setTotal(data.total)
             }
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    const getPopularChannelVideos = async () => {
+        try {
+            const data: VideosList = await apiGetVideosFromChannel(+id!, 1, 8, false, true)
+
+            if (data) setPopularVideos(data.videos)
         } catch (err) {
             console.error(err)
         }
@@ -60,10 +71,7 @@ function ChannelPage() {
     }
 
     useEffect(() => {
-        if (id) {
-            getChannel().then(() => {})
-            getChannelVideos().then(() => {})
-        }
+        if (id) Promise.all([getChannel(), getNewChannelVideos(), getPopularChannelVideos()]).then()
     }, [id])
 
     return (
@@ -82,9 +90,17 @@ function ChannelPage() {
 
             <ChannelTabs activeTab={activeTab} setActiveTab={setActiveTab}/>
 
-            {activeTab === 0 && (<ChannelMain videos={newVideos}/>)}
-            {activeTab === 1 && (<ChannelVideos videos={videos} hasMore={hasMore}/>)}
-            {activeTab === 2 && (<ChannelAbout total={total} date={channel?.date}/>)}
+            <div style={{display: activeTab === 0 ? 'block' : 'none'}}>
+                <ChannelMain newVideos={newVideos} popularVideos={popularVideos}/>
+            </div>
+
+            <div style={{display: activeTab === 1 ? 'block' : 'none'}}>
+                <ChannelVideos videos={videos} hasMore={hasMore}/>
+            </div>
+
+            <div style={{display: activeTab === 2 ? 'block' : 'none'}}>
+                <ChannelAbout total={total} date={channel?.date}/>
+            </div>
         </div>
     )
 }

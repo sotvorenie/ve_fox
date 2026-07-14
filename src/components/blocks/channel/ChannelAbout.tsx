@@ -9,7 +9,7 @@ function ChannelAbout({total, date}: Props) {
 
     return (
         <div className="channel__about">
-            <p className="channel__sub-title h6">Информация о канале</p>
+            <p className="h6 mb-10">Информация о канале</p>
 
             <ul className="channel__statistic">
                 <li className="channel__statistic-item">Всего видео: {total}</li>
