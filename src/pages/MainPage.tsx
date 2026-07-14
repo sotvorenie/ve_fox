@@ -52,7 +52,7 @@ function MainPage() {
             {!isLoading && (
                 <ul className="video-list row">
                     {videos?.map((video: VideoForList) => (
-                        <VideoItem key={video.id} video={video} isRow={false}/>
+                        <VideoItem key={video.id} className="col-4" video={video} isRow={false}/>
                     ))}
                 </ul>
             )}

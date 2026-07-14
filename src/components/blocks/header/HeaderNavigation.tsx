@@ -32,7 +32,7 @@ function HeaderNavigation() {
                     <BurgerIcon/>
                 </button>
 
-                <button className="header__back flex flex-align-center recolor-svg hover-color-accent"
+                <button className="header__back flex flex-align-center recolor-svg hover-color-accent z-1000"
                         onClick={() => navigate(-1)}
                         title={isLaptop ? 'Назад' : ''}
                         type="button"
@@ -41,7 +41,7 @@ function HeaderNavigation() {
                     <span className="h5">Назад</span>
                 </button>
 
-                <button className="header__forward flex flex-align-center recolor-svg hover-color-accent"
+                <button className="header__forward flex flex-align-center recolor-svg hover-color-accent z-1000"
                         onClick={() => navigate(+1)}
                         title={isLaptop ? 'Вперед' : ''}
                         type="button"

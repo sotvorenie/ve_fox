@@ -36,7 +36,7 @@ function RecommendedVideo({video, onClick}: Readonly<VideoProps>) {
                 <VideoMenu id={video.id} isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} isSmall/>
 
                 {!!(video.saved_time) && (
-                    <div className="video-item__timeline recommended__timeline w-100 position-absolute">
+                    <div className="video-item__timeline recommended__timeline w-100 position-absolute bottom-0">
                         <div className="h-100"
                              style={{'width': `${video.saved_time / video.duration * 100}%`}}
                         />

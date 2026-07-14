@@ -5,7 +5,6 @@
   padding: rem(8);
   transition: background-color var(--transition-duration);
   border-radius: var(--radius-medium);
-  width: 100%;
 
   @include hover {
     background: #fe797180;
@@ -60,14 +59,7 @@
 
     padding: 0;
     background: var(--color-light-alt);
-    border-radius: 50%;
     color: var(--color-dark-alt);
-    text-transform: uppercase;
-  }
-
-  &__text {
-    display: flex;
-    flex-direction: column;
   }
 
   &__date, &__channel {
@@ -96,7 +88,6 @@
   &__timeline {
     height: rem(5);
     background: var(--color-light-alt);
-    bottom: 0;
 
     div {
       background: var(--color-accent);

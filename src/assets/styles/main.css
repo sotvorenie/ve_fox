@@ -481,6 +481,10 @@ input, textarea {
   white-space: nowrap !important;
 }
 
+.text-upper {
+  text-transform: uppercase !important;
+}
+
 .flex {
   display: flex !important;
 }
@@ -556,6 +560,22 @@ input, textarea {
 
 .inset-0 {
   inset: 0 !important;
+}
+
+.top-0 {
+  top: 0 !important;
+}
+
+.bottom-0 {
+  bottom: 0 !important;
+}
+
+.left-0 {
+  left: 0 !important;
+}
+
+.right-0 {
+  right: 0 !important;
 }
 
 .radius-50 {
@@ -652,6 +672,9 @@ input, textarea {
   column-gap: var(--column-gap) !important;
   row-gap: var(--row-gap) !important;
   width: 100%;
+}
+.row.row-cols-5 {
+  grid-template-columns: repeat(5, 1fr);
 }
 
 .col-1 {
@@ -1225,7 +1248,6 @@ input, textarea {
   width: 100%;
   backdrop-filter: blur(52px);
   background: rgba(15, 15, 15, 0.5647058824);
-  top: 0;
   padding-block: 1.875rem;
   z-index: 1002;
 }
@@ -1244,7 +1266,6 @@ input, textarea {
 }
 .header__back, .header__forward {
   column-gap: 0.625rem;
-  z-index: 1000;
 }
 .header__back svg, .header__forward svg {
   width: 2.5rem;
@@ -1266,7 +1287,6 @@ input, textarea {
 .header__avatar {
   top: 2.5rem;
   right: 2.5rem;
-  border-radius: 50%;
   aspect-ratio: 1;
   width: 3.125rem;
   z-index: 10001;
@@ -1331,10 +1351,6 @@ input, textarea {
   min-height: 3.25rem;
   min-width: 3.25rem;
 }
-.header__aside {
-  top: 0;
-  left: 0;
-}
 
 .settings__inner {
   background-color: color-mix(in srgb, var(--color-dark), transparent 2%);
@@ -1351,7 +1367,6 @@ input, textarea {
   height: 3.125rem;
   min-height: 3.125rem;
   min-width: 3.125rem;
-  border-radius: 50%;
   background-color: color-mix(in srgb, var(--color-dark-alt), transparent 2%);
   transition: background-color var(--transition-duration), right var(--transition-duration), top var(--transition-duration), border var(--transition-duration);
   right: 2.5rem;
@@ -1455,9 +1470,6 @@ input, textarea {
 .redact-user__redact {
   margin-top: auto;
 }
-.redact-user__login {
-  background: red;
-}
 
 .channel__banner {
   width: 100%;
@@ -1481,9 +1493,6 @@ input, textarea {
 .channel__tabs {
   border-bottom: var(--border-dark-alt);
   margin-bottom: 1.25rem;
-}
-.channel__tab {
-  position: relative;
 }
 .channel__tab.is-active {
   pointer-events: none;
@@ -1515,7 +1524,6 @@ input, textarea {
   padding: 0.5rem;
   transition: background-color var(--transition-duration);
   border-radius: var(--radius-medium);
-  width: 100%;
 }
 @media (any-hover: hover) {
   .video-item:hover {
@@ -1571,13 +1579,7 @@ input, textarea {
   min-width: 3.125rem;
   padding: 0;
   background: var(--color-light-alt);
-  border-radius: 50%;
   color: var(--color-dark-alt);
-  text-transform: uppercase;
-}
-.video-item__text {
-  display: flex;
-  flex-direction: column;
 }
 .video-item__date, .video-item__channel {
   font-size: 0.875rem;
@@ -1598,7 +1600,6 @@ input, textarea {
 .video-item__timeline {
   height: 0.3125rem;
   background: var(--color-light-alt);
-  bottom: 0;
 }
 .video-item__timeline div {
   background: var(--color-accent);
@@ -1800,7 +1801,6 @@ input, textarea {
 }
 
 .video-player {
-  width: 100%;
   aspect-ratio: 16/9;
   background: var(--color-dark-alt);
 }
@@ -1819,8 +1819,6 @@ input, textarea {
   opacity: 0;
 }
 .video-player video {
-  width: 100%;
-  height: 100%;
   object-fit: contain;
 }
 .video-player__controls {
@@ -1857,8 +1855,6 @@ input, textarea {
   opacity: 1;
 }
 .video-player__bottom {
-  bottom: 0;
-  left: 0;
   padding-inline: 0.625rem;
 }
 .video-player__timeline {
@@ -1963,12 +1959,9 @@ input, textarea {
   white-space: nowrap;
 }
 .video-player__settings {
-  opacity: 0;
   pointer-events: none;
-  transition: opacity var(--transition-duration);
 }
 .video-player__settings.is-active {
-  opacity: 1;
   pointer-events: auto;
 }
 .video-player__settings-content {
@@ -2014,7 +2007,6 @@ input, textarea {
   border-radius: var(--radius-medium) var(--radius-medium) 0 0;
   padding: 1.875rem 0.625rem 1.25rem;
   transition: transform var(--transition-duration);
-  bottom: 0;
 }
 .video-player__recommended_content:not(.is-open) {
   transform: translateY(105%);
@@ -2037,8 +2029,6 @@ input, textarea {
   height: calc(100% - var(--width));
 }
 .video-player__recommended_list {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
   height: 31.25rem;
   overflow-y: auto;
 }
@@ -2163,12 +2153,10 @@ input, textarea {
 }
 .upload-loading__fox {
   color: var(--color-accent);
-  bottom: 0;
   left: clamp(0%, var(--progress) - 5rem, 100% - 5rem);
   width: 5rem;
 }
 .upload-loading__forest-sent {
-  bottom: 0;
   filter: brightness(0) invert(1);
   clip-path: inset(0 calc(100% - var(--progress)) 0 0);
   transition: clip-path var(--transition-duration);

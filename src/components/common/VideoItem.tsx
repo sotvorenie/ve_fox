@@ -16,9 +16,10 @@ interface Props {
     isRow: boolean
     showAvatar?: boolean
     isSmall?: boolean
+    className?: string
 }
 
-function VideoItem({video, isRow = false, showAvatar = true, isSmall = false}: Readonly<Props>) {
+function VideoItem({video, isRow = false, showAvatar = true, isSmall = false, className}: Readonly<Props>) {
     const navigate = useNavigate();
 
     const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false)
@@ -31,7 +32,7 @@ function VideoItem({video, isRow = false, showAvatar = true, isSmall = false}: R
     }
 
     return (
-        <li className={`video-item col-4 ${isSmall ? 'is-small' : ''}`}>
+        <li className={`video-item w-100 ${isSmall ? 'is-small' : ''} ${className}`}>
             <Link to={`/video/${video.id}`}
                   className={isRow ? 'video-item__row-item flex flex-align-start w-100' : 'w-100 flex flex-column'}
             >
@@ -52,7 +53,7 @@ function VideoItem({video, isRow = false, showAvatar = true, isSmall = false}: R
                 </div>
                 <div className={isRow ? 'video-item__info flex flex-column' : 'video-item__info flex'}>
                     {!isRow && showAvatar &&
-                        <button className="video-item__avatar img-container"
+                        <button className="video-item__avatar img-container radius-50 text-upper"
                                 title={video.channel.name}
                                 onClick={(event) => handleChannel(event)}
                                 type="button"
@@ -64,7 +65,7 @@ function VideoItem({video, isRow = false, showAvatar = true, isSmall = false}: R
                         </button>
                     }
 
-                    <div className="video-item__text">
+                    <div className="video-item__text flex flex-column">
                                     <span className="video-item__title two-lines">
                                         {formatVideoName(video.name)}
                                     </span>
@@ -82,7 +83,7 @@ function VideoItem({video, isRow = false, showAvatar = true, isSmall = false}: R
                                 onClick={(event) => handleChannel(event)}
                         >
                             {showAvatar && (
-                                <div className="video-item__avatar img-container">
+                                <div className="video-item__avatar img-container radius-50 text-upper">
                                     {video.channel.avatar_url ?
                                         (<img src={`${BASE_URL}${video.channel.avatar_url}`}
                                               alt={video.channel.name}/>) :

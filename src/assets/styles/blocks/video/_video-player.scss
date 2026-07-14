@@ -1,7 +1,6 @@
 @use '../../helpers/index' as *;
 
 .video-player {
-  width: 100%;
   aspect-ratio: 16/9;
   background: var(--color-dark-alt);
 
@@ -26,8 +25,6 @@
   }
 
   video {
-    width: 100%;
-    height: 100%;
     object-fit: contain;
   }
 
@@ -61,8 +58,6 @@
   }
 
   &__bottom {
-    bottom: 0;
-    left: 0;
     padding-inline: rem(10);
   }
 
@@ -179,12 +174,9 @@
   }
 
   &__settings {
-    opacity: 0;
     pointer-events: none;
-    transition: opacity var(--transition-duration);
 
     &.is-active {
-      opacity: 1;
       pointer-events: auto;
     }
 
@@ -230,7 +222,6 @@
       border-radius: var(--radius-medium) var(--radius-medium) 0 0;
       padding: rem(30) rem(10) rem(20);
       transition: transform var(--transition-duration);
-      bottom: 0;
 
       &:not(.is-open) {
         transform: translateY(105%);
@@ -254,8 +245,6 @@
     }
 
     &_list {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
       height: rem(500);
       overflow-y: auto;
 

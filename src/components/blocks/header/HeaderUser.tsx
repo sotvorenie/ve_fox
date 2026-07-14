@@ -82,7 +82,10 @@ function HeaderUser() {
         <div className={`settings ${isVisibleSettings ? 'is-active' : ''}`}>
             <Portal>
                 <button
-                    className={`header__avatar img-container cursor-pointer position-absolute recolor-svg flex-center ${isVisibleSettings ? 'is-active' : ''}`}
+                    className={`
+                        header__avatar img-container cursor-pointer position-absolute recolor-svg flex-center radius-50 
+                        ${isVisibleSettings ? 'is-active' : ''}
+                    `}
                     type="button"
                     onClick={() => setIsVisibleSettings(prev => !prev)}
                     title={user.name}
@@ -103,7 +106,7 @@ function HeaderUser() {
                         return (
                             <button
                                 className={
-                                    `settings__btn recolor-svg button-width-svg hover-color-accent position-absolute 
+                                    `settings__btn recolor-svg button-width-svg hover-color-accent position-absolute radius-50
                                     ${isVisibleSettings ? 'is-visible' : ''} 
                                     ${button.activeElement ? 'is-active' : ''}`
                                 }

@@ -240,7 +240,7 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
 
     return (
         <section className={
-                    `video-player position-relative overflow-hidden 
+                    `video-player position-relative overflow-hidden w-100 
                     ${isFullscreen ? 'is-fullscreen' : ''}
                     ${isShowControls ? '' : 'controls-hidden'}`
                  }
@@ -255,6 +255,7 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
 
             {/*eslint-disable jsx-a11y/media-has-caption*/}
             <video src={`${BASE_URL}${video?.video_url}`}
+                   className="w-100 h-100"
                    autoPlay
                    crossOrigin="anonymous"
                    ref={videoRef}

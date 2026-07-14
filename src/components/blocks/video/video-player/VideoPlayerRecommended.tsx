@@ -23,7 +23,7 @@ function VideoPlayerRecommended({isOpen, setIsOpen}: Readonly<Props>) {
                 <SelectArrowIcon/>
             </button>
 
-            <div className={`video-player__recommended_content position-absolute w-100 z-1001 ${isOpen ? 'is-open' : ''}`}>
+            <div className={`video-player__recommended_content position-absolute w-100 z-1001 bottom-0 ${isOpen ? 'is-open' : ''}`}>
                 <button className={`
                         video-player__recommended_close button-width-svg recolor-svg hover-color-accent radius-50 flex-center
                         ${isOpen ? 'is-open' : ''}
@@ -38,9 +38,9 @@ function VideoPlayerRecommended({isOpen, setIsOpen}: Readonly<Props>) {
                 </button>
 
                 {videos?.length > 0 && (
-                    <ul className="video-player__recommended_list z-10000">
+                    <ul className="video-player__recommended_list z-10000 row row-cols-5">
                         {videos.map((video) => (
-                            <VideoItem key={video.id} video={video} isRow={false} showAvatar={false} isSmall/>
+                            <VideoItem key={video.id} className="col" video={video} isRow={false} showAvatar={false} isSmall/>
                         ))}
                     </ul>
                 )}

@@ -5,7 +5,7 @@ interface Props {
 function VideoPlayerSettings({isShowSettings}: Readonly<Props>) {
 
     return (
-        <div className={`video-player__settings position-absolute inset-0 z-1000 ${isShowSettings ? 'is-active' : ''}`}>
+        <div className={`video-player__settings position-absolute inset-0 z-1000 tr-opacity ${isShowSettings ? 'is-active' : ''}`}>
             <div
                 className="video-player__settings-content position-absolute"
                 onClick={(e) => e.stopPropagation()}

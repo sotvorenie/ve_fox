@@ -53,7 +53,7 @@ const VideoPlayerControls = forwardRef<ControlsHandles, Props>((props, ref) => {
                 }}
             />
 
-            <div className="video-player__bottom position-absolute flex flex-column w-100 z-1000">
+            <div className="video-player__bottom position-absolute flex flex-column w-100 z-1000 bottom-0 left-0">
                 <div className="video-player__timeline cursor-pointer w-100"
                      ref={timelineRef}
                      style={{'--progress': `${progress}%`} as React.CSSProperties}
