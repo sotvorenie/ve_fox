@@ -1,12 +1,14 @@
 import {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 
 import useWidthWatcher from "@composables/useWidthWatcher";
 
-import ArrowIcon from "@icons/ArrowIcon";
-import BurgerIcon from "@icons/BurgerIcon.tsx";
 import Aside from "@common/Aside.tsx";
 import Portal from "@common/Portal.tsx";
+
+import ArrowIcon from "@icons/ArrowIcon";
+import BurgerIcon from "@icons/BurgerIcon.tsx";
+import Logo from "@icons/Logo.tsx";
 
 function HeaderNavigation() {
     const navigate = useNavigate();
@@ -31,6 +33,10 @@ function HeaderNavigation() {
                 >
                     <BurgerIcon/>
                 </button>
+
+                <Link to="/main" className="header__logo button-width-svg flex-center">
+                    <Logo/>
+                </Link>
 
                 <button className="header__back flex flex-align-center recolor-svg hover-color-accent z-1000"
                         onClick={() => navigate(-1)}
