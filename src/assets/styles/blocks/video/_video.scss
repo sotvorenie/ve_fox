@@ -1,8 +1,8 @@
 @use '../../helpers/index' as *;
 
 .video {
-  min-width: 75%;
-  max-width: 75%;
+  min-width: 70%;
+  max-width: 70%;
 
   &__actions {
     justify-content: space-between;
@@ -10,7 +10,6 @@
 
   &__title {
     margin-top: rem(15);
-    margin-bottom: rem(10) !important;
   }
 
   &__channel {
@@ -41,8 +40,9 @@
 
   &__button {
     background: var(--color-dark-alt);
-    padding: rem(5) rem(30);
+    padding: rem(8) rem(25);
     border-radius: var(--radius-big);
+    line-height: 1;
 
     &.fill {
       background: var(--color-accent);
@@ -57,5 +57,15 @@
 
       fill: currentColor;
     }
+  }
+
+  &__like span {
+    margin-top: rem(4);
+  }
+
+  &__info {
+    background: var(--color-dark-alt);
+    padding: rem(15) rem(30);
+    border-radius: var(--radius-medium);
   }
 }

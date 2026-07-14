@@ -47,7 +47,7 @@
 
   &__info {
     column-gap: rem(15);
-    row-gap: rem(20);
+    row-gap: rem(10);
   }
 
   &__title {
@@ -62,7 +62,7 @@
     color: var(--color-dark-alt);
   }
 
-  &__date, &__channel {
+  &__info-item {
     font-size: rem(14);
     color: var(--color-light-alt);
     opacity: .9;
@@ -79,10 +79,13 @@
         margin-bottom: 0;
       }
     }
+  }
 
-    &-channel {
-      column-gap: rem(10);
-    }
+  &__dot {
+    @include square(4);
+
+    border-radius: 50%;
+    background: var(--color-light-alt);
   }
 
   &__timeline {

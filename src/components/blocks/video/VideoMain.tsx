@@ -1,8 +1,13 @@
 import {useState} from "react";
 import {Link} from "react-router-dom";
 
+import {viewsArr} from "@data/countArrays.ts";
+
 import {BASE_URL} from "@api/url";
 import {apiLike} from "@api/like/like";
+
+import {formatCount} from "@composables/useFormatCount.ts";
+import {formatVideoDate} from "@composables/useFormatVideoDate.ts";
 
 import VideoPlayer from "@video/video-player/VideoPlayer";
 
@@ -32,6 +37,9 @@ function VideoMain({isLiked, setIsLiked, isWatchLater, setIsWatchLater, savedTim
         await apiLike(video.id)
         setLikeIsActive(true)
 
+        const change = isLiked ? -1 : 1
+        video.likes += change
+
         setIsLiked((prev: any) => !prev)
     }
     const handleWatchLater = async () => {
@@ -53,7 +61,7 @@ function VideoMain({isLiked, setIsLiked, isWatchLater, setIsWatchLater, savedTim
         <div className="video">
             <VideoPlayer savedTime={savedTime}/>
 
-            <p className="video__title h5 one-line">{video?.name}</p>
+            <p className="video__title h5 one-line mb-20">{video?.name}</p>
 
             <div className="video__actions flex flex-align-center">
                 <Link to={`/channel/${video.channel.id}`}
@@ -77,11 +85,12 @@ function VideoMain({isLiked, setIsLiked, isWatchLater, setIsWatchLater, savedTim
 
                 {video?.video_url ? (
                     <div className="video__buttons flex">
-                        <button className={`video__button recolor-svg ${isLiked ? 'fill' : ''}`}
+                        <button className={`video__button video__like recolor-svg flex flex-align-center gap-10 ${isLiked ? 'fill' : ''}`}
                                 type="button"
                                 disabled={!likeIsActive}
                                 onClick={handleLike}
                         >
+                            <span>{video.likes}</span>
                             <LikeIcon/>
                         </button>
                         <button className={`video__button ${isWatchLater ? 'fill' : ''}`}
@@ -93,6 +102,12 @@ function VideoMain({isLiked, setIsLiked, isWatchLater, setIsWatchLater, savedTim
                         </button>
                     </div>
                 ) : null}
+
+                <div className="video__info flex flex-align-center gap-10">
+                    <span>{video.views} {formatCount(video.views, viewsArr)}</span>
+                    <div className="video-item__dot"/>
+                    <span>{formatVideoDate(video.date)}</span>
+                </div>
             </div>
         </div>
     )

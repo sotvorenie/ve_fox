@@ -1,6 +1,6 @@
 import {VideoForList} from "@/types/video";
 
-import VideoItem from "@common/VideoItem";
+import VideoItem from "@video/VideoItem";
 
 interface VideoProps {
     readonly videos: VideoForList[];

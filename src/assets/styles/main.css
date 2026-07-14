@@ -340,6 +340,10 @@ svg * {
   margin-bottom: 2.5rem;
 }
 
+.gap-10 {
+  gap: 0.625rem;
+}
+
 html.is-lock {
   overflow: hidden;
 }
@@ -483,6 +487,13 @@ input, textarea {
 
 .text-upper {
   text-transform: uppercase !important;
+}
+
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .flex {
@@ -991,6 +1002,9 @@ input, textarea {
   padding: 0 1.25rem 2.5rem;
   flex-grow: 1;
 }
+.main-layout .video-list {
+  row-gap: 0.9375rem !important;
+}
 
 .menu {
   width: fit-content;
@@ -1256,7 +1270,7 @@ input, textarea {
   top: 50%;
   translate: 0 -50%;
   column-gap: 1.875rem;
-  left: 3.125rem;
+  left: 1.25rem;
 }
 .header__logo {
   width: 5rem;
@@ -1567,7 +1581,7 @@ input, textarea {
 }
 .video-item__info {
   column-gap: 0.9375rem;
-  row-gap: 1.25rem;
+  row-gap: 0.625rem;
 }
 .video-item__title {
   color: var(--color-light) !important;
@@ -1581,7 +1595,7 @@ input, textarea {
   background: var(--color-light-alt);
   color: var(--color-dark-alt);
 }
-.video-item__date, .video-item__channel {
+.video-item__info-item {
   font-size: 0.875rem;
   color: var(--color-light-alt);
   opacity: 0.9;
@@ -1594,8 +1608,13 @@ input, textarea {
   flex: 0 0 50%;
   margin-bottom: 0;
 }
-.video-item__row-channel {
-  column-gap: 0.625rem;
+.video-item__dot {
+  width: 0.25rem;
+  height: 0.25rem;
+  min-height: 0.25rem;
+  min-width: 0.25rem;
+  border-radius: 50%;
+  background: var(--color-light-alt);
 }
 .video-item__timeline {
   height: 0.3125rem;
@@ -1664,21 +1683,20 @@ input, textarea {
 }
 
 .video-page__content {
-  padding-left: 3.75rem;
+  padding-left: 1.25rem;
   column-gap: 1.25rem;
   padding-bottom: 7.5rem;
 }
 
 .video {
-  min-width: 75%;
-  max-width: 75%;
+  min-width: 70%;
+  max-width: 70%;
 }
 .video__actions {
   justify-content: space-between;
 }
 .video__title {
   margin-top: 0.9375rem;
-  margin-bottom: 0.625rem !important;
 }
 .video__channel {
   column-gap: 0.625rem;
@@ -1712,8 +1730,9 @@ input, textarea {
 }
 .video__button {
   background: var(--color-dark-alt);
-  padding: 0.3125rem 1.875rem;
+  padding: 0.5rem 1.5625rem;
   border-radius: var(--radius-big);
+  line-height: 1;
 }
 .video__button.fill {
   background: var(--color-accent);
@@ -1734,6 +1753,14 @@ input, textarea {
   min-height: 1.875rem;
   min-width: 1.875rem;
   fill: currentColor;
+}
+.video__like span {
+  margin-top: 0.25rem;
+}
+.video__info {
+  background: var(--color-dark-alt);
+  padding: 0.9375rem 1.875rem;
+  border-radius: var(--radius-medium);
 }
 
 .recommended {
@@ -1790,8 +1817,9 @@ input, textarea {
 }
 .recommended__title {
   flex-shrink: 0.9375rem;
+  font-size: 1rem;
 }
-.recommended__date, .recommended__channel {
+.recommended__info-item {
   font-size: 0.8125rem;
   color: var(--color-light-alt);
   opacity: 0.9;

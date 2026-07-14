@@ -1,4 +1,4 @@
-import VideoItem from "@common/VideoItem.tsx";
+import VideoItem from "@video/VideoItem.tsx";
 
 import SelectArrowIcon from "@icons/SelectArrowIcon.tsx";
 

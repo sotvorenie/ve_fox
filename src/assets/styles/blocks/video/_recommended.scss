@@ -48,9 +48,10 @@
 
   &__title {
     flex-shrink: rem(15);
+    font-size: rem(16);
   }
 
-  &__date, &__channel {
+  &__info-item {
     font-size: rem(13);
     color: var(--color-light-alt);
     opacity: .9;

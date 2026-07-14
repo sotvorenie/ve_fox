@@ -6,7 +6,7 @@ import {apiGetHistory} from "@api/history/history";
 import {apiGetListLikes} from "@api/like/like";
 import {apiGetListWatchLater} from "@api/watch_later/watchLater";
 
-import VideoItem from "@common/VideoItem";
+import VideoItem from "@video/VideoItem";
 import ListColumnSkeleton from "@ui/skeletons/ListColumnSkeleton";
 
 import {usePagesStore} from "@store/usePagesStore";

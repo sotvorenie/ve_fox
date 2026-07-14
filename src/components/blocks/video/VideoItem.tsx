@@ -3,8 +3,11 @@ import {Link, useNavigate} from "react-router-dom";
 
 import {VideoForList} from "@/types/video";
 
+import {viewsArr} from "@data/countArrays.ts";
+
 import {BASE_URL} from "@api/url";
 
+import {formatCount} from "@composables/useFormatCount.ts";
 import {formatVideoName} from "@composables/useFormatVideoName";
 import {formatVideoDate} from "@composables/useFormatVideoDate";
 import {formatVideoTime} from "@composables/useFormatVideoTime";
@@ -69,30 +72,47 @@ function VideoItem({video, isRow = false, showAvatar = true, isSmall = false, cl
                                     <span className="video-item__title two-lines">
                                         {formatVideoName(video.name)}
                                     </span>
-                        {!isRow &&
-                            <span className="video-item__channel">
-                                {video.channel.name}
-                            </span>
-                        }
-                        <span className="video-item__date">{formatVideoDate(video.date)}</span>
+                        {!isRow && (
+                            <div className="flex gap-10 flex-align-center text-ellipsis">
+                                <span className="video-item__info-item">
+                                    {video.channel.name}
+                                </span>
+                                <div className="video-item__dot"/>
+                                <span className="video-item__info-item">{formatVideoDate(video.date)}</span>
+                                <div className="video-item__dot"/>
+                                <span className="video-item__info-item">{video.views} {formatCount(video.views, viewsArr)}</span>
+                            </div>
+                        )}
                     </div>
 
                     {isRow &&
-                        <button className="video-item__row-channel flex flex-align-center"
-                                type="button"
-                                onClick={(event) => handleChannel(event)}
-                        >
-                            {showAvatar && (
-                                <div className="video-item__avatar img-container radius-50 text-upper">
-                                    {video.channel.avatar_url ?
-                                        (<img src={`${BASE_URL}${video.channel.avatar_url}`}
-                                              alt={video.channel.name}/>) :
-                                        (<span>{video.channel.name.slice(0, 1)}</span>)
-                                    }
-                                </div>
-                            )}
-                            <span className="video-item__channel">{video.channel.name}</span>
-                        </button>
+                        <>
+                            <div className="flex gap-10 mb-10 flex-align-center">
+                                 <span className="video-item__info-item">
+                                    {video.channel.name}
+                                </span>
+                                <div className="video-item__dot"/>
+                                <span className="video-item__info-item">{formatVideoDate(video.date)}</span>
+                                <div className="video-item__dot"/>
+                                <span className="video-item__info-item">{video.views} {formatCount(video.views, viewsArr)}</span>
+                            </div>
+
+                            <button className="video-item__row-channel flex flex-align-center gap-10"
+                                    type="button"
+                                    onClick={(event) => handleChannel(event)}
+                            >
+                                {showAvatar && (
+                                    <div className="video-item__avatar img-container radius-50 text-upper">
+                                        {video.channel.avatar_url ?
+                                            (<img src={`${BASE_URL}${video.channel.avatar_url}`}
+                                                  alt={video.channel.name}/>) :
+                                            (<span>{video.channel.name.slice(0, 1)}</span>)
+                                        }
+                                    </div>
+                                )}
+                                <span className="video-item__channel">{video.channel.name}</span>
+                            </button>
+                        </>
                     }
                 </div>
             </Link>

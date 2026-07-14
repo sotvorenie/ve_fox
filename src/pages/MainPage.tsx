@@ -4,7 +4,7 @@ import {VideoForList, VideosList} from "@/types/video";
 
 import {apiGetAllVideos} from "@api/video/video";
 
-import VideoItem from "@common/VideoItem";
+import VideoItem from "@video/VideoItem";
 import ListRowSkeleton from "@ui/skeletons/ListRowSkeleton";
 import MainEmpty from "@ui/empty/mainEmpty";
 

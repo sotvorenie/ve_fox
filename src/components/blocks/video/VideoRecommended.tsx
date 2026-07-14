@@ -1,12 +1,15 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
-import {BASE_URL} from "@api/url";
-
 import {VideoForList} from "@/types/video";
+
+import {viewsArr} from "@data/countArrays.ts";
+
+import {BASE_URL} from "@api/url";
 
 import {formatVideoName} from "@composables/useFormatVideoName";
 import {formatVideoDate} from "@composables/useFormatVideoDate";
+import {formatCount} from "@composables/useFormatCount.ts";
 
 import VideoMenu from "@video/VideoMenu.tsx";
 import ListColumnSkeleton from "@ui/skeletons/ListColumnSkeleton";
@@ -48,8 +51,13 @@ function RecommendedVideo({video, onClick}: Readonly<VideoProps>) {
                             <span className="recommended__title two-lines">
                                 {formatVideoName(video.name)}
                             </span>
-                    <span className="recommended__channel">{video.channel.name}</span>
-                    <span className="recommended__date">{formatVideoDate(video.date)}</span>
+                    <span className="recommended__info-item">{video.channel.name}</span>
+
+                    <div className="flex gap-10 flex-align-center">
+                        <span className="recommended__info-item">{formatVideoDate(video.date)}</span>
+                        <div className="video-item__dot"/>
+                        <span className="recommended__info-item">{video.views} {formatCount(video.views, viewsArr)}</span>
+                    </div>
                 </div>
             </div>
         </li>

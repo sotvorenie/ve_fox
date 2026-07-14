@@ -18,6 +18,12 @@ $grid-columns: 12 !default;
 .text-w700 {font-weight: 700 !important;}
 .text-nowrap {white-space: nowrap !important;}
 .text-upper {text-transform: uppercase !important;}
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
 
 .flex { display: flex !important; }
 .flex-column { flex-direction: column !important; }

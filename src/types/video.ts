@@ -10,6 +10,7 @@ export interface VideoForList {
     subtitle_url: string
     channel: ChannelForList
     saved_time: number
+    views: number
 }
 
 export interface Video {
@@ -22,6 +23,8 @@ export interface Video {
     preview_url: string
     subtitle_url: string
     channel: ChannelForList
+    views: number
+    likes: number
 }
 
 export interface VideosList extends Meta {

@@ -6,7 +6,7 @@ import {BASE_URL} from "@api/url.ts";
 import {ChannelForList} from "@/types/channel";
 import {VideoForList} from "@/types/video";
 
-import VideoItem from "@common/VideoItem";
+import VideoItem from "@video/VideoItem";
 import ListColumnSkeleton from "@ui/skeletons/ListColumnSkeleton";
 
 import {useSearchStore} from "@store/useSearchStore";
