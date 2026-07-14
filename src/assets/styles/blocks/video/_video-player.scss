@@ -11,7 +11,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 9999;
+    z-index: 100000;
   }
 
   &.controls-hidden {
@@ -199,6 +199,69 @@
 
     &-label {
       gap: rem(10);
+    }
+  }
+
+  &__recommended {
+
+    &_open, &_close span {
+      --btn-bg-alpha: 2%;
+
+      background-color: color-mix(in srgb, var(--color-dark-alt), transparent var(--btn-bg-alpha));
+
+      @include hover() {
+        --btn-bg-alpha: 30%;
+      }
+    }
+
+    &_open {
+      @include square(42);
+      @include abs-x;
+
+      bottom: rem(90);
+
+      svg {
+        width: 65%;
+      }
+    }
+
+    &_content {
+      background: var(--color-dark);
+      border-radius: var(--radius-medium) var(--radius-medium) 0 0;
+      padding: rem(30) rem(10) rem(20);
+      transition: transform var(--transition-duration);
+      bottom: 0;
+
+      &:not(.is-open) {
+        transform: translateY(105%);
+      }
+    }
+
+    &_close {
+      @include square(42);
+      @include abs-x;
+
+      background: var(--color-dark);
+      top: rem(-15);
+      rotate: 180deg;
+
+      span {
+        --width: #{rem(8)};
+
+        width: calc(100% - var(--width));
+        height: calc(100% - var(--width));
+      }
+    }
+
+    &_list {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      height: rem(500);
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 }

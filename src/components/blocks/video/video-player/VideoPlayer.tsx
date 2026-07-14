@@ -10,6 +10,7 @@ import VideoPlayerControls, {ControlsHandles} from "@video/video-player/VideoPla
 import {useVideoStore} from "@store/useVideoStore";
 import {usePlayerStore} from "@store/usePlayerStore";
 import {useUserStore} from "@store/useUserStore";
+import VideoPlayerRecommended from "@video/video-player/VideoPlayerRecommended.tsx";
 
 interface Props {
     savedTime: number
@@ -40,7 +41,9 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
     const {isLogged} = useUserStore();
 
     const [isMoving, setIsMoving] = useState<boolean>(false)
-    const [progress, setProgress] = useState<number>(0);
+    const [progress, setProgress] = useState<number>(0)
+
+    const [isRecommendedOpen, setIsRecommendedOpen] = useState<boolean>(false)
 
     const sectionRef = useRef<HTMLElement | null>(null)
     const videoRef = useRef<HTMLVideoElement | null>(null)
@@ -101,7 +104,14 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
             } else if (e.key === 'f' && !(document.activeElement instanceof HTMLInputElement)) {
                 toggleIsFullscreen()
             } else if (e.code === 'Escape') {
-                setIsFullscreen(false)
+                setIsRecommendedOpen(prev => {
+                    if (prev) {
+                        return false
+                    } else {
+                        setIsFullscreen(false)
+                        return false
+                    }
+                })
             }
         }
 
@@ -230,7 +240,7 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
 
     return (
         <section className={
-                    `video-player position-relative 
+                    `video-player position-relative overflow-hidden 
                     ${isFullscreen ? 'is-fullscreen' : ''}
                     ${isShowControls ? '' : 'controls-hidden'}`
                  }
@@ -271,6 +281,8 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
                                  videoRef={videoRef}
                                  ref={controlsRef}
             />
+
+            {isFullscreen && <VideoPlayerRecommended isOpen={isRecommendedOpen} setIsOpen={setIsRecommendedOpen}/>}
         </section>
     )
 }

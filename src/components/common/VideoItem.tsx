@@ -12,11 +12,13 @@ import {formatVideoTime} from "@composables/useFormatVideoTime";
 import VideoMenu from "@video/VideoMenu.tsx";
 
 interface Props {
-    readonly video: VideoForList;
-    readonly isRow: boolean;
+    video: VideoForList
+    isRow: boolean
+    showAvatar?: boolean
+    isSmall?: boolean
 }
 
-function VideoItem({video, isRow = false}: Props) {
+function VideoItem({video, isRow = false, showAvatar = true, isSmall = false}: Readonly<Props>) {
     const navigate = useNavigate();
 
     const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false)
@@ -29,7 +31,7 @@ function VideoItem({video, isRow = false}: Props) {
     }
 
     return (
-        <li className="video-item col-4">
+        <li className={`video-item col-4 ${isSmall ? 'is-small' : ''}`}>
             <Link to={`/video/${video.id}`}
                   className={isRow ? 'video-item__row-item flex flex-align-start w-100' : 'w-100 flex flex-column'}
             >
@@ -41,7 +43,7 @@ function VideoItem({video, isRow = false}: Props) {
                     <VideoMenu id={video.id} isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu}/>
                 </div>
                 <div className={isRow ? 'video-item__info flex flex-column' : 'video-item__info flex'}>
-                    {!isRow &&
+                    {!isRow && showAvatar &&
                         <button className="video-item__avatar img-container"
                                 title={video.channel.name}
                                 onClick={(event) => handleChannel(event)}
@@ -71,13 +73,15 @@ function VideoItem({video, isRow = false}: Props) {
                                 type="button"
                                 onClick={(event) => handleChannel(event)}
                         >
-                            <div className="video-item__avatar img-container">
-                                {video.channel.avatar_url ?
-                                    (<img src={`${BASE_URL}${video.channel.avatar_url}`}
-                                          alt={video.channel.name}/>) :
-                                    (<span>{video.channel.name.slice(0, 1)}</span>)
-                                }
-                            </div>
+                            {showAvatar && (
+                                <div className="video-item__avatar img-container">
+                                    {video.channel.avatar_url ?
+                                        (<img src={`${BASE_URL}${video.channel.avatar_url}`}
+                                              alt={video.channel.name}/>) :
+                                        (<span>{video.channel.name.slice(0, 1)}</span>)
+                                    }
+                                </div>
+                            )}
                             <span className="video-item__channel">{video.channel.name}</span>
                         </button>
                     }
