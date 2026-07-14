@@ -34,6 +34,14 @@ function RecommendedVideo({video, onClick}: Readonly<VideoProps>) {
                 <span className="position-absolute">{formatVideoTime(video?.duration)}</span>
 
                 <VideoMenu id={video.id} isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} isSmall/>
+
+                {!!(video.saved_time) && (
+                    <div className="video-item__timeline recommended__timeline w-100 position-absolute">
+                        <div className="h-100"
+                             style={{'width': `${video.saved_time / video.duration * 100}%`}}
+                        />
+                    </div>
+                )}
             </div>
             <div className="recommended__info">
                 <div className="recommended__text flex flex-column">
@@ -68,7 +76,7 @@ function VideoRecommended() {
                 <ul className="recommended__list">
                     {videos?.map((video: VideoForList) => {
                         if (activeVideo.id === video.id) return
-                        return <RecommendedVideo video={video} onClick={() => clickToVideo(video)}/>
+                        return <RecommendedVideo key={video.id} video={video} onClick={() => clickToVideo(video)}/>
                     })}
                 </ul>
             )}

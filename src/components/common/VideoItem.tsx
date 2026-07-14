@@ -41,6 +41,14 @@ function VideoItem({video, isRow = false, showAvatar = true, isSmall = false}: R
                     <span className="position-absolute">{formatVideoTime(video.duration)}</span>
 
                     <VideoMenu id={video.id} isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu}/>
+
+                    {!!(video.saved_time) && (
+                        <div className="video-item__timeline w-100 position-absolute">
+                            <div className="h-100"
+                                 style={{'width': `${video.saved_time / video.duration * 100}%`}}
+                            />
+                        </div>
+                    )}
                 </div>
                 <div className={isRow ? 'video-item__info flex flex-column' : 'video-item__info flex'}>
                     {!isRow && showAvatar &&

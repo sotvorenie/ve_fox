@@ -1595,6 +1595,14 @@ input, textarea {
 .video-item__row-channel {
   column-gap: 0.625rem;
 }
+.video-item__timeline {
+  height: 0.3125rem;
+  background: var(--color-light-alt);
+  bottom: 0;
+}
+.video-item__timeline div {
+  background: var(--color-accent);
+}
 
 .video-menu.is-active .video-menu__open {
   --btn-bg-alpha: 50%;
@@ -1786,6 +1794,9 @@ input, textarea {
   font-size: 0.8125rem;
   color: var(--color-light-alt);
   opacity: 0.9;
+}
+.recommended__timeline {
+  height: 0.25rem;
 }
 
 .video-player {

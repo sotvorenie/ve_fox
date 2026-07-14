@@ -92,4 +92,14 @@
       column-gap: rem(10);
     }
   }
+
+  &__timeline {
+    height: rem(5);
+    background: var(--color-light-alt);
+    bottom: 0;
+
+    div {
+      background: var(--color-accent);
+    }
+  }
 }

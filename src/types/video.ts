@@ -9,6 +9,7 @@ export interface VideoForList {
     preview_url: string
     subtitle_url: string
     channel: ChannelForList
+    saved_time: number
 }
 
 export interface Video {
