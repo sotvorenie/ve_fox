@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
 
 import {VideoForList, VideosList} from "@/types/video";
 
@@ -17,6 +18,8 @@ interface Props {
 }
 
 function MainPageDefault({name, index}: Props) {
+    const location = useLocation()
+
     const {setPage} = usePagesStore()
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -65,10 +68,26 @@ function MainPageDefault({name, index}: Props) {
         setResponsePage(1)
     }
 
+    const deleteFromWatchLater = (event: any) => {
+        setVideos(prev => {
+            const filtered = prev.filter(v => v.id !== event.detail.id)
+            setTotal(filtered?.length)
+            return filtered
+        })
+    }
+
     useEffect(() => {
         clearData()
         setPage(index)
         getVideos().catch(() => {})
+
+        if (location.pathname === '/watch_later') {
+            globalThis.addEventListener('watchLaterDelete', deleteFromWatchLater)
+
+            return () => {
+                globalThis.removeEventListener('watchLaterDelete', deleteFromWatchLater)
+            }
+        }
     }, [])
 
     return (

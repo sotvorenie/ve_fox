@@ -1,7 +1,7 @@
 import React from "react";
 import {useLocation} from "react-router-dom";
 
-import {apiSetWatchLater} from "@api/watch_later/watchLater.ts";
+import {apiDeleteFromWatchLater, apiSetWatchLater} from "@api/watch_later/watchLater.ts";
 
 import EllipsisIcon from "@icons/EllipsisIcon.tsx";
 
@@ -28,6 +28,19 @@ function VideoMenu({id, isOpenMenu = false, setIsOpenMenu, isSmall = false}: Rea
                 await apiSetWatchLater(id)
                 setIsOpenMenu(false)
             },
+            notIn: '/watch_later',
+        },
+        {
+            title: 'Удалить из "Смотреть позже"',
+            func: async () => {
+                await apiDeleteFromWatchLater(id)
+                const event = new CustomEvent('watchLaterDelete', {
+                    detail: {id}
+                })
+                globalThis.dispatchEvent(event)
+                setIsOpenMenu(false)
+            },
+            in: '/watch_later',
         },
     ]
 
@@ -41,27 +54,28 @@ function VideoMenu({id, isOpenMenu = false, setIsOpenMenu, isSmall = false}: Rea
 
     return (
         <div className={`video-menu ${isOpenMenu ? 'is-active' : ''} ${isSmall ? 'is-small' : ''}`}>
-            {location.pathname !== '/watch_later' && (
-                <button
-                    className="video-menu__open recolor-svg button-width-svg flex-center radius-50 position-absolute"
-                    type="button"
-                    onClick={handleMenuOpen}
-                    title={titleText}
-                >
-                    <EllipsisIcon/>
-                </button>
-            )}
+            <button
+                className="video-menu__open recolor-svg button-width-svg flex-center radius-50 position-absolute"
+                type="button"
+                onClick={handleMenuOpen}
+                title={titleText}
+            >
+                <EllipsisIcon/>
+            </button>
 
-            <div className="video-menu__content position-absolute text-nowrap">
-                {buttons?.map(button => (
-                    <button key={button.title}
-                            className="hover-color-accent"
-                            type="button"
-                            onClick={(e) => handleButtonFunc(e, button.func)}
-                    >
-                        {button.title}
-                    </button>
-                ))}
+            <div className="video-menu__content position-absolute text-nowrap flex flex-column gap-10">
+                {buttons?.map(button => {
+                    if (location.pathname === button.notIn || (button.in && location.pathname !== button.in)) return
+                    return (
+                        <button key={button.title}
+                                className="hover-color-accent"
+                                type="button"
+                                onClick={(e) => handleButtonFunc(e, button.func)}
+                        >
+                            {button.title}
+                        </button>
+                    )
+                })}
             </div>
         </div>
     )
