@@ -160,6 +160,7 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
         }
 
         if (isPlaying && !isShowSettings) {
+            if (hideControlsTimer.current) clearTimeout(hideControlsTimer.current)
             hideControlsTimer.current = setTimeout(() => {
                 setIsShowControls(false)
             }, 2000)
@@ -176,7 +177,7 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
             }
             sectionRef.current?.removeEventListener('mousemove', moveCursor)
         }
-    }, [isPlaying, isShowSettings, isFullscreen])
+    }, [isPlaying, isShowSettings, isFullscreen, video.id])
 
     useEffect(() => {
         const mouseMove = (e: MouseEvent) => {
