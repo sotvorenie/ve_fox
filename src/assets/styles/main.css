@@ -1326,10 +1326,10 @@ input, textarea {
   z-index: 1000;
 }
 .header__burger-btn {
-  width: 4rem;
-  height: 4rem;
-  min-height: 4rem;
-  min-width: 4rem;
+  width: 3.25rem;
+  height: 3.25rem;
+  min-height: 3.25rem;
+  min-width: 3.25rem;
 }
 .header__aside {
   top: 0;

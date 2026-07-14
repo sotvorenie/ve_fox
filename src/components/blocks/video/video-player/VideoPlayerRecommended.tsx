@@ -40,9 +40,7 @@ function VideoPlayerRecommended({isOpen, setIsOpen}: Readonly<Props>) {
                 {videos?.length > 0 && (
                     <ul className="video-player__recommended_list z-10000">
                         {videos.map((video) => (
-                            <li key={video.id} className="video-player__recommended_item">
-                                <VideoItem video={video} isRow={false} showAvatar={false} isSmall/>
-                            </li>
+                            <VideoItem key={video.id} video={video} isRow={false} showAvatar={false} isSmall/>
                         ))}
                     </ul>
                 )}

@@ -1,10 +1,12 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 import {Video} from "@/types/video";
 import {ChannelForList} from "@/types/channel";
 import {Section} from "@/types/section";
 
 import {apiUploadVideo} from "@api/upload/upload";
+
+import {showError} from "@utils/modals.ts";
 
 import SettingsBlock from "@settings/settingsBlock";
 import Upload1 from "@upload/upload-1";
@@ -47,6 +49,16 @@ function UploadVideo({isVisible, setIsVisible}: Readonly<Props>) {
         },
     ]
 
+    const clear = () => {
+        setActiveTab(0)
+        setProgress(0)
+        setVideo(null)
+        setPreview(null)
+        setTitle('')
+        setActiveChannel(null)
+        setTags([])
+    }
+
     const uploadVideo = async () => {
         if (!video || !title || !tags?.length || !activeChannel) return
 
@@ -65,12 +77,23 @@ function UploadVideo({isVisible, setIsVisible}: Readonly<Props>) {
             )
 
             setNewVideo(response)
+
+            clear()
         } catch (err) {
             console.error(err)
+
+            await showError(
+                'Ошибка загрузки видео',
+                'Не удалось загрузить видео'
+            )
         } finally {
             setIsLoading(false)
         }
     }
+
+    useEffect(() => {
+        if (!isVisible && newVideo) setNewVideo(null)
+    }, [isVisible])
 
     const renderUploadVideo = () => (
         <>
