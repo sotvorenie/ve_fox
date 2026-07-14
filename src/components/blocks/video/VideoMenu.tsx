@@ -24,9 +24,18 @@ function VideoMenu({id, isOpenMenu = false, setIsOpenMenu, isSmall = false}: Rea
     const buttons = [
         {
             title: 'Смотреть позже',
-            func: () => apiSetWatchLater(id).then(),
+            func: async () => {
+                await apiSetWatchLater(id)
+                setIsOpenMenu(false)
+            },
         },
     ]
+
+    const handleButtonFunc = (event: React.MouseEvent, func: Function) => {
+        event.stopPropagation()
+        event.preventDefault()
+        func()
+    }
 
     const titleText = isOpenMenu ? 'Закрыть меню' : 'Действия с видео'
 
@@ -48,7 +57,7 @@ function VideoMenu({id, isOpenMenu = false, setIsOpenMenu, isSmall = false}: Rea
                     <button key={button.title}
                             className="hover-color-accent"
                             type="button"
-                            onClick={button.func}
+                            onClick={(e) => handleButtonFunc(e, button.func)}
                     >
                         {button.title}
                     </button>
