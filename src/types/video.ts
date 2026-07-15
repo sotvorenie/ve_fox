@@ -6,6 +6,7 @@ export interface VideoForList {
     name: string
     date: string
     duration: number
+    video_url: string
     preview_url: string
     subtitle_url: string
     channel: ChannelForList

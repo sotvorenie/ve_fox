@@ -55,7 +55,7 @@ function VideoMenu({id, isOpenMenu = false, setIsOpenMenu, isSmall = false}: Rea
     return (
         <div className={`video-menu ${isOpenMenu ? 'is-active' : ''} ${isSmall ? 'is-small' : ''}`}>
             <button
-                className="video-menu__open recolor-svg button-width-svg flex-center radius-50 position-absolute"
+                className="video-menu__open recolor-svg button-width-svg flex-center radius-50 position-absolute z-10"
                 type="button"
                 onClick={handleMenuOpen}
                 title={titleText}
@@ -63,7 +63,7 @@ function VideoMenu({id, isOpenMenu = false, setIsOpenMenu, isSmall = false}: Rea
                 <EllipsisIcon/>
             </button>
 
-            <div className="video-menu__content position-absolute text-nowrap flex flex-column gap-10">
+            <div className="video-menu__content position-absolute text-nowrap flex flex-column gap-10 z-10">
                 {buttons?.map(button => {
                     if (location.pathname === button.notIn || (button.in && location.pathname !== button.in)) return
                     return (
