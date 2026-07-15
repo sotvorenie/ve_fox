@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import {useUserStore} from "@store/useUserStore.ts";
+
 const client = axios.create({
     baseURL: 'http://localhost:5557',
     timeout: 10000,
@@ -18,13 +20,8 @@ client.interceptors.response.use(
             error.message = error.response.data.detail;
         }
 
-        if (error.response?.status === 401) {
-            localStorage.removeItem('token')
+        if (error.response?.status === 401) useUserStore.getState().logOut()
 
-            if (globalThis.location.pathname !== '/auth') {
-                globalThis.location.href = '/auth'
-            }
-        }
         return Promise.reject(error)
     }
 )

@@ -27,6 +27,8 @@ const emptyVideo: Video = {
     duration: 0,
     preview_url: '',
     subtitle_url: '',
+    views: 0,
+    likes: 0,
     channel: {
         id: -1,
         name: '',

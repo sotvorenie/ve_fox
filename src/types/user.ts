@@ -2,6 +2,7 @@ export interface User {
     id: number
     name: string
     avatar_url: string
+    router_map: string[]
 }
 
 export interface UserWithToken {
@@ -16,4 +17,8 @@ export interface Token {
 
 export interface UserAvatar {
     new_avatar_url: string
+}
+
+export interface UserRouterMap {
+    router_map: string
 }

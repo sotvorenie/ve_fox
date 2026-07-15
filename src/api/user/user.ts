@@ -1,7 +1,7 @@
 import {SuccessResponse} from "@/types/success";
-import {UserAvatar} from "@/types/user";
+import {UserAvatar, UserRouterMap} from "@/types/user";
 
-import {apiPost} from "@api/index";
+import {apiGet, apiPost} from "@api/index";
 
 
 export const apiRedactUserName = (name: string): Promise<SuccessResponse> => {
@@ -21,4 +21,14 @@ export const apiRedactUserAvatar = (file: File): Promise<UserAvatar> => {
     formData.append('file', file);
 
     return apiPost(`/user/redact_avatar`, formData)
+}
+
+export const apiSetUserRouterMap = (routerMap: string[]): Promise<SuccessResponse> => {
+    return apiPost(`/user/set_router_map`, {
+        router_map: JSON.stringify(routerMap)
+    })
+}
+
+export const apiGetUserRouterMap = (): Promise<UserRouterMap> => {
+    return apiGet(`/user/get_router_map`)
 }

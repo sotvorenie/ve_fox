@@ -10,13 +10,26 @@ import ArrowIcon from "@icons/ArrowIcon";
 import BurgerIcon from "@icons/BurgerIcon.tsx";
 import Logo from "@icons/Logo.tsx";
 
+import {useUserStore} from "@store/useUserStore.ts";
+
 function HeaderNavigation() {
     const navigate = useNavigate();
+
+    const {goBack, goForward} = useUserStore()
 
     const isLaptop: boolean = useWidthWatcher('(max-width: 1440px)')
 
     const [isAsideOpen, setIsAsideOpen] = useState<boolean>(false)
 
+    const handleBack = () => {
+        const path = goBack()
+        if (path) navigate(path)
+    }
+
+    const handleForward = () => {
+        const path = goForward()
+        if (path) navigate(path)
+    }
     return (
         <>
             <Portal>
@@ -39,7 +52,7 @@ function HeaderNavigation() {
                 </Link>
 
                 <button className="header__back flex flex-align-center recolor-svg hover-color-accent z-1000"
-                        onClick={() => navigate(-1)}
+                        onClick={handleBack}
                         title={isLaptop ? 'Назад' : ''}
                         type="button"
                 >
@@ -48,7 +61,7 @@ function HeaderNavigation() {
                 </button>
 
                 <button className="header__forward flex flex-align-center recolor-svg hover-color-accent z-1000"
-                        onClick={() => navigate(+1)}
+                        onClick={handleForward}
                         title={isLaptop ? 'Вперед' : ''}
                         type="button"
                 >

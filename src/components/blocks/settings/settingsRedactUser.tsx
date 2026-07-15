@@ -22,7 +22,7 @@ interface Props {
 function SettingsRedactUser({isVisible, setIsVisible}: Readonly<Props>) {
     const navigate = useNavigate();
 
-    const {logOut, user, isLogged} = useUserStore()
+    const {user, isLogged} = useUserStore()
 
     const [name, setName] = useState<string>("")
 
@@ -58,10 +58,7 @@ function SettingsRedactUser({isVisible, setIsVisible}: Readonly<Props>) {
             'Вы действительно хотите выйти?'
         )
 
-        if (confirm) {
-            logOut()
-            navigate('/auth')
-        }
+        if (confirm) navigate('/auth')
     }
 
     useEffect(() => {

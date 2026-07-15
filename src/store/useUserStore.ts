@@ -9,9 +9,17 @@ interface UserState {
     user: User
     token: string
 
+    routerMap: string[]
+    currentIndex: number
+
     setUser: (user: User) => void
     setToken: (token: string) => void
     setIsLogged: (isLogged: boolean) => void
+
+    setRouterMap: (map: string[]) => void
+    addRoute: (path: string) => void
+    goBack: () => string | null
+    goForward: () => string | null
 
     logIn: (data: UserWithToken) => void
     logOut: () => void
@@ -22,6 +30,7 @@ const emptyUser: User = {
     id: -1,
     name: '',
     avatar_url: '',
+    router_map: []
 }
 
 export const useUserStore = create<UserState>((set, get) => ({
@@ -29,9 +38,44 @@ export const useUserStore = create<UserState>((set, get) => ({
     user: emptyUser,
     token: '',
 
+    routerMap: [],
+    currentIndex: -1,
+
     setUser: (user: User) => set({user}),
     setToken: (token: string) => set({token}),
     setIsLogged: (isLogged: boolean) => set({isLogged}),
+
+    setRouterMap: (routerMap: string[]) => set({
+        routerMap,
+        currentIndex: routerMap.length - 1
+    }),
+    addRoute: (path) => set((state) => {
+        if (state.routerMap[state.currentIndex] === path) return state
+
+        const newStack = [...state.routerMap.slice(0, state.currentIndex + 1), path]
+        return {
+            routerMap: newStack,
+            currentIndex: newStack.length - 1
+        }
+    }),
+    goBack: () => {
+        const { currentIndex, routerMap } = get()
+        if (currentIndex > 0) {
+            const nextIndex = currentIndex - 1
+            set({ currentIndex: nextIndex })
+            return routerMap[nextIndex]
+        }
+        return '/main'
+    },
+    goForward: () => {
+        const { currentIndex, routerMap } = get()
+        if (currentIndex < routerMap.length - 1) {
+            const nextIndex = currentIndex + 1
+            set({ currentIndex: nextIndex })
+            return routerMap[nextIndex]
+        }
+        return null
+    },
 
     logIn: (data: UserWithToken) => {
         localStorage.setItem("token", data.token)
@@ -43,11 +87,14 @@ export const useUserStore = create<UserState>((set, get) => ({
     },
     logOut: () => {
         localStorage.removeItem('token')
+        localStorage.removeItem('router-map')
+        localStorage.removeItem('has-router-map')
         set({
             user: {
                 id: -1,
                 name: '',
                 avatar_url: '',
+                router_map: []
             },
             isLogged: false,
             token: ''
