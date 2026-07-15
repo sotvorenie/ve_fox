@@ -71,7 +71,7 @@ export const useUserStore = create<UserState>((set, get) => ({
             set({ currentIndex: nextIndex })
             return routerMap[nextIndex]
         }
-        return '/main'
+        return '/'
     },
     goForward: () => {
         const { currentIndex, routerMap } = get()

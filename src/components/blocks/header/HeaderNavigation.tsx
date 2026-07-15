@@ -54,7 +54,7 @@ function HeaderNavigation({isOnlyBack = false}: Readonly<Props>) {
                             <BurgerIcon/>
                         </button>
 
-                        <Link to="/main" className="header__logo button-width-svg flex-center">
+                        <Link to="/" className="header__logo button-width-svg flex-center">
                             <Logo/>
                         </Link>
                     </>
