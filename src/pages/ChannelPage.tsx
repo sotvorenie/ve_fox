@@ -1,5 +1,5 @@
-import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
+import {useOutletContext, useParams} from "react-router-dom";
 
 import {BASE_URL} from "@api/url";
 
@@ -14,6 +14,7 @@ import ChannelAbout from "@channel/ChannelAbout";
 import ChannelTabs from "@channel/ChannelTabs";
 
 function ChannelPage() {
+    const { setHeaderOptions } = useOutletContext<{ setHeaderOptions: any }>();
     const { id } = useParams<{ id: string }>();
 
     const [activeTab, setActiveTab] = useState(0)
@@ -73,6 +74,10 @@ function ChannelPage() {
     useEffect(() => {
         if (id) Promise.all([getChannel(), getNewChannelVideos(), getPopularChannelVideos()]).then()
     }, [id])
+
+    useEffect(() => {
+        setHeaderOptions({ visibleNavigation: true, isOnlyBack: true })
+    }, [])
 
     return (
         <div className="main-page__channel channel m-auto">

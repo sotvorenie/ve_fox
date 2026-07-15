@@ -4,17 +4,15 @@ import HeaderUser from "@header/HeaderUser";
 
 
 interface Props {
-    readonly isVideoPage?: boolean
+    visibleNavigation?: boolean
+    isOnlyBack?: boolean
 }
 
-function Header({isVideoPage = false}: Props) {
+function Header({visibleNavigation = false, isOnlyBack = false}: Readonly<Props>) {
 
     return(
-        <header className={
-            `header flex flex-align-center flex-justify-center top-0
-            ${!isVideoPage && "position-sticky"}`
-        }>
-            {isVideoPage && <HeaderNavigation/>}
+        <header className={`header flex flex-align-center flex-justify-center top-0 position-sticky ${!visibleNavigation}`}>
+            {visibleNavigation && <HeaderNavigation isOnlyBack={isOnlyBack}/>}
 
             <HeaderSearch/>
 

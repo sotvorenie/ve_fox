@@ -85,7 +85,7 @@ function VideoPage() {
 
     return(
         <div className="video-page h-100">
-            <Header isVideoPage={true}/>
+            <Header visibleNavigation={true}/>
 
             <div className="video-page__content flex h-100">
                 <VideoMain isLiked={isLiked}

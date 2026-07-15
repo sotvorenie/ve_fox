@@ -12,7 +12,11 @@ import Logo from "@icons/Logo.tsx";
 
 import {useUserStore} from "@store/useUserStore.ts";
 
-function HeaderNavigation() {
+interface Props {
+    isOnlyBack?: boolean
+}
+
+function HeaderNavigation({isOnlyBack = false}: Readonly<Props>) {
     const navigate = useNavigate();
 
     const {goBack, goForward} = useUserStore()
@@ -40,16 +44,21 @@ function HeaderNavigation() {
             </Portal>
 
             <div className="header__btn-bar flex flex-align-center position-absolute">
-                <button className="header__burger-btn button-width-svg recolor-svg hover-color-accent flex-center"
-                        type="button"
-                        onClick={() => setIsAsideOpen(true)}
-                >
-                    <BurgerIcon/>
-                </button>
+                {!isOnlyBack && (
+                    <>
+                        <button
+                            className="header__burger-btn button-width-svg recolor-svg hover-color-accent flex-center"
+                            type="button"
+                            onClick={() => setIsAsideOpen(true)}
+                        >
+                            <BurgerIcon/>
+                        </button>
 
-                <Link to="/main" className="header__logo button-width-svg flex-center">
-                    <Logo/>
-                </Link>
+                        <Link to="/main" className="header__logo button-width-svg flex-center">
+                            <Logo/>
+                        </Link>
+                    </>
+                )}
 
                 <button className="header__back flex flex-align-center recolor-svg hover-color-accent z-1000"
                         onClick={handleBack}
@@ -60,14 +69,16 @@ function HeaderNavigation() {
                     <span className="h5">Назад</span>
                 </button>
 
-                <button className="header__forward flex flex-align-center recolor-svg hover-color-accent z-1000"
-                        onClick={handleForward}
-                        title={isLaptop ? 'Вперед' : ''}
-                        type="button"
-                >
-                    <ArrowIcon/>
-                    <span className="h5">Вперед</span>
-                </button>
+                {!isOnlyBack && (
+                    <button className="header__forward flex flex-align-center recolor-svg hover-color-accent z-1000"
+                            onClick={handleForward}
+                            title={isLaptop ? 'Вперед' : ''}
+                            type="button"
+                    >
+                        <ArrowIcon/>
+                        <span className="h5">Вперед</span>
+                    </button>
+                )}
             </div>
         </>
     )
