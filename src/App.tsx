@@ -75,7 +75,7 @@ function App() {
                 setRouterMap(finalMap)
                 const lastPath = finalMap[finalMap.length - 1]
                 navigate(lastPath, { replace: true })
-            } else navigate('/main', { replace: true })
+            }
             setIsLoading(false)
         }
     }
