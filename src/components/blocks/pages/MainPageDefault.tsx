@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 
 import {VideoForList, VideosList} from "@/types/video";
@@ -6,6 +6,8 @@ import {VideoForList, VideosList} from "@/types/video";
 import {apiGetHistory} from "@api/history/history";
 import {apiGetListLikes} from "@api/like/like";
 import {apiGetListWatchLater} from "@api/watch_later/watchLater";
+
+import {videoListObserver} from "@composables/useVideoListObserver.ts";
 
 import VideoItem from "@video/VideoItem";
 import ListColumnSkeleton from "@ui/skeletons/ListColumnSkeleton";
@@ -28,7 +30,7 @@ function MainPageDefault({name, index}: Props) {
     const [total, setTotal] = useState<number>(0);
     const [responsePage, setResponsePage] = useState<number>(1);
 
-    const getVideos = async () => {
+    const getVideos = useCallback(async () => {
         try {
             setIsLoading(true)
 
@@ -49,7 +51,7 @@ function MainPageDefault({name, index}: Props) {
             }
 
             if (data) {
-                setVideos(data.videos)
+                setVideos(prev => [...prev, ...data.videos])
                 setHasMore(data.has_more)
                 setTotal(data.total)
                 setResponsePage(data.page + 1)
@@ -59,7 +61,7 @@ function MainPageDefault({name, index}: Props) {
         } finally {
             setIsLoading(false)
         }
-    }
+    }, [name, responsePage])
 
     const clearData = () => {
         setVideos([])
@@ -75,6 +77,8 @@ function MainPageDefault({name, index}: Props) {
             return filtered
         })
     }
+
+    const lastElementRef = videoListObserver(getVideos, hasMore, isLoading)
 
     useEffect(() => {
         clearData()
@@ -96,15 +100,20 @@ function MainPageDefault({name, index}: Props) {
 
             {!isLoading && (
                 <ul className="w-100">
-                    {videos?.map((video: VideoForList) => (
-                        <VideoItem key={video.id} video={video} isRow={true}/>
-                    ))}
+                    {videos?.map((video: VideoForList, mapIndex: number) => {
+                        const isLast = mapIndex === videos.length - 2
+                        return (
+                            <VideoItem key={video.id}
+                                       video={video}
+                                       isRow={true}
+                                       ref={isLast ? lastElementRef : null}
+                            />
+                        )
+                    })}
                 </ul>
             )}
 
             {isLoading && <ListColumnSkeleton isRecommended={false}/>}
-
-            {hasMore && <button>Загрузить еще</button>}
         </div>
     )
 }

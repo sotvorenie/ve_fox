@@ -16,10 +16,14 @@ interface UserState {
     setToken: (token: string) => void
     setIsLogged: (isLogged: boolean) => void
 
+    videoSeed: number
+
     setRouterMap: (map: string[]) => void
     addRoute: (path: string) => void
     goBack: () => string | null
     goForward: () => string | null
+
+    setVideoSeed: (seed: number) => void
 
     logIn: (data: UserWithToken) => void
     logOut: () => void
@@ -40,6 +44,8 @@ export const useUserStore = create<UserState>((set, get) => ({
 
     routerMap: [],
     currentIndex: -1,
+
+    videoSeed: 0,
 
     setUser: (user: User) => set({user}),
     setToken: (token: string) => set({token}),
@@ -76,6 +82,8 @@ export const useUserStore = create<UserState>((set, get) => ({
         }
         return null
     },
+
+    setVideoSeed: (seed: number) => set({ videoSeed: seed }),
 
     logIn: (data: UserWithToken) => {
         localStorage.setItem("token", data.token)

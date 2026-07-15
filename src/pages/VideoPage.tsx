@@ -95,7 +95,7 @@ function VideoPage() {
                            savedTime={savedTime}
                 />
 
-                <VideoRecommended/>
+                <VideoRecommended id={id}/>
             </div>
         </div>
     );

@@ -34,6 +34,7 @@ function App() {
         checkMe,
         setRouterMap,
         addRoute,
+        setVideoSeed,
     } = useUserStore()
 
     const [isLoading, setIsLoading] = useState(true)
@@ -52,6 +53,8 @@ function App() {
                 localStorage.removeItem('router-map')
             }
         }
+
+        setVideoSeed(Math.random() * 2 - 1)
 
         try {
             setIsLoading(true)

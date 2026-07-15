@@ -50,6 +50,7 @@ export const useVideoStore = create<VideoState>((set, get) => ({
         isLoading: true,
         recommendedIsLoading: true,
         recommendedHasMore: false,
+        recommendedPage: 1,
     }),
     setVideo: (video: Video) => set({video}),
     setIsLoading: (isLoading: boolean) => set({isLoading}),
@@ -60,8 +61,9 @@ export const useVideoStore = create<VideoState>((set, get) => ({
 
             if (data) {
                 set({
-                    recommendedVideos: data.videos,
-                    recommendedHasMore: data.has_more
+                    recommendedVideos: [...get().recommendedVideos, ...data.videos],
+                    recommendedHasMore: data.has_more,
+                    recommendedPage: data.page + 1,
                 })
             }
         } catch (err) {
@@ -69,5 +71,5 @@ export const useVideoStore = create<VideoState>((set, get) => ({
         } finally {
             set({recommendedIsLoading: false})
         }
-    },
+    }
 }))

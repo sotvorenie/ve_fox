@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {forwardRef, useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 
 import {VideoForList} from "@/types/video";
@@ -154,15 +154,14 @@ function InfoInRow({
     )
 }
 
-
-function VideoItem({
-                       video,
-                       isRow = false,
-                       showAvatar = true,
-                       isSmall = false,
-                       className,
-                       isRecommendation = false,
-                   }: Readonly<Props>) {
+const VideoItem = forwardRef(({
+                                  video,
+                                  isRow = false,
+                                  showAvatar = true,
+                                  isSmall = false,
+                                  className,
+                                  isRecommendation = false,
+                              }: Props, ref: React.ForwardedRef<HTMLLIElement>) => {
     const navigate = useNavigate();
 
     const [isHovered, setIsHovered] = useState<boolean>(false)
@@ -188,12 +187,20 @@ function VideoItem({
         setIsReady(false)
     }
 
+    useEffect(() => {
+        return () => {
+            if (timer) clearTimeout(timer)
+        }
+    }, [timer])
+
     return (
         <li className={`
-                video-item w-100 
-                ${isSmall ? 'is-small' : ''} 
-                ${className} ${isRecommendation ? 'is-recommended' : ''}
-            `}>
+                 video-item w-100
+                 ${isSmall ? 'is-small' : ''}
+                 ${className} ${isRecommendation ? 'is-recommended' : ''}
+             `}
+            ref={ref}
+        >
             <Link to={`/video/${video.id}`}
                   className={isRow ? 'video-item__row-item flex flex-align-start w-100' : 'w-100 flex flex-column'}
                   onMouseEnter={handleMouseEnter}
@@ -238,6 +245,6 @@ function VideoItem({
             </Link>
         </li>
     )
-}
+})
 
 export default VideoItem;

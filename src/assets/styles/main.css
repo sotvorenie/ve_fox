@@ -1751,6 +1751,9 @@ input, textarea {
   column-gap: 1.25rem;
   padding-bottom: 7.5rem;
 }
+.video-page__recommended {
+  overflow-y: auto;
+}
 
 .video {
   min-width: 70%;

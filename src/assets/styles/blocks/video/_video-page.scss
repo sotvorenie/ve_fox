@@ -7,4 +7,8 @@
     column-gap: rem(20);
     padding-bottom: rem(120);
   }
+
+  &__recommended {
+    overflow-y: auto;
+  }
 }
