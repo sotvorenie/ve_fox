@@ -9,21 +9,9 @@ interface UserState {
     user: User
     token: string
 
-    routerMap: string[]
-    currentIndex: number
-
-    setUser: (user: User) => void
+    updateUser: (fields: Partial<User>) => void
     setToken: (token: string) => void
     setIsLogged: (isLogged: boolean) => void
-
-    videoSeed: number
-
-    setRouterMap: (map: string[]) => void
-    addRoute: (path: string) => void
-    goBack: () => string | null
-    goForward: () => string | null
-
-    setVideoSeed: (seed: number) => void
 
     logIn: (data: UserWithToken) => void
     logOut: () => void
@@ -42,48 +30,11 @@ export const useUserStore = create<UserState>((set, get) => ({
     user: emptyUser,
     token: '',
 
-    routerMap: [],
-    currentIndex: -1,
-
-    videoSeed: 0,
-
-    setUser: (user: User) => set({user}),
     setToken: (token: string) => set({token}),
     setIsLogged: (isLogged: boolean) => set({isLogged}),
-
-    setRouterMap: (routerMap: string[]) => set({
-        routerMap,
-        currentIndex: routerMap.length - 1
-    }),
-    addRoute: (path) => set((state) => {
-        if (state.routerMap[state.currentIndex] === path) return state
-
-        const newStack = [...state.routerMap.slice(0, state.currentIndex + 1), path]
-        return {
-            routerMap: newStack,
-            currentIndex: newStack.length - 1
-        }
-    }),
-    goBack: () => {
-        const { currentIndex, routerMap } = get()
-        if (currentIndex > 0) {
-            const nextIndex = currentIndex - 1
-            set({ currentIndex: nextIndex })
-            return routerMap[nextIndex]
-        }
-        return '/'
-    },
-    goForward: () => {
-        const { currentIndex, routerMap } = get()
-        if (currentIndex < routerMap.length - 1) {
-            const nextIndex = currentIndex + 1
-            set({ currentIndex: nextIndex })
-            return routerMap[nextIndex]
-        }
-        return null
-    },
-
-    setVideoSeed: (seed: number) => set({ videoSeed: seed }),
+    updateUser: (fields: Partial<User>) => set((state) => ({
+        user: { ...state.user, ...fields }
+    })),
 
     logIn: (data: UserWithToken) => {
         localStorage.setItem("token", data.token)

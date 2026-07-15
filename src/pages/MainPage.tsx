@@ -11,11 +11,11 @@ import ListRowSkeleton from "@ui/skeletons/ListRowSkeleton";
 import MainEmpty from "@ui/empty/mainEmpty";
 
 import {usePagesStore} from "@store/usePagesStore";
-import {useUserStore} from "@store/useUserStore.ts";
+import {useVideoSeedStore} from "@store/useVideoSeedStore.ts";
 
 function MainPage() {
     const {setPage: setRouterPage} = usePagesStore()
-    const {videoSeed} = useUserStore()
+    const {videoSeed} = useVideoSeedStore()
 
     const [page, setPage] = useState<number>(1)
     const [hasMore, setHasMore] = useState<boolean>(true)

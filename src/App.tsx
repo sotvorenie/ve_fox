@@ -21,21 +21,25 @@ import AuthPage from "@pages/AuthPage";
 import {useUserStore} from "@store/useUserStore";
 import {useVideoStore} from "@store/useVideoStore.ts";
 import {usePlayerStore} from "@store/usePlayerStore.ts";
+import {useRouterMapStore} from "@store/useRouterMapStore.ts";
+import {useVideoSeedStore} from "@store/useVideoSeedStore.ts";
 
 function App() {
     const location = useLocation();
     const navigate = useNavigate();
 
     const {
-        routerMap,
-        currentIndex,
+        checkMe,
     } = useUserStore()
     const {
-        checkMe,
+        routerMap,
+        currentIndex,
+    } = useRouterMapStore()
+    const {
         setRouterMap,
         addRoute,
-        setVideoSeed,
-    } = useUserStore()
+    } = useRouterMapStore()
+    const {setVideoSeed} = useVideoSeedStore()
 
     const [isLoading, setIsLoading] = useState(true)
 
@@ -100,7 +104,7 @@ function App() {
                         await apiSaveTime(video.id, currentTime)
                     }
 
-                    let routerForSave = useUserStore.getState().routerMap.slice(0, useUserStore.getState().currentIndex + 1)
+                    let routerForSave = useRouterMapStore.getState().routerMap.slice(0, useRouterMapStore.getState().currentIndex + 1)
                     if (useUserStore.getState().isLogged) {
                         await apiSetUserRouterMap(routerForSave)
                         localStorage.setItem('has-router-map', JSON.stringify(routerForSave?.length > 0))

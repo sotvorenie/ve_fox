@@ -10,7 +10,7 @@ import ArrowIcon from "@icons/ArrowIcon";
 import BurgerIcon from "@icons/BurgerIcon.tsx";
 import Logo from "@icons/Logo.tsx";
 
-import {useUserStore} from "@store/useUserStore.ts";
+import {useRouterMapStore} from "@store/useRouterMapStore.ts";
 
 interface Props {
     isOnlyBack?: boolean
@@ -19,7 +19,7 @@ interface Props {
 function HeaderNavigation({isOnlyBack = false}: Readonly<Props>) {
     const navigate = useNavigate();
 
-    const {goBack, goForward} = useUserStore()
+    const {goBack, goForward} = useRouterMapStore()
 
     const isLaptop: boolean = useWidthWatcher('(max-width: 1440px)')
 

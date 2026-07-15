@@ -20,6 +20,7 @@ interface Props {
 
 function SettingsRedactAvatar({isLoading, setIsLoading}: Readonly<Props>) {
     const {user} = useUserStore()
+    const {updateUser} = useUserStore()
 
     const avatarInputRef = useRef<HTMLInputElement | null>(null)
 
@@ -40,9 +41,7 @@ function SettingsRedactAvatar({isLoading, setIsLoading}: Readonly<Props>) {
             try {
                 const response: UserAvatar = await apiRedactUserAvatar(file)
 
-                if (response.new_avatar_url) {
-                    user.avatar_url = response.new_avatar_url
-                }
+                if (response.new_avatar_url) updateUser({avatar_url: response.new_avatar_url})
             } catch (err) {
                 console.error(err)
 

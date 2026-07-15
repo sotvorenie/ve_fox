@@ -23,6 +23,7 @@ function SettingsRedactUser({isVisible, setIsVisible}: Readonly<Props>) {
     const navigate = useNavigate();
 
     const {user, isLogged} = useUserStore()
+    const {updateUser} = useUserStore()
 
     const [name, setName] = useState<string>("")
 
@@ -43,7 +44,7 @@ function SettingsRedactUser({isVisible, setIsVisible}: Readonly<Props>) {
 
                 await apiRedactUserName(name)
 
-                user.name = name
+                updateUser({name: name})
             } catch (err) {
                 console.error(err)
             } finally {

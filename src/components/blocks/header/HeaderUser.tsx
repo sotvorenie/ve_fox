@@ -96,7 +96,10 @@ function HeaderUser() {
 
             <Portal>
                 <div
-                    className={`settings__inner position-fixed inset-0 z-10000 tr-opacity ${isVisibleSettings ? 'is-active' : ''}`}
+                    className={`
+                        settings__inner position-fixed inset-0 z-10000 tr-opacity 
+                        ${isVisibleSettings ? 'is-active' : ''}
+                    `}
                     onClick={() => setIsVisibleSettings(false)}
 
                 >
