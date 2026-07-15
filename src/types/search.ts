@@ -6,3 +6,7 @@ export interface SearchResponse extends Meta{
     channels: Channel[];
     videos: VideoForList[];
 }
+
+export interface SearchHistoryResponse {
+    search_history: string[]
+}

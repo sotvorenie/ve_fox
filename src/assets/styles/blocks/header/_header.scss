@@ -63,12 +63,15 @@
   &__search {
     width: rem(800);
     height: rem(50);
-    border-radius: var(--radius-big);
-    border: var(--border-light-alt);
-    background: var(--color-dark);
 
-    & * {
-      height: 100%;
+    &_wrapper {
+      border-radius: var(--radius-big);
+      border: var(--border-light-alt);
+      background: var(--color-dark);
+
+      & * {
+        height: 100%;
+      }
     }
   }
 

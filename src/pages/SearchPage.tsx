@@ -25,9 +25,9 @@ function SearchPage() {
     useEffect(() => {
         if (!videos?.length) {
             setPage(-1)
-            search().catch(() => {})
+            search().then()
         }
-    }, []);
+    }, [])
 
     return (
         <div className="margin-center-page search-page">
