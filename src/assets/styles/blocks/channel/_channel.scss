@@ -4,10 +4,27 @@
 
   &__banner {
     width: 100%;
-    height: rem(300);
-    background: var(--color-accent);
-    border-radius: var(--radius-big);
+    height: rem(320);
+    border-radius: var(--radius-medium);
     margin-bottom: rem(20);
+
+    & > video {
+      width: calc(100% - #{rem(390)});
+    }
+  }
+
+  &__active-video {
+    width: rem(400) !important;
+    background: var(--color-dark);
+    border: var(--border-light-alt);
+
+    a {
+      height: 100%;
+    }
+
+    img {
+      object-fit: contain !important;
+    }
   }
 
   &__info {
@@ -16,7 +33,7 @@
   }
 
   &__avatar {
-    @include square(120);
+    @include square(100);
 
     border-radius: 50%;
     background: var(--color-light-alt);

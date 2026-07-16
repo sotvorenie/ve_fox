@@ -12,6 +12,7 @@ import ChannelMain from "@channel/ChannelMain";
 import ChannelVideos from "@channel/ChannelVideos";
 import ChannelAbout from "@channel/ChannelAbout";
 import ChannelTabs from "@channel/ChannelTabs";
+import ChannelBanner from "@channel/ChannelBanner.tsx";
 
 function ChannelPage() {
     const { setHeaderOptions } = useOutletContext<{ setHeaderOptions: any }>();
@@ -81,7 +82,7 @@ function ChannelPage() {
 
     return (
         <div className="main-page__channel channel m-auto">
-            <div className="channel__banner"></div>
+            <ChannelBanner videos={videos}/>
 
             <div className="channel__info flex flex-align-center">
                 <div className="channel__avatar img-container flex-center">
@@ -90,7 +91,7 @@ function ChannelPage() {
                         : <span className="text-center">{channel?.name?.[0]}</span>
                     }
                 </div>
-                <p className="h3">{channel?.name}</p>
+                <p className="h5">{channel?.name}</p>
             </div>
 
             <ChannelTabs activeTab={activeTab} setActiveTab={setActiveTab}/>

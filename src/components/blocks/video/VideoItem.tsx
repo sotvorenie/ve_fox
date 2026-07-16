@@ -24,6 +24,9 @@ interface Props extends BaseVideoProps {
     isSmall?: boolean
     className?: string
     isRecommendation?: boolean
+    isChannel?: boolean
+    hoverOn?: boolean
+    hoverColorAccentOpacity?: boolean
 }
 
 interface PreviewProps extends BaseVideoProps {
@@ -161,6 +164,9 @@ const VideoItem = forwardRef(({
                                   isSmall = false,
                                   className,
                                   isRecommendation = false,
+                                  isChannel = false,
+                                  hoverOn = true,
+                                  hoverColorAccentOpacity = true,
                               }: Props, ref: React.ForwardedRef<HTMLLIElement>) => {
     const navigate = useNavigate();
 
@@ -177,11 +183,13 @@ const VideoItem = forwardRef(({
     }
 
     const handleMouseEnter = () => {
+        if (!hoverOn) return
         const t = setTimeout(() => setIsHovered(true), 500)
         setTimer(t)
     }
 
     const handleMouseLeave = () => {
+        if (!hoverOn) return
         if (timer) clearTimeout(timer)
         setIsHovered(false)
         setIsReady(false)
@@ -198,6 +206,7 @@ const VideoItem = forwardRef(({
                  video-item w-100
                  ${isSmall ? 'is-small' : ''}
                  ${className} ${isRecommendation ? 'is-recommended' : ''}
+                 ${hoverColorAccentOpacity ? 'hover-opacity' : ''}
              `}
             ref={ref}
         >
@@ -223,10 +232,14 @@ const VideoItem = forwardRef(({
 
                         {!isRow && (
                             <div className="flex gap-10 flex-align-center text-ellipsis">
-                                <span className="video-item__info-item">
-                                    {video.channel.name}
-                                </span>
-                                <div className="video-item__dot"/>
+                                {!isChannel && (
+                                    <>
+                                        <span className="video-item__info-item">
+                                            {video.channel.name}
+                                        </span>
+                                        <div className="video-item__dot"/>
+                                    </>
+                                )}
                                 <span className="video-item__info-item">{formatVideoDate(video.date)}</span>
                                 <div className="video-item__dot"/>
                                 <span className="video-item__info-item">{video.views} {formatCount(video.views, viewsArr)}</span>

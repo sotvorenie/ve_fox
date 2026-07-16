@@ -7,7 +7,17 @@
   border-radius: var(--radius-medium);
 
   @include hover {
-    background: #fe797180;
+
+    &.hover-opacity {
+      background: #fe797180;
+    }
+    &:not(.hover-opacity) {
+      background: var(--color-accent);
+
+      .video-item__info * {
+        color: var(--color-light);
+      }
+    }
 
     .video-item__preview {
       border-radius: 0;

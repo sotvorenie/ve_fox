@@ -34,7 +34,7 @@ function ChannelMain({ newVideos, popularVideos }: Readonly<Props>) {
                     >
                         {newVideos?.map((video: VideoForList) => (
                             <SwiperSlide key={video.id}>
-                                <VideoItem video={video} isRow={false}/>
+                                <VideoItem video={video} isRow={false} isChannel/>
                             </SwiperSlide>
                         ))}
                     </Swiper>
@@ -69,7 +69,7 @@ function ChannelMain({ newVideos, popularVideos }: Readonly<Props>) {
                         >
                             {popularVideos?.map((video: VideoForList) => (
                                 <SwiperSlide key={video.id}>
-                                    <VideoItem video={video} isRow={false}/>
+                                    <VideoItem video={video} isRow={false} isChannel/>
                                 </SwiperSlide>
                             ))}
                         </Swiper>

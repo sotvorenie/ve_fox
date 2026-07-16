@@ -273,7 +273,7 @@ svg * {
   overflow: hidden;
   user-select: none;
 }
-.img-container img {
+.img-container img, .img-container video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -404,7 +404,7 @@ h4, .h4 {
 }
 
 h5, .h5 {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
 }
 
 h6, .h6 {
@@ -1631,20 +1631,33 @@ input, textarea {
 
 .channel__banner {
   width: 100%;
-  height: 18.75rem;
-  background: var(--color-accent);
-  border-radius: var(--radius-big);
+  height: 20rem;
+  border-radius: var(--radius-medium);
   margin-bottom: 1.25rem;
+}
+.channel__banner > video {
+  width: calc(100% - 24.375rem);
+}
+.channel__active-video {
+  width: 25rem !important;
+  background: var(--color-dark);
+  border: var(--border-light-alt);
+}
+.channel__active-video a {
+  height: 100%;
+}
+.channel__active-video img {
+  object-fit: contain !important;
 }
 .channel__info {
   column-gap: 1.25rem;
   margin-bottom: 1.875rem;
 }
 .channel__avatar {
-  width: 7.5rem;
-  height: 7.5rem;
-  min-height: 7.5rem;
-  min-width: 7.5rem;
+  width: 6.25rem;
+  height: 6.25rem;
+  min-height: 6.25rem;
+  min-width: 6.25rem;
   border-radius: 50%;
   background: var(--color-light-alt);
 }
@@ -1718,16 +1731,28 @@ input, textarea {
   border-radius: var(--radius-medium);
 }
 @media (any-hover: hover) {
-  .video-item:hover {
+  .video-item:hover.hover-opacity {
     background: rgba(254, 121, 113, 0.5019607843);
+  }
+  .video-item:hover:not(.hover-opacity) {
+    background: var(--color-accent);
+  }
+  .video-item:hover:not(.hover-opacity) .video-item__info * {
+    color: var(--color-light);
   }
   .video-item:hover .video-item__preview {
     border-radius: 0;
   }
 }
 @media (any-hover: none) {
-  .video-item:active {
+  .video-item:active.hover-opacity {
     background: rgba(254, 121, 113, 0.5019607843);
+  }
+  .video-item:active:not(.hover-opacity) {
+    background: var(--color-accent);
+  }
+  .video-item:active:not(.hover-opacity) .video-item__info * {
+    color: var(--color-light);
   }
   .video-item:active .video-item__preview {
     border-radius: 0;
