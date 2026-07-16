@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 
 import {BASE_URL} from "@api/url";
 
-import {apiSaveTime} from "@api/save_time/saveTime";
+import {apiDeleteSavedTime, apiSaveTime} from "@api/save_time/saveTime";
 
 import VideoPlayerSettings from "@video/video-player/VideoPlayerSettings.tsx";
 import VideoPlayerControls, {ControlsHandles} from "@video/video-player/VideoPlayerControls.tsx";
@@ -138,7 +138,19 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
 
             return () => {
                 if (saveTimeTimer.current) clearTimeout(saveTimeTimer.current)
-                if (video.id >= 0) apiSaveTime(video.id, usePlayerStore.getState().currentTime).then()
+                if (video.id >= 0) {
+                    const duration = +usePlayerStore.getState().duration
+                    const currentTime = +usePlayerStore.getState().currentTime
+
+                    const differenceTime = duration - currentTime
+                    const threshold = Math.max(duration * 0.07, 30)
+                    const isFinished = differenceTime < threshold
+                    if (isFinished) {
+                        apiDeleteSavedTime(video.id).then()
+                    } else {
+                        apiSaveTime(video.id, currentTime).then()
+                    }
+                }
             }
         }
     }, [video.id])

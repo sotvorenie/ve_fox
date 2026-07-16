@@ -3,7 +3,7 @@ import {Routes, Route, Navigate, useLocation, useNavigate} from "react-router-do
 import { listen } from '@tauri-apps/api/event';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 
-import {apiSaveTime} from "@api/save_time/saveTime.ts";
+import {apiDeleteSavedTime, apiSaveTime} from "@api/save_time/saveTime.ts";
 import {apiGetUserRouterMap, apiSetUserRouterMap} from "@api/user/user.ts";
 
 import {showConfirm} from "@utils/modals.ts";
@@ -99,9 +99,18 @@ function App() {
                 )
                 if (check) {
                     const video = useVideoStore.getState().video
-                    const currentTime = usePlayerStore.getState().currentTime
+                    const currentTime = +usePlayerStore.getState().currentTime
                     if (video && video.id > 0 && useUserStore.getState().isLogged) {
-                        await apiSaveTime(video.id, currentTime)
+                        const duration = +usePlayerStore.getState().duration
+
+                        const differenceTime = duration - currentTime
+                        const threshold = Math.max(duration * 0.07, 30)
+                        const isFinished = differenceTime < threshold
+                        if (isFinished) {
+                            await apiDeleteSavedTime(video.id).then()
+                        } else {
+                            await apiSaveTime(video.id, currentTime).then()
+                        }
                     }
 
                     let routerForSave = useRouterMapStore.getState().routerMap.slice(0, useRouterMapStore.getState().currentIndex + 1)
