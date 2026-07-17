@@ -1,4 +1,4 @@
-export const formatVideoDate = (date: string) => {
+export const formatDateAgo = (date: string) => {
     const oldDate = new Date(date);
     const nowDate = new Date()
 
@@ -17,5 +17,6 @@ export const formatVideoDate = (date: string) => {
     if (days < 1) return `${hours} ч назад`;
     if (days < 30) return `${days} дн назад`;
     if (days < 365) return `${months} мес назад`;
-    return `${years} г назад`;
+    if (years < 5)return `${years} г назад`;
+    return `${years} лет назад`;
 }

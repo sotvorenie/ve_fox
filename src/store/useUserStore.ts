@@ -22,7 +22,8 @@ const emptyUser: User = {
     id: -1,
     name: '',
     avatar_url: '',
-    router_map: []
+    router_map: [],
+    search_history: [],
 }
 
 export const useUserStore = create<UserState>((set, get) => ({
@@ -53,7 +54,8 @@ export const useUserStore = create<UserState>((set, get) => ({
                 id: -1,
                 name: '',
                 avatar_url: '',
-                router_map: []
+                router_map: [],
+                search_history: [],
             },
             isLogged: false,
             token: ''

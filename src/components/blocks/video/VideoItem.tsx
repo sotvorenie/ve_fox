@@ -9,7 +9,7 @@ import {BASE_URL} from "@api/url";
 
 import {formatCount} from "@composables/useFormatCount.ts";
 import {formatVideoName} from "@composables/useFormatVideoName";
-import {formatVideoDate} from "@composables/useFormatVideoDate";
+import {formatDateAgo} from "@composables/useFormatDateAgo.ts";
 import {formatVideoTime} from "@composables/useFormatVideoTime";
 
 import VideoMenu from "@video/VideoMenu.tsx";
@@ -132,7 +132,7 @@ function InfoInRow({
                 {!isRecommendation && <div className="video-item__dot"/>}
 
                 <div className={`flex gap-10 ${isRecommendation ? 'flex-align-center' : 'flex-align-center mb-10'}`}>
-                    <span className="video-item__info-item">{formatVideoDate(video.date)}</span>
+                    <span className="video-item__info-item">{formatDateAgo(video.date)}</span>
                     <div className="video-item__dot"/>
                     <span className="video-item__info-item">{video.views} {formatCount(video.views, viewsArr)}</span>
                 </div>
@@ -240,7 +240,7 @@ const VideoItem = forwardRef(({
                                         <div className="video-item__dot"/>
                                     </>
                                 )}
-                                <span className="video-item__info-item">{formatVideoDate(video.date)}</span>
+                                <span className="video-item__info-item">{formatDateAgo(video.date)}</span>
                                 <div className="video-item__dot"/>
                                 <span className="video-item__info-item">{video.views} {formatCount(video.views, viewsArr)}</span>
                             </div>

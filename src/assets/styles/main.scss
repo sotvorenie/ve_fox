@@ -33,6 +33,8 @@
 @use 'blocks/video/video-page';
 @use 'blocks/video/video';
 @use 'blocks/video/video-player';
+@use 'blocks/video/comments';
+@use 'blocks/video/comment';
 
 @use 'blocks/upload/upload-video';
 @use 'blocks/upload/upload-modal';

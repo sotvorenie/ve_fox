@@ -99,7 +99,7 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
         videoRef.current.volume = volume
 
         const handleKeys = (e: KeyboardEvent) => {
-            if (e.code === 'Space') {
+            if (e.code === 'Space' && !(document.activeElement instanceof HTMLInputElement)) {
                 toggleIsPlaying()
             } else if (e.key === 'f' && !(document.activeElement instanceof HTMLInputElement)) {
                 toggleIsFullscreen()
@@ -158,7 +158,21 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
     useEffect(() => {
         if (!videoRef.current) return
 
-        isPlaying ? videoRef.current.play() : videoRef.current.pause()
+        const videoElement = videoRef.current
+        const playVideo = async () => {
+            try {
+                if (videoElement.paused && isPlaying) {
+                    await videoElement.play()
+                } else if (!videoElement.paused && !isPlaying) {
+                    videoElement.pause()
+                }
+            } catch (err: any) {
+                if (err.name !== 'AbortError') {
+                    console.error("Video playback error:", err)
+                }
+            }
+        }
+        playVideo().then()
 
         setIsShowControls(true)
 

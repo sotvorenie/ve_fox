@@ -1,5 +1,7 @@
 import React, {forwardRef} from "react";
 
+import CrossIcon from "@icons/CrossIcon.tsx";
+
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string
     id: string
@@ -10,6 +12,9 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
     value: string
     setValue: (value:string) => void
     className?: string
+    hasCross?: boolean
+    isTransparent?: boolean
+    placeholder?: string
 }
 
 const InputUi = forwardRef<HTMLInputElement, Props>(({
@@ -22,21 +27,44 @@ const InputUi = forwardRef<HTMLInputElement, Props>(({
     value,
     setValue,
     className,
+    hasCross = false,
+    isTransparent = false,
+    placeholder
 }, ref) => {
+    const handleClear = () => {
+        setValue('')
+    }
+
     return (
-        <label className={`input position-relative ${className}`} htmlFor={id}>
+        <label className={`
+                    input position-relative 
+                    ${hasCross ? 'has-cross' : ''} 
+                    ${isTransparent ? 'is-transparent' : ''}
+                    ${className}
+                `} htmlFor={id}
+        >
             <span className="input__name input__text position-absolute">{title}</span>
 
             <input type="text"
                    className="input__inp w-100"
                    name={name}
                    id={id}
+                   placeholder={placeholder}
                    value={value}
                    onChange={(e) => setValue(e.target.value)}
                    maxLength={maxLength}
                    minLength={minLength}
                    ref={ref}
             />
+
+            {hasCross && !!(value?.length) && (
+                <button type="button"
+                        className="input__clear button-width-svg radius-50 hover-color-accent recolor-svg flex-center"
+                        onClick={handleClear}
+                >
+                    <CrossIcon/>
+                </button>
+            )}
 
             {visibleCounter && (
                 <span className="input__counter input__text position-absolute">

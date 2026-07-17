@@ -5,16 +5,17 @@ import {viewsArr} from "@data/countArrays.ts";
 
 import {BASE_URL} from "@api/url";
 import {apiLike} from "@api/like/like";
+import {apiDeleteFromWatchLater, apiSetWatchLater} from "@api/watch_later/watchLater.ts";
 
 import {formatCount} from "@composables/useFormatCount.ts";
-import {formatVideoDate} from "@composables/useFormatVideoDate.ts";
+import {formatDateAgo} from "@composables/useFormatDateAgo.ts";
 
 import VideoPlayer from "@video/video-player/VideoPlayer";
+import Comments from "@video/comments/Comments.tsx";
 
 import LikeIcon from "@icons/LikeIcon";
 
 import {useVideoStore} from "@store/useVideoStore";
-import {apiDeleteFromWatchLater, apiSetWatchLater} from "@api/watch_later/watchLater.ts";
 
 interface Props {
     isLiked: boolean
@@ -61,9 +62,9 @@ function VideoMain({isLiked, setIsLiked, isWatchLater, setIsWatchLater, savedTim
         <div className="video">
             <VideoPlayer savedTime={savedTime}/>
 
-            <p className="video__title h5 one-line mb-20">{video?.name}</p>
+            <p className="video__title text-w700 one-line mb-20">{video?.name}</p>
 
-            <div className="video__actions flex flex-align-center">
+            <div className="video__actions flex flex-align-center mb-30">
                 <Link to={`/channel/${video.channel.id}`}
                       state={{
                           channel: {
@@ -106,9 +107,11 @@ function VideoMain({isLiked, setIsLiked, isWatchLater, setIsWatchLater, savedTim
                 <div className="video__info flex flex-align-center gap-10">
                     <span>{video.views} {formatCount(video.views, viewsArr)}</span>
                     <div className="video-item__dot"/>
-                    <span>{formatVideoDate(video.date)}</span>
+                    <span>{formatDateAgo(video.date)}</span>
                 </div>
             </div>
+
+            <Comments/>
         </div>
     )
 }
