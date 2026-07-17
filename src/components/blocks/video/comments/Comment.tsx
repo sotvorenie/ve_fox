@@ -26,6 +26,7 @@ function Comment({initialComment, deleteComment}: Readonly<Props>) {
     const [comment, setComment] = useState<CommentForListResponse>(initialComment)
     const [isRedact, setIsRedact] = useState<boolean>(false)
     const [newText, setNewText] = useState<string>('')
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const clear = () => {
         setIsRedact(false)
@@ -39,16 +40,20 @@ function Comment({initialComment, deleteComment}: Readonly<Props>) {
 
     const saveRedact = async () => {
         try {
+            setIsLoading(true)
             const response: CommentForListResponse = await apiEditComment(comment.id, newText)
             if (response) setComment(response)
             clear()
         } catch (err) {
             console.error(err)
+        } finally {
+            setIsLoading(false)
         }
     }
 
     const handleLike = async () => {
         try {
+            setIsLoading(true)
             const response: LikeResponse = await apiLikeComment(comment.id)
             if (response) setComment(prev => ({
                 ...prev,
@@ -57,6 +62,8 @@ function Comment({initialComment, deleteComment}: Readonly<Props>) {
             }))
         } catch (err) {
             console.error(err)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -100,6 +107,7 @@ function Comment({initialComment, deleteComment}: Readonly<Props>) {
                                         type="button"
                                         title={comment.is_liked ? 'Убрать оценку' : 'Оценить комментарий'}
                                         onClick={handleLike}
+                                        disabled={isLoading}
                                 >
                                     <LikeIcon/>
                                     {comment.likes > 0 && <span>{comment.likes}</span>}
@@ -109,7 +117,7 @@ function Comment({initialComment, deleteComment}: Readonly<Props>) {
                         )}
                     </div>
 
-                    {comment.user.id === user.id && (
+                    {comment.user.id === user.id && !isLoading && (
                         <CommentMenu handleRedact={handleRedact}
                                      deleteComment={() => deleteComment(comment.id)}
                         />
