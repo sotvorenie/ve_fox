@@ -85,7 +85,7 @@ function Comment({initialComment, deleteComment}: Readonly<Props>) {
 
                             <div className="comment__date flex">
                                 <span className="comment__info">{formatDateAgo(comment.date)}</span>
-                                {comment.is_redact && <span className="comment__info">(изменено)</span>}
+                                {comment.is_redacted && <span className="comment__info">(изменено)</span>}
                             </div>
                         </div>
 

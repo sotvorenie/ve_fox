@@ -1,4 +1,4 @@
-import { CommentsListResponse, CommentBaseResponse } from "@/types/comment";
+import {CommentsListResponse, CommentForListResponse} from "@/types/comment";
 import {SuccessResponse} from "@/types/success.ts";
 import {LikeResponse} from "@/types/like.ts";
 
@@ -25,14 +25,14 @@ export const apiAddNewComment = (
     videoId: number,
     text: string,
     parentId?: number
-): Promise<CommentBaseResponse> => {
+): Promise<CommentForListResponse> => {
     return apiPost(`/comment/add/${videoId}`, { text, parent_id: parentId })
 }
 
 export const apiEditComment = (
     commentId: number,
     text: string
-): Promise<CommentBaseResponse> => {
+): Promise<CommentForListResponse> => {
     return apiPatch(`/comment/redact/${commentId}`, { text })
 }
 

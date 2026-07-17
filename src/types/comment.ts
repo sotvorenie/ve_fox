@@ -5,7 +5,7 @@ export interface CommentBaseResponse {
     id: number
     text: string
     date: string
-    is_redact: boolean
+    is_redacted: boolean
     is_liked: boolean
     likes: number
     user: UserBase
