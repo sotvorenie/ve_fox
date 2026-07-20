@@ -10,8 +10,8 @@ import {apiDeleteFromWatchLater, apiSetWatchLater} from "@api/watch_later/watchL
 import {formatCount} from "@composables/useFormatCount.ts";
 import {formatDateAgo} from "@composables/useFormatDateAgo.ts";
 
-import VideoPlayer from "@video/video-player/VideoPlayer";
 import Comments from "@video/comments/Comments.tsx";
+import VideoIntersect from "@video/VideoIntersect.tsx";
 
 import LikeIcon from "@icons/LikeIcon";
 
@@ -60,7 +60,7 @@ function VideoMain({isLiked, setIsLiked, isWatchLater, setIsWatchLater, savedTim
 
     return (
         <div className="video">
-            <VideoPlayer savedTime={savedTime}/>
+            <VideoIntersect savedTime={savedTime}/>
 
             <p className="video__title text-w700 one-line mb-20">{video?.name}</p>
 

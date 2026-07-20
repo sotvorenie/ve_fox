@@ -2043,6 +2043,24 @@ input, textarea {
   padding: 0.9375rem 1.875rem;
   border-radius: var(--radius-medium);
 }
+.video__intersect {
+  aspect-ratio: 16/9;
+}
+.video__intersect:has(.is-fullscreen) {
+  position: fixed;
+  inset: 0;
+  z-index: 1000000;
+}
+.video__intersect.mini-player .video__intersect_wrapper:not(:has(.is-fullscreen)) {
+  position: fixed;
+  width: 31.25rem;
+}
+.video__intersect.mini-player .video-player__play-btn {
+  width: 2.625rem;
+  height: 2.625rem;
+  min-height: 2.625rem;
+  min-width: 2.625rem;
+}
 
 .video-player {
   aspect-ratio: 16/9;
@@ -2090,10 +2108,13 @@ input, textarea {
   }
 }
 .video-player__play-btn {
+  width: 6.25rem;
+  height: 6.25rem;
+  min-height: 6.25rem;
+  min-width: 6.25rem;
   color: var(--color-accent);
-  width: max(5vw, 3.25rem);
-  height: max(5vw, 3.25rem);
   opacity: 0;
+  cursor: pointer !important;
 }
 .video-player__play-btn.is-active {
   opacity: 1;

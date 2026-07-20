@@ -26,6 +26,7 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
         isShowControls,
         isFullscreen,
         duration,
+        isMiniPlayer,
     } = usePlayerStore();
     const {
         setIsPlaying,
@@ -277,9 +278,11 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
                  onMouseLeave={hideControllers}
                  onMouseEnter={showControllers}
         >
-            <button className="video-player__hidden position-absolute inset-0 z-100 cursor-pointer"
-                    onClick={toggleIsPlaying}
-            />
+            {!isMiniPlayer && (
+                <button className="video-player__hidden position-absolute inset-0 z-100 cursor-pointer"
+                        onClick={toggleIsPlaying}
+                />
+            )}
 
             {/*eslint-disable jsx-a11y/media-has-caption*/}
             <video src={`${BASE_URL}${video?.video_url}`}
@@ -301,7 +304,7 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
                 )}
             </video>
 
-            <VideoPlayerSettings isShowSettings={isShowSettings}/>
+            {!isMiniPlayer && <VideoPlayerSettings isShowSettings={isShowSettings}/>}
 
             <VideoPlayerControls setIsShowSettings={setIsShowSettings}
                                  progress={progress}

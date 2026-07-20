@@ -9,6 +9,8 @@ interface PlayerState {
     duration: number
     currentTime: number
     isFullscreen: boolean
+    isMiniPlayer: boolean
+    isMoving: boolean
 
     setIsPlaying: (value: boolean) => void
     toggleIsPlaying: () => void
@@ -20,6 +22,8 @@ interface PlayerState {
     setIsShowControls: (value: boolean) => void
     setIsFullscreen: (value: boolean) => void
     toggleIsFullscreen: () => void
+    setIsMiniPlayer: (value: boolean) => void
+    setIsMoving: (value: boolean) => void
 
     clearData: () => void
 }
@@ -33,9 +37,11 @@ export const usePlayerStore = create<PlayerState>((set) => ({
     duration: 0,
     currentTime: 0,
     isFullscreen: false,
+    isMiniPlayer: false,
+    isMoving: false,
 
     setIsPlaying: (value: boolean) => set({isPlaying: value}),
-    toggleIsPlaying: () => set((state) => ({ isPlaying: !state.isPlaying })),
+    toggleIsPlaying: () => set((state) => ({isPlaying: !state.isPlaying})),
     setVolume: (volume: number) => set({volume: volume}),
     setOldVolume: (volume: number) => set({oldVolume: volume}),
     setDuration: (duration: number) => set({duration: duration}),
@@ -52,4 +58,6 @@ export const usePlayerStore = create<PlayerState>((set) => ({
             isShowSettings: false
         })
     },
+    setIsMiniPlayer: (value: boolean) => set({isMiniPlayer: value}),
+    setIsMoving: (value: boolean) => set({isMoving: value}),
 }))

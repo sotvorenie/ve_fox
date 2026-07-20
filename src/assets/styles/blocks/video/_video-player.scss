@@ -47,10 +47,11 @@
   }
 
   &__play-btn {
+    @include square(100);
+
     color: var(--color-accent);
-    width: max(5vw, #{rem(52)});
-    height: max(5vw, #{rem(52)});
     opacity: 0;
+    cursor: pointer !important;
 
     &.is-active {
       opacity: 1;

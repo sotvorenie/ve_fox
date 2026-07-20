@@ -1,13 +1,13 @@
 import { motion } from "framer-motion";
 
 interface Props {
-    readonly className?: string;
-    readonly title?: string;
-    readonly isPlaying: boolean;
-    readonly setIsPlaying: (isPlaying: boolean) => void;
+    className?: string
+    title?: string
+    isPlaying: boolean
+    setIsPlaying: (isPlaying: boolean) => void
 }
 
-function PlayerButton({ className, title, isPlaying, setIsPlaying }: Props) {
+function PlayerButton({ className, title, isPlaying, setIsPlaying }: Readonly<Props>) {
     const pausePath = "M6,5 L9.5,5 L9.5,19 L6,19 Z M14.5,5 L18,5 L18,19 L14.5,19 Z";
     const playPath = "M8.5,5 L14,8.5 L14,15.5 L8.5,19 Z M14,8.5 L19.5,12 L19.5,12 L14,15.5 Z";
 
