@@ -67,7 +67,8 @@ export const useCommentsStore = create<CommentsState>((set, get) => ({
 
             const response = await apiGetVideoComments(
                 video.id,
-                setLoading ? get().page + 1 : 1, 21,
+                get().page + 1,
+                21,
                 !get().isPopular
             )
             if (response?.comments) set((state) => ({
