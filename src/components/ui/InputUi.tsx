@@ -29,7 +29,8 @@ const InputUi = forwardRef<HTMLInputElement, Props>(({
     className,
     hasCross = false,
     isTransparent = false,
-    placeholder
+    placeholder,
+    ...rest
 }, ref) => {
     const handleClear = () => {
         setValue('')
@@ -55,6 +56,7 @@ const InputUi = forwardRef<HTMLInputElement, Props>(({
                    maxLength={maxLength}
                    minLength={minLength}
                    ref={ref}
+                   {...rest}
             />
 
             {hasCross && !!(value?.length) && (

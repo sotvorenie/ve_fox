@@ -109,7 +109,7 @@ html {
   Плавный скролл
  */
 html,
-:has(:target) {
+:has(:target) * {
   scroll-behavior: smooth;
 }
 
@@ -2280,6 +2280,9 @@ input, textarea {
   display: none;
 }
 
+.comments {
+  padding-bottom: 1.25rem;
+}
 .comments .button {
   padding: 0.625rem;
 }
@@ -2387,6 +2390,7 @@ input, textarea {
 }
 .comment__menu-block:not(.is-active) {
   transform: translateX(10px);
+  pointer-events: none;
 }
 .comment__menu-btn {
   padding: 0.625rem;
@@ -2397,6 +2401,23 @@ input, textarea {
   height: 1.5rem;
   min-height: 1.5rem;
   min-width: 1.5rem;
+}
+.comment__answer-count {
+  gap: 0.3125rem;
+  margin-top: 0.625rem;
+}
+.comment__answer-count:not(.is-active) svg {
+  rotate: 180deg;
+}
+.comment__answer-count svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  min-height: 1.25rem;
+  min-width: 1.25rem;
+  margin-left: 0.1875rem;
+}
+.comment__input {
+  margin-block: 0.9375rem;
 }
 
 .upload-video {

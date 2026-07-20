@@ -1,6 +1,7 @@
-import {useState} from "react";
+import {forwardRef, useState} from "react";
 
 import {CommentForListResponse} from "@/types/comment.ts";
+import {LikeResponse} from "@/types/like.ts";
 
 import {BASE_URL} from "@api/url.ts";
 import {apiEditComment, apiLikeComment} from "@api/comment/comment.ts";
@@ -9,24 +10,31 @@ import {formatDateAgo} from "@composables/useFormatDateAgo.ts";
 
 import CommentMenu from "@video/comments/CommentMenu.tsx";
 import CommentsInput from "@video/comments/CommentsInput.tsx";
+import CommentAnswer from "@video/comments/CommentAnswer.tsx";
 
 import LikeIcon from "@icons/LikeIcon.tsx";
 
 import {useUserStore} from "@store/useUserStore.ts";
-import {LikeResponse} from "@/types/like.ts";
 
 interface Props {
     initialComment: CommentForListResponse
     deleteComment: (id: number) => Promise<void>
+    answerLevel?: number
 }
 
-function Comment({initialComment, deleteComment}: Readonly<Props>) {
+const Comment = forwardRef<HTMLLIElement, Props>(({
+    initialComment,
+    deleteComment,
+    answerLevel = 1
+}, ref) => {
     const {user} = useUserStore()
 
     const [comment, setComment] = useState<CommentForListResponse>(initialComment)
+
     const [isRedact, setIsRedact] = useState<boolean>(false)
     const [newText, setNewText] = useState<string>('')
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isVisibleInputAnswer, setIsVisibleInputAnswer] = useState<boolean>(false)
 
     const clear = () => {
         setIsRedact(false)
@@ -68,7 +76,7 @@ function Comment({initialComment, deleteComment}: Readonly<Props>) {
     }
 
     return (
-        <li className="comments__item comment flex gap-10 mb-20 position-relative">
+        <li className="comments__item comment flex gap-10 mb-15 position-relative" ref={ref}>
             <div className="comment__avatar img-container radius-50">
                 <img src={`${BASE_URL}${comment.user?.avatar_url}`} alt={comment.user?.name}/>
             </div>
@@ -82,11 +90,12 @@ function Comment({initialComment, deleteComment}: Readonly<Props>) {
                                    setIsRedact(false)
                                }}
                                hideButton={false}
+                               isLoading={isLoading}
                                ref={(element) => element?.focus()}
                 />
             ) : (
                 <>
-                    <div className="comment__right">
+                    <div className="comment__right w-100">
                         <div className="comment__head flex gap-10 flex-align-center line-height-1 fs-14">
                             <span className="comment__name text-w700">{comment.user.name}</span>
 
@@ -99,7 +108,7 @@ function Comment({initialComment, deleteComment}: Readonly<Props>) {
                         <p className="comment__text fs-16">{comment.text}</p>
 
                         {comment.user.id !== user.id && (
-                            <div className="comment__actions flex flex-align-center gap-20 line-height-1">
+                            <div className="comment__actions flex flex-align-center gap-20 line-height-1 mb-15">
                                 <button className={`
                                             comment__like recolor-svg button-width-svg hover-color-accent flex flex-align-center fs-14
                                             ${comment.is_liked ? 'is-liked' : ''}
@@ -112,9 +121,23 @@ function Comment({initialComment, deleteComment}: Readonly<Props>) {
                                     <LikeIcon/>
                                     {comment.likes > 0 && <span>{comment.likes}</span>}
                                 </button>
-                                <button className="text-w500 fs-14 hover-color-accent" type="button">Ответить</button>
+
+                                {answerLevel <= 5 && (
+                                    <button className="text-w500 fs-14 hover-color-accent"
+                                            type="button"
+                                            onClick={() => setIsVisibleInputAnswer(true)}
+                                    >
+                                        Ответить
+                                    </button>
+                                )}
                             </div>
                         )}
+
+                        <CommentAnswer comment={comment}
+                                       isVisibleInputAnswer={isVisibleInputAnswer}
+                                       setIsVisibleInputAnswer={setIsVisibleInputAnswer}
+                                       answerLevel={answerLevel}
+                        />
                     </div>
 
                     {comment.user.id === user.id && !isLoading && (
@@ -126,6 +149,6 @@ function Comment({initialComment, deleteComment}: Readonly<Props>) {
             )}
         </li>
     )
-}
+})
 
 export default Comment;

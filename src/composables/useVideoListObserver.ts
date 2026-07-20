@@ -8,7 +8,6 @@ export const videoListObserver = (fetchData: () => Promise<void>, hasMore: boole
 
         observer.current = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting && hasMore && !isLoading) {
-                console.log('долистали')
                 fetchData().then()
             }
         })

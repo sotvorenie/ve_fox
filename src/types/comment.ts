@@ -18,3 +18,7 @@ export interface CommentForListResponse extends CommentBaseResponse {
 export interface CommentsListResponse extends Meta {
     comments: CommentForListResponse[]
 }
+
+export interface CommentDeletedCount {
+    deleted_count: number
+}

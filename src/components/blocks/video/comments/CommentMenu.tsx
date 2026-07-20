@@ -52,10 +52,10 @@ function CommentMenu({handleRedact, deleteComment}: Readonly<Props>) {
         <div className="comment__menu position-absolute right-0">
             <button
                 className="comment__menu-open button-width-svg recolor-svg hover-color-accent flex-center"
-                type="buton"
-                title="Действия с комментарием"
+                title={menuIsOpen ? 'Закрыть' : 'Действия с комментарием'}
                 onClick={() => setMenuIsOpen(prev => !prev)}
                 ref={openMenuBtnRef}
+                type="button"
             >
                 <EllipsisIcon/>
             </button>

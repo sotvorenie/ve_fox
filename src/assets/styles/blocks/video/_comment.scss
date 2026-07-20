@@ -58,6 +58,7 @@
 
       &:not(.is-active) {
         transform: translateX(10px);
+        pointer-events: none;
       }
     }
 
@@ -69,5 +70,24 @@
         @include square(24);
       }
     }
+  }
+
+  &__answer-count {
+    gap: rem(5);
+    margin-top: rem(10);
+
+    &:not(.is-active) svg {
+      rotate: 180deg;
+    }
+
+    svg {
+      @include square(20);
+
+      margin-left: rem(3);
+    }
+  }
+
+  &__input {
+    margin-block: rem(15);
   }
 }

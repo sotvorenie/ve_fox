@@ -100,6 +100,7 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
 
         const handleKeys = (e: KeyboardEvent) => {
             if (e.code === 'Space' && !(document.activeElement instanceof HTMLInputElement)) {
+                e.preventDefault()
                 toggleIsPlaying()
             } else if (e.key === 'f' && !(document.activeElement instanceof HTMLInputElement)) {
                 toggleIsFullscreen()

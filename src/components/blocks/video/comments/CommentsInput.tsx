@@ -1,4 +1,4 @@
-import {forwardRef} from "react";
+import {forwardRef, RefObject, KeyboardEvent} from "react";
 
 import InputUi from "@ui/InputUi.tsx";
 import ButtonUi from "@ui/ButtonUi.tsx";
@@ -8,6 +8,7 @@ interface Props {
     setCommentText: (commentText: string) => void
     addNewComment: () => Promise<void>
     cancel: () => void
+    isLoading: boolean
     hideButton?: boolean
 }
 
@@ -16,8 +17,14 @@ const CommentsInput = forwardRef<HTMLInputElement, Props>(({
     setCommentText,
     addNewComment,
     cancel,
+    isLoading,
     hideButton = true,
-}, inputRef) => {
+}, ref) => {
+    const inputRef = ref as RefObject<HTMLInputElement | null>
+
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') if (commentText?.trim() && !isLoading) addNewComment().then()
+    }
 
     return (
         <>
@@ -33,12 +40,13 @@ const CommentsInput = forwardRef<HTMLInputElement, Props>(({
                      hasCross
                      isTransparent
                      ref={inputRef}
+                     onKeyDown={handleKeyDown}
             />
 
             <div className={`comments__btn-bar row gap-10 ${commentText?.length || !hideButton ? 'is-active' : ''}`}>
                 <ButtonUi func={addNewComment}
                           className="comments__btn col-6 is-small"
-                          isDisabled={!commentText}
+                          isDisabled={!commentText || isLoading}
                 >
                     Отправить
                 </ButtonUi>
@@ -47,6 +55,7 @@ const CommentsInput = forwardRef<HTMLInputElement, Props>(({
                               inputRef.current?.blur()
                           }}
                           className="comments__btn col-6"
+                          isDisabled={isLoading}
                 >
                     Отмена
                 </ButtonUi>

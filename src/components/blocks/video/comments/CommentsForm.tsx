@@ -5,15 +5,18 @@ import {BASE_URL} from "@api/url.ts";
 import CommentsInput from "@video/comments/CommentsInput.tsx";
 
 import {useUserStore} from "@store/useUserStore.ts";
+import {useCommentsStore} from "@store/useCommentsStore.ts";
 
-interface Props {
-    commentText: string
-    setCommentText: (text: string) => void
-    addNewComment: () => Promise<void>
-}
-
-function CommentsForm({commentText, setCommentText, addNewComment}: Readonly<Props>) {
+function CommentsForm() {
     const {user} = useUserStore()
+    const {
+        commentText,
+        isLoading,
+    } = useCommentsStore()
+    const {
+        setCommentText,
+        addNewComment,
+    } = useCommentsStore()
 
     const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -27,6 +30,7 @@ function CommentsForm({commentText, setCommentText, addNewComment}: Readonly<Pro
                            setCommentText={setCommentText}
                            addNewComment={addNewComment}
                            cancel={() => setCommentText("")}
+                           isLoading={isLoading}
                            ref={inputRef}
             />
         </div>
