@@ -25,7 +25,7 @@ interface CommentsState {
     setIsPopular: (isPopular: boolean) => void
     setCommentText: (text: string) => void
 
-    clear: () => void
+    clear: (setLoading?: boolean) => void
 
     getComments: (setLoading?: boolean) => Promise<void>
     addNewComment: () => Promise<void>
@@ -51,13 +51,13 @@ export const useCommentsStore = create<CommentsState>((set, get) => ({
     setIsPopular: (isPopular: boolean) => set({isPopular: isPopular}),
     setCommentText: (text: string) => set({commentText: text}),
 
-    clear: () => set({
+    clear: (setLoading = true) => set((state) => ({
         comments: [],
-        isLoading: true,
+        isLoading: setLoading,
         commentText: '',
         page: 0,
-        isPopular: false,
-    }),
+        isPopular: setLoading ? false : state.isPopular,
+    })),
 
     getComments: async (setLoading = true) => {
         const {video} = useVideoStore.getState()
@@ -67,7 +67,7 @@ export const useCommentsStore = create<CommentsState>((set, get) => ({
 
             const response = await apiGetVideoComments(
                 video.id,
-                setLoading ? get().page + 1 : get().page, 21,
+                setLoading ? get().page + 1 : 1, 21,
                 !get().isPopular
             )
             if (response?.comments) set((state) => ({

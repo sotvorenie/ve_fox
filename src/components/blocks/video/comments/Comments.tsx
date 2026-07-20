@@ -42,6 +42,7 @@ function Comments() {
 
     useEffect(() => {
         if (video.id < 0) return
+        clear(false)
         getComments(false).then()
     }, [isPopular])
 
