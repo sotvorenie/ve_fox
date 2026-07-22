@@ -54,8 +54,6 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
     const cursorTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
     const saveTimeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-    const isPlayingRef = useRef(isPlaying)
-
     // при загрузке метаданных видео
     const loadedMetadata = () => {
         if (!videoRef.current) return
@@ -129,7 +127,7 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
             if (saveTimeTimer.current) clearTimeout(saveTimeTimer.current)
 
             saveTimeTimer.current = setInterval(() => {
-                if (isPlayingRef.current && isLogged) {
+                if (usePlayerStore.getState().isPlaying && isLogged) {
                     apiSaveTime(video.id, videoRef.current!.currentTime).then()
                 }
             }, timerTime)
@@ -252,10 +250,6 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
 
         videoRef.current.volume = volume
     }, [volume])
-
-    useEffect(() => {
-        isPlayingRef.current = isPlaying
-    }, [isPlaying])
 
     useEffect(() => {
         if (videoRef.current) {
