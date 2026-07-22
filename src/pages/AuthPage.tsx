@@ -8,10 +8,10 @@ import {apiAuth, apiRegister} from "@api/auth/auth";
 import {onSubmit, onBlur, onInput} from "@composables/useFormValidation";
 import {showWarning} from "@utils/modals";
 
-import LoadingIcon from "@icons/LoadingIcon";
+import InputUi from "@ui/InputUi.tsx";
+import ButtonUi from "@ui/ButtonUi.tsx";
 
 import {useUserStore} from "@store/useUserStore";
-import InputUi from "@ui/InputUi.tsx";
 
 function AuthPage() {
     const navigate = useNavigate();
@@ -140,18 +140,17 @@ function AuthPage() {
                     />
                 )}
 
-                <button className="auth__submit hover-color-accent flex-center recolor-svg"
-                        type="submit"
-                        disabled={isLoading}
+                <ButtonUi func={() => {}}
+                          isSubmit
+                          isLoading={isLoading}
+                          className="mb-20"
                 >
-                    {isLoading ? (<LoadingIcon/>) : buttonText}
-                </button>
+                    {buttonText}
+                </ButtonUi>
 
-                <button className="auth__submit hover-color-accent"
-                        type="button"
-                        onClick={goWithoutLogin}
-                >Войти как Гость
-                </button>
+                <ButtonUi func={goWithoutLogin}>
+                    Войти как Гость
+                </ButtonUi>
             </form>
 
         </div>

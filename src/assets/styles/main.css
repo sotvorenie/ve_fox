@@ -1436,18 +1436,6 @@ input, textarea {
 .auth__form {
   width: min(50vw, 25rem);
 }
-.auth__error {
-  bottom: 0.625rem;
-  left: 0.625rem;
-  color: var(--color-accent);
-}
-.auth__submit {
-  border: 1px solid var(--color-light);
-  padding: 0.625rem;
-  font-size: 1.25rem;
-  border-radius: var(--radius-medium);
-  margin-top: 1.25rem;
-}
 
 .header {
   width: 100%;
