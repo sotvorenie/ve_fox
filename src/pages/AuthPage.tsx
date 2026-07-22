@@ -11,6 +11,7 @@ import {showWarning} from "@utils/modals";
 import LoadingIcon from "@icons/LoadingIcon";
 
 import {useUserStore} from "@store/useUserStore";
+import InputUi from "@ui/InputUi.tsx";
 
 function AuthPage() {
     const navigate = useNavigate();
@@ -91,72 +92,52 @@ function AuthPage() {
                       submit(e).then(() => {})
                   }}
             >
-                <label htmlFor="login" className="auth__label position-relative">
-                    <span className="visually-hidden">Логин</span>
-                    <input type="text"
-                           id="login"
-                           className="auth__input input w-100"
-                           placeholder="Логин"
-                           required
-                           aria-describedby="login-error"
-                           value={login}
-                           onChange={(e) => setLogin(e.target.value)}
-                           autoComplete="username"
-                           onBlur={(e) => onBlur(e.nativeEvent)}
-                           onInput={(e) => onInput(e.nativeEvent)}
-                           minLength={4}
-                           maxLength={15}
-                           readOnly={isLoading}
-                    />
-                    <span className="auth__error fields_error position-absolute"
-                          id="login-error"
-                          data-js-form-field-errors=""
-                    />
-                </label>
-                <label htmlFor="password" className="auth__label position-relative">
-                    <span className="visually-hidden">Пароль</span>
-                    <input type="text"
-                           id="password"
-                           className="auth__input input w-100"
-                           placeholder="Пароль"
-                           required
-                           aria-describedby="password-error"
-                           value={password}
-                           onChange={(e) => setPassword(e.target.value)}
-                           onBlur={(e) => onBlur(e.nativeEvent)}
-                           onInput={(e) => onInput(e.nativeEvent)}
-                           minLength={4}
-                           maxLength={15}
-                           readOnly={isLoading}
-                    />
-                    <span className="auth__error fields_error position-absolute"
-                          id="password-error"
-                          data-js-form-field-errors=""
-                    />
-                </label>
+                <InputUi name="login"
+                         id="login"
+                         title="Логин"
+                         value={login}
+                         setValue={setLogin}
+                         required
+                         autoComplete="username"
+                         onBlur={(e) => onBlur(e.nativeEvent)}
+                         onInput={(e) => onInput(e.nativeEvent)}
+                         minLength={4}
+                         maxLength={15}
+                         readOnly={isLoading}
+                         className="mb-40"
+                         isDark
+                />
+
+                <InputUi name="password"
+                         id="password"
+                         title="Пароль"
+                         value={password}
+                         setValue={setPassword}
+                         required
+                         onBlur={(e) => onBlur(e.nativeEvent)}
+                         onInput={(e) => onInput(e.nativeEvent)}
+                         minLength={4}
+                         maxLength={15}
+                         readOnly={isLoading}
+                         className="mb-40"
+                         isDark
+                />
 
                 {!isAuth && (
-                    <label htmlFor="name" className="auth__label position-relative">
-                        <span className="visually-hidden">Имя пользователя</span>
-                        <input type="text"
-                               id="name"
-                               className="auth__input input w-100"
-                               placeholder="Имя пользователя"
-                               required={!isAuth}
-                               aria-describedby="name-error"
-                               value={name}
-                               onChange={(e) => setName(e.target.value)}
-                               onBlur={(e) => onBlur(e.nativeEvent)}
-                               onInput={(e) => onInput(e.nativeEvent)}
-                               minLength={4}
-                               maxLength={15}
-                               readOnly={isLoading}
-                        />
-                        <span className="auth__error fields_error position-absolute"
-                              id="name-error"
-                              data-js-form-field-errors=""
-                        />
-                    </label>
+                    <InputUi name="name"
+                             id="name"
+                             title="Имя пользователя"
+                             value={name}
+                             setValue={setName}
+                             required={!isAuth}
+                             onBlur={(e) => onBlur(e.nativeEvent)}
+                             onInput={(e) => onInput(e.nativeEvent)}
+                             minLength={4}
+                             maxLength={15}
+                             readOnly={isLoading}
+                             className="mb-40"
+                             isDark
+                    />
                 )}
 
                 <button className="auth__submit hover-color-accent flex-center recolor-svg"

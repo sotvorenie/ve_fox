@@ -952,6 +952,15 @@ input, textarea {
 .input.has-cross .input__inp {
   padding-right: 3.4375rem;
 }
+.input.is-dark .input__inp {
+  background: var(--color-dark);
+}
+.input.is-dark .input__name, .input.is-dark .input__counter {
+  background: var(--color-dark);
+}
+.input.is-dark .input__error {
+  background: transparent;
+}
 .input.is-transparent .input__inp {
   border-bottom: 1px solid var(--color-dark-alt);
   transition: padding-block var(--transition-duration), border-color var(--transition-duration);
@@ -961,7 +970,6 @@ input, textarea {
   border-color: var(--color-light);
 }
 .input:not(.is-transparent) .input__inp {
-  background: var(--color-dark-alt);
   border-radius: var(--radius-regular);
   border: 1px solid currentColor;
   padding: 0.9375rem;
