@@ -107,12 +107,8 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
                 toggleIsFullscreen()
             } else if (e.code === 'Escape') {
                 setIsRecommendedOpen(prev => {
-                    if (prev) {
-                        return false
-                    } else {
-                        setIsFullscreen(false)
-                        return false
-                    }
+                    if (!prev) setIsFullscreen(false)
+                    return false
                 })
             }
         }
