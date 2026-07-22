@@ -1436,13 +1436,6 @@ input, textarea {
 .auth__form {
   width: min(50vw, 25rem);
 }
-.auth__input {
-  padding: 0.9375rem;
-  border-radius: var(--radius-medium);
-}
-.auth__input:not(:last-child) {
-  margin-bottom: 1.875rem;
-}
 .auth__error {
   bottom: 0.625rem;
   left: 0.625rem;

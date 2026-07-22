@@ -21,15 +21,6 @@
     width: min(50vw, #{rem(400)});
   }
 
-  &__input {
-    padding: rem(15);
-    border-radius: var(--radius-medium);
-
-    &:not(:last-child) {
-      margin-bottom: rem(30);
-    }
-  }
-
   &__error {
     bottom: rem(10);
     left: rem(10);
