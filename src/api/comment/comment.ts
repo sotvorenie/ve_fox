@@ -1,7 +1,7 @@
 import {CommentsListResponse, CommentForListResponse, CommentDeletedCount} from "@/types/comment";
 import {LikeResponse} from "@/types/like.ts";
 
-import { apiGet, apiPost, apiPatch } from "@api/index";
+import { apiGet, apiPost, apiPatch, apiDelete } from "@api/index";
 
 export const apiGetVideoComments = (
     videoId: number,
@@ -36,7 +36,7 @@ export const apiEditComment = (
 }
 
 export const apiDeleteComment = (commentId: number): Promise<CommentDeletedCount> => {
-    return apiPost(`/comment/delete/${commentId}`)
+    return apiDelete(`/comment/delete/${commentId}`)
 }
 
 export const apiLikeComment = (commentId: number): Promise<LikeResponse> => {

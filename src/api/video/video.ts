@@ -16,5 +16,5 @@ export const apiGetRecommendedVideos = (video_id: number, page: number = 1, limi
 }
 
 export const apiGetVideosFromSection = (sectionId: number): Promise<VideosList> => {
-    return apiGet(`/video/all_from_section/${sectionId}`)
+    return apiGet(`/video/section/${sectionId}`)
 }

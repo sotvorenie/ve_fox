@@ -1,11 +1,11 @@
 import {SuccessResponse} from "@/types/success";
 import {UserAvatar, UserRouterMap} from "@/types/user";
 
-import {apiGet, apiPost} from "@api/index";
+import {apiGet, apiPatch, apiPost} from "@api/index";
 
 
 export const apiRedactUserName = (name: string): Promise<SuccessResponse> => {
-    return apiPost('/user/redact_name', {name})
+    return apiPatch('/user/redact_name', {name})
 }
 
 export const apiCheckUserPassword = (password: string): Promise<SuccessResponse> => {
@@ -13,7 +13,7 @@ export const apiCheckUserPassword = (password: string): Promise<SuccessResponse>
 }
 
 export const apiRedactUserPassword = (password: string): Promise<SuccessResponse> => {
-    return apiPost('/user/redact_password', {password})
+    return apiPatch('/user/redact_password', {password})
 }
 
 export const apiRedactUserAvatar = (file: File): Promise<UserAvatar> => {

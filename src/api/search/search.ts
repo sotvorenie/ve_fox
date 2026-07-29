@@ -1,7 +1,7 @@
 import {SearchHistoryResponse, SearchResponse} from "@/types/search";
 import {SuccessResponse} from "@/types/success.ts";
 
-import {apiGet, apiPost} from "@api/index";
+import {apiDelete, apiGet, apiPost} from "@api/index";
 
 export const apiSearch = (title: string, page: number): Promise<SearchResponse> => {
     return apiGet(`/search?value=${title}&page=${page}`)
@@ -18,7 +18,7 @@ export const apiSetSearchHistory = (search: string): Promise<SuccessResponse> =>
 }
 
 export const apiDeleteFromSearchHistory = (search: string): Promise<SuccessResponse> => {
-    return apiPost(`/search/delete_from_history`, {
+    return apiDelete(`/search/delete_from_history`, {
         search
     })
 }
