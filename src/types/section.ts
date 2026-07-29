@@ -1,7 +1,7 @@
 export interface Section {
     id: number
     name: string
-    channel_id: number
+    channelId: number
 }
 
 export interface SectionResponse {

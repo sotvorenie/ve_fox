@@ -4,28 +4,32 @@ import {Meta} from "./meta.ts";
 export interface VideoForList {
     id: number
     name: string
-    date: string
+    createdAt: string
     duration: number
-    video_url: string
-    preview_url: string
-    subtitle_url: string
+    url: string
+    previewUrl: string
     channel: ChannelForList
-    saved_time: number
-    views: number
+    savedTime: number
+    viewsCount: number
 }
 
 export interface Video {
     id: number
     name: string
-    path: string
-    video_url: string
-    date: string
+    url: string
+    createdAt: string
     duration: number
-    preview_url: string
-    subtitle_url: string
+    previewUrl: string
     channel: ChannelForList
-    views: number
-    likes: number
+    viewsCount: number
+    likesCount: number
+}
+
+export interface VideoResponse {
+    video: Video
+    savedTime: number
+    isLiked: boolean
+    isWatchLater: boolean
 }
 
 export interface VideosList extends Meta {

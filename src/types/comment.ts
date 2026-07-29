@@ -5,20 +5,16 @@ export interface CommentBaseResponse {
     id: number
     text: string
     date: string
-    is_redacted: boolean
-    is_liked: boolean
+    isRedacted: boolean
+    isLiked: boolean
     likes: number
     user: UserBase
 }
 
 export interface CommentForListResponse extends CommentBaseResponse {
-    question_comments_count: number
+    questionCommentsCount: number
 }
 
 export interface CommentsListResponse extends Meta {
     comments: CommentForListResponse[]
-}
-
-export interface CommentDeletedCount {
-    deleted_count: number
 }

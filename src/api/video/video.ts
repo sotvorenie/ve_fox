@@ -1,9 +1,9 @@
-import {Video, VideosList} from "@/types/video";
+import {VideoResponse, VideosList} from "@/types/video";
 
 import {apiGet} from "@api/index";
 
 
-export const apiGetVideo = (id: number): Promise<Video> => {
+export const apiGetVideo = (id: number): Promise<VideoResponse> => {
     return apiGet(`/video/${id}`)
 }
 

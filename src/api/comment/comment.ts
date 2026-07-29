@@ -1,5 +1,6 @@
-import {CommentsListResponse, CommentForListResponse, CommentDeletedCount} from "@/types/comment";
+import {CommentsListResponse, CommentForListResponse} from "@/types/comment";
 import {LikeResponse} from "@/types/like.ts";
+import {SuccessResponse} from "@/types/success.ts";
 
 import { apiGet, apiPost, apiPatch, apiDelete } from "@api/index";
 
@@ -35,7 +36,7 @@ export const apiEditComment = (
     return apiPatch(`/comment/redact/${commentId}`, { text })
 }
 
-export const apiDeleteComment = (commentId: number): Promise<CommentDeletedCount> => {
+export const apiDeleteComment = (commentId: number): Promise<SuccessResponse> => {
     return apiDelete(`/comment/delete/${commentId}`)
 }
 

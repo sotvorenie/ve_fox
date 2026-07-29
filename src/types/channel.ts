@@ -1,14 +1,11 @@
 export interface ChannelForList {
     id: number
     name: string
-    avatar_url: string
+    avatarUrl: string
 }
 
-export interface Channel {
-    id: number
-    name: string
+export interface Channel extends ChannelForList {
     path: string
-    avatar_url: string
     date: string
 }
 

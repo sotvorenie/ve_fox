@@ -8,5 +8,5 @@ export interface SearchResponse extends Meta{
 }
 
 export interface SearchHistoryResponse {
-    search_history: string[]
+    searchHistory: string[]
 }

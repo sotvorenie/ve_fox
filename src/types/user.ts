@@ -1,12 +1,12 @@
 export interface UserBase {
     id: number
     name: string
-    avatar_url: string
+    avatarUrl: string
 }
 
 export interface User extends UserBase {
-    router_map: string[]
-    search_history: string[]
+    routerMap: string[]
+    searchHistory: string[]
 }
 
 export interface UserWithToken {
@@ -15,14 +15,14 @@ export interface UserWithToken {
 }
 
 export interface Token {
-    access_token: string
-    token_type: string
+    accessToken: string
+    tokenType: string
 }
 
 export interface UserAvatar {
-    new_avatar_url: string
+    newAvatarUrl: string
 }
 
 export interface UserRouterMap {
-    router_map: string
+    routerMap: string
 }
