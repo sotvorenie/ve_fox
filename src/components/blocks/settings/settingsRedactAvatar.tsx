@@ -58,6 +58,8 @@ function SettingsRedactAvatar({isLoading, setIsLoading}: Readonly<Props>) {
             const response: UserAvatar = await apiUploadUserAvatar(croppedPhoto)
             if (response.newAvatarUrl) updateUser({avatarUrl: response.newAvatarUrl})
 
+            URL.revokeObjectURL(imageUrl)
+            setSelectedFile(null)
         } catch (err) {
             console.error(err)
             await showError(
@@ -65,9 +67,7 @@ function SettingsRedactAvatar({isLoading, setIsLoading}: Readonly<Props>) {
                 'Не удалось загрузить аватар..'
             )
         } finally {
-            URL.revokeObjectURL(imageUrl)
             setIsLoading(false)
-            setSelectedFile(null)
         }
     }
 
