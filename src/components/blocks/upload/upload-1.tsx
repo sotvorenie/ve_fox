@@ -155,7 +155,7 @@ function Upload1({className, activeChannel, setActiveChannel, activeSection, set
                             <p>Выбран канал:</p>
                             <div className="upload-video__changed-channel_right flex flex-align-center">
                                 <div className="upload-video__changed-channel_img-container img-container radius-50">
-                                    <img src={`${BASE_URL}/${activeChannel.avatar_url}`} alt={activeChannel.name}/>
+                                    <img src={`${BASE_URL}${activeChannel.avatarUrl}`} alt={activeChannel.name}/>
                                 </div>
                                 <p>{activeChannel.name}</p>
                             </div>

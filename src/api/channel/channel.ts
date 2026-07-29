@@ -1,11 +1,11 @@
-import {Channel, ChannelsListResponse} from "@/types/channel";
+import {ChannelResponse, ChannelsListResponse} from "@/types/channel";
 import {VideosList} from "@/types/video";
 import {Section, SectionResponse} from "@/types/section";
 import {SuccessResponse} from "@/types/success";
 
 import {apiGet, apiPost} from "@api/index";
 
-export const apiGetChannel = (id: number): Promise<Channel> => {
+export const apiGetChannel = (id: number): Promise<ChannelResponse> => {
     return apiGet(`/channel/${id}`)
 }
 

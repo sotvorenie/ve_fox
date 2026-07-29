@@ -21,9 +21,9 @@ interface UserState {
 const emptyUser: User = {
     id: -1,
     name: '',
-    avatar_url: '',
-    router_map: [],
-    search_history: [],
+    avatarUrl: '',
+    routerMap: [],
+    searchHistory: [],
 }
 
 export const useUserStore = create<UserState>((set, get) => ({
@@ -53,9 +53,9 @@ export const useUserStore = create<UserState>((set, get) => ({
             user: {
                 id: -1,
                 name: '',
-                avatar_url: '',
-                router_map: [],
-                search_history: [],
+                avatarUrl: '',
+                routerMap: [],
+                searchHistory: [],
             },
             isLogged: false,
             token: ''

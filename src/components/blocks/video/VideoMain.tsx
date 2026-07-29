@@ -39,7 +39,7 @@ function VideoMain({isLiked, setIsLiked, isWatchLater, setIsWatchLater, savedTim
         setLikeIsActive(true)
 
         const change = isLiked ? -1 : 1
-        video.likes += change
+        video.likesCount += change
 
         setIsLiked((prev: any) => !prev)
     }
@@ -69,29 +69,29 @@ function VideoMain({isLiked, setIsLiked, isWatchLater, setIsWatchLater, savedTim
                       state={{
                           channel: {
                               name: video.channel.name,
-                              avatar: video.channel.avatar_url,
+                              avatar: video.channel.avatarUrl,
                           }
                       }}
                       className="video__channel flex flex-align-center cursor-pointer hover-color-accent"
                 >
                     <div className="video__channel-avatar img-container"
                     >
-                        {video.channel.avatar_url ?
-                            (<img src={`${BASE_URL}${video.channel.avatar_url}`} alt={video.channel.name}/>) :
+                        {video.channel.avatarUrl ?
+                            (<img src={`${BASE_URL}${video.channel.avatarUrl}`} alt={video.channel.name}/>) :
                             (<span>{video?.channel.name?.slice(0, 1)}</span>)
                         }
                     </div>
                     <span className="video__channel-name text-w700">{video.channel.name}</span>
                 </Link>
 
-                {video?.video_url ? (
+                {video?.url ? (
                     <div className="video__buttons flex">
                         <button className={`video__button video__like recolor-svg flex flex-align-center gap-10 ${isLiked ? 'fill' : ''}`}
                                 type="button"
                                 disabled={!likeIsActive}
                                 onClick={handleLike}
                         >
-                            <span>{video.likes}</span>
+                            <span>{video.likesCount}</span>
                             <LikeIcon/>
                         </button>
                         <button className={`video__button ${isWatchLater ? 'fill' : ''}`}
@@ -105,9 +105,9 @@ function VideoMain({isLiked, setIsLiked, isWatchLater, setIsWatchLater, savedTim
                 ) : null}
 
                 <div className="video__info flex flex-align-center gap-10">
-                    <span>{video.views} {formatCount(video.views, viewsArr)}</span>
+                    <span>{video.viewsCount} {formatCount(video.viewsCount, viewsArr)}</span>
                     <div className="video-item__dot"/>
-                    <span>{formatDateAgo(video.date)}</span>
+                    <span>{formatDateAgo(video.createdAt)}</span>
                 </div>
             </div>
 

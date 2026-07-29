@@ -1,13 +1,9 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 
-import {Video} from "@/types/video";
+import {VideoResponse} from "@/types/video";
 
-import {apiSetToHistory} from "@api/history/history";
-import {apiCheckIsLiked} from "@api/like/like";
-import {apiGetSavedTime} from "@api/save_time/saveTime";
 import {apiGetVideo} from "@api/video/video";
-import {apiCheckWatchLater} from "@api/watch_later/watchLater.ts";
 
 import Header from "@header/Header";
 import VideoMain from "@video/VideoMain";
@@ -38,9 +34,14 @@ function VideoPage() {
             setIsLoading(true)
             clearVideo()
             if (id) {
-                const data: Video = await apiGetVideo(+id)
-                if (data) {
-                    setVideo(data)
+                const response: VideoResponse = await apiGetVideo(+id)
+                if (response) {
+                    setVideo(response.video)
+                    if (isLogged) {
+                        setIsLiked(response.isLiked)
+                        setSavedTime(response.savedTime)
+                        setIsWatchLater(response.isWatchLater)
+                    }
                 }
             }
         } catch (err) {
@@ -52,20 +53,6 @@ function VideoPage() {
 
     const updateVideo = async (id: number) => {
         await getVideo()
-
-        if (isLogged) {
-            const [_, likeRes, saveTimeRes, watchLaterRes] =
-                await Promise.all([
-                    apiSetToHistory(id),
-                    apiCheckIsLiked(id),
-                    apiGetSavedTime(id),
-                    apiCheckWatchLater(id)
-                ])
-
-            setIsLiked(likeRes.is_liked)
-            setSavedTime(saveTimeRes.time)
-            setIsWatchLater(watchLaterRes.is_watch_later)
-        }
 
         await getRecommendedVideos(+id).then()
     }

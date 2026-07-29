@@ -63,12 +63,12 @@ function Preview({
         <div className="video-item__preview img-container position-relative">
             {isHovered ? (
                 <>
-                    <img src={`${BASE_URL}${video.preview_url}`}
+                    <img src={`${BASE_URL}${video.previewUrl}`}
                          alt={video.name}
                          loading="lazy"
                          className={`${isReady ? 'is-hidden' : ''}`}
                     />
-                    <video src={`${BASE_URL}${video.video_url}?start=${previewTime}`}
+                    <video src={`${BASE_URL}${video.url}?start=${previewTime}`}
                            autoPlay
                            muted
                            loop
@@ -78,17 +78,17 @@ function Preview({
                     />
                 </>
             ) : (
-                <img src={`${BASE_URL}${video.preview_url}`} alt={video.name} loading="lazy"/>
+                <img src={`${BASE_URL}${video.previewUrl}`} alt={video.name} loading="lazy"/>
             )}
 
             <span className="position-absolute">{formatVideoTime(video.duration)}</span>
 
             <VideoMenu id={video.id} isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} isSmall={isRecommendation}/>
 
-            {!!(video.saved_time) && (
+            {!!(video.savedTime) && (
                 <div className="video-item__timeline w-100 position-absolute bottom-0 z-10">
                     <div className="h-100"
-                         style={{'width': `${video.saved_time / video.duration * 100}%`}}
+                         style={{'width': `${video.savedTime / video.duration * 100}%`}}
                     />
                 </div>
             )}
@@ -107,8 +107,8 @@ function Avatar({
                 onClick={(event) => handleChannel(event)}
                 type="button"
         >
-            {video.channel.avatar_url ?
-                (<img src={`${BASE_URL}${video.channel.avatar_url}`} alt={video.channel.name}/>) :
+            {video.channel.avatarUrl ?
+                (<img src={`${BASE_URL}${video.channel.avatarUrl}`} alt={video.channel.name}/>) :
                 (<span>{video.channel.name?.slice(0, 1)}</span>)
             }
         </button>
@@ -132,9 +132,9 @@ function InfoInRow({
                 {!isRecommendation && <div className="video-item__dot"/>}
 
                 <div className={`flex gap-10 ${isRecommendation ? 'flex-align-center' : 'flex-align-center mb-10'}`}>
-                    <span className="video-item__info-item">{formatDateAgo(video.date)}</span>
+                    <span className="video-item__info-item">{formatDateAgo(video.createdAt)}</span>
                     <div className="video-item__dot"/>
-                    <span className="video-item__info-item">{video.views} {formatCount(video.views, viewsArr)}</span>
+                    <span className="video-item__info-item">{video.viewsCount} {formatCount(video.viewsCount, viewsArr)}</span>
                 </div>
             </div>
 
@@ -144,8 +144,8 @@ function InfoInRow({
             >
                 {showAvatar && (
                     <div className="video-item__avatar img-container radius-50 text-upper">
-                        {video.channel.avatar_url ?
-                            (<img src={`${BASE_URL}${video.channel.avatar_url}`}
+                        {video.channel.avatarUrl ?
+                            (<img src={`${BASE_URL}${video.channel.avatarUrl}`}
                                   alt={video.channel.name}/>) :
                             (<span>{video.channel.name.slice(0, 1)}</span>)
                         }
@@ -240,9 +240,9 @@ const VideoItem = forwardRef(({
                                         <div className="video-item__dot"/>
                                     </>
                                 )}
-                                <span className="video-item__info-item">{formatDateAgo(video.date)}</span>
+                                <span className="video-item__info-item">{formatDateAgo(video.createdAt)}</span>
                                 <div className="video-item__dot"/>
-                                <span className="video-item__info-item">{video.views} {formatCount(video.views, viewsArr)}</span>
+                                <span className="video-item__info-item">{video.viewsCount} {formatCount(video.viewsCount, viewsArr)}</span>
                             </div>
                         )}
                     </div>

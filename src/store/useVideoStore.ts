@@ -21,18 +21,16 @@ interface VideoState {
 const emptyVideo: Video = {
     id: -1,
     name: '',
-    path: '',
-    video_url: '',
-    date: '',
+    url: '',
+    createdAt: '',
     duration: 0,
-    preview_url: '',
-    subtitle_url: '',
-    views: 0,
-    likes: 0,
+    previewUrl: '',
+    viewsCount: 0,
+    likesCount: 0,
     channel: {
         id: -1,
         name: '',
-        avatar_url: '',
+        avatarUrl: '',
     }
 }
 
@@ -62,7 +60,7 @@ export const useVideoStore = create<VideoState>((set, get) => ({
             if (data) {
                 set({
                     recommendedVideos: [...get().recommendedVideos, ...data.videos],
-                    recommendedHasMore: data.has_more,
+                    recommendedHasMore: data.hasMore,
                     recommendedPage: data.page + 1,
                 })
             }

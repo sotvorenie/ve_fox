@@ -14,7 +14,7 @@ function UploadNewVideo({newVideo}: Readonly<Props>) {
             <div className="uploaded-video__top">
                 <div className="uploaded-video__preview flex-center">
                     <div className="img-container h-100">
-                        <img src={`${BASE_URL}${newVideo.preview_url}`} alt={newVideo.name}/>
+                        <img src={`${BASE_URL}${newVideo.previewUrl}`} alt={newVideo.name}/>
                     </div>
                 </div>
 
@@ -27,7 +27,7 @@ function UploadNewVideo({newVideo}: Readonly<Props>) {
 
                     <div className="uploaded-video__channel flex flex-align-center">
                         <div className="uploaded-video__channel-avatar img-container radius-50">
-                            <img src={`${BASE_URL}${newVideo.channel.avatar_url}`} alt={newVideo.channel.name}/>
+                            <img src={`${BASE_URL}${newVideo.channel.avatarUrl}`} alt={newVideo.channel.name}/>
                         </div>
                         <p className="uploaded-video__channel-name text-w500">{newVideo.channel.name}</p>
                     </div>

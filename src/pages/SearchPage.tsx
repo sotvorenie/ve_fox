@@ -39,7 +39,7 @@ function SearchPage() {
                         <li className="search-page__channel" key={channel.id}>
                             <Link to={`/channel/${channel.id}`} className="flex flex-align-center">
                                 <div className="search-page__channel-avatar img-container radius-50">
-                                    <img src={`${BASE_URL}${channel?.avatar_url}`} alt={channel?.name}/>
+                                    <img src={`${BASE_URL}${channel?.avatarUrl}`} alt={channel?.name}/>
                                 </div>
                                 <span className="search-page__channel-name h4">{channel?.name}</span>
                             </Link>

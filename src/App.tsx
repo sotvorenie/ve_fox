@@ -68,7 +68,7 @@ function App() {
                 const hasRouterMap: boolean = localStorage.getItem('has-router-map') === 'true'
                 if (hasRouterMap) {
                     const response = await apiGetUserRouterMap()
-                    if (response?.router_map) finalMap = JSON.parse(response.router_map)
+                    if (response?.routerMap) finalMap = JSON.parse(response.routerMap)
                 }
             } else getMapFromLocStore()
         } catch (err) {

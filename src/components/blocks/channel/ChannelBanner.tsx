@@ -55,7 +55,7 @@ function ChannelBanner({videos}: Readonly<Props>) {
 
             {/*eslint-disable jsx-a11y/media-has-caption*/}
             <video key={activeVideo?.id}
-                   src={`${BASE_URL}${activeVideo?.video_url}?start=${activeVideo?.start}`}
+                   src={`${BASE_URL}${activeVideo?.url}?start=${activeVideo?.start}`}
                    autoPlay
                    muted
                    playsInline

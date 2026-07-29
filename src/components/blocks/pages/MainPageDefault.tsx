@@ -52,7 +52,7 @@ function MainPageDefault({name, index}: Props) {
 
             if (data) {
                 setVideos(prev => [...prev, ...data.videos])
-                setHasMore(data.has_more)
+                setHasMore(data.hasMore)
                 setTotal(data.total)
                 setResponsePage(data.page + 1)
             }

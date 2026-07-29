@@ -65,8 +65,8 @@ const Comment = forwardRef<HTMLLIElement, Props>(({
             const response: LikeResponse = await apiLikeComment(comment.id)
             if (response) setComment(prev => ({
                 ...prev,
-                is_liked: response.is_liked,
-                likes: response.is_liked ? prev.likes + 1 : prev.likes - 1
+                is_liked: response.isLiked,
+                likes: response.isLiked ? prev.likes + 1 : prev.likes - 1
             }))
         } catch (err) {
             console.error(err)
@@ -78,7 +78,7 @@ const Comment = forwardRef<HTMLLIElement, Props>(({
     return (
         <li className="comments__item comment flex gap-10 mb-15 position-relative" ref={ref}>
             <div className="comment__avatar img-container radius-50">
-                <img src={`${BASE_URL}${comment.user?.avatar_url}`} alt={comment.user?.name}/>
+                <img src={`${BASE_URL}${comment.user?.avatarUrl}`} alt={comment.user?.name}/>
             </div>
 
             {isRedact ? (
@@ -101,7 +101,7 @@ const Comment = forwardRef<HTMLLIElement, Props>(({
 
                             <div className="comment__date flex">
                                 <span className="comment__info">{formatDateAgo(comment.date)}</span>
-                                {comment.is_redacted && <span className="comment__info">(изменено)</span>}
+                                {comment.isRedacted && <span className="comment__info">(изменено)</span>}
                             </div>
                         </div>
 
@@ -111,10 +111,10 @@ const Comment = forwardRef<HTMLLIElement, Props>(({
                             <div className="comment__actions flex flex-align-center gap-20 line-height-1 mb-15">
                                 <button className={`
                                             comment__like recolor-svg button-width-svg hover-color-accent flex flex-align-center fs-14
-                                            ${comment.is_liked ? 'is-liked' : ''}
+                                            ${comment.isLiked ? 'is-liked' : ''}
                                         `}
                                         type="button"
-                                        title={comment.is_liked ? 'Убрать оценку' : 'Оценить комментарий'}
+                                        title={comment.isLiked ? 'Убрать оценку' : 'Оценить комментарий'}
                                         onClick={handleLike}
                                         disabled={isLoading}
                                 >

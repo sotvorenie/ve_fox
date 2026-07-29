@@ -22,7 +22,7 @@ function HeaderSearchHistory({inFocus, handleSearch}: Readonly<Props>) {
         if (isLogged) {
             try {
                 const response = await apiGetSearchHistory()
-                if (response.search_history) setHistory(response.search_history)
+                if (response.searchHistory) setHistory(response.searchHistory)
             } catch (err) {
                 console.error(err)
             }

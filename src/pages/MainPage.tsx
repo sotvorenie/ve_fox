@@ -31,7 +31,7 @@ function MainPage() {
             if (data) {
                 setVideos(prev => [...prev, ...data.videos])
                 setPage(prev => prev + 1)
-                setHasMore(data.has_more)
+                setHasMore(data.hasMore)
             }
         } catch (err) {
             console.error(err)

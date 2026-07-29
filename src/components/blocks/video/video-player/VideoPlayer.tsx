@@ -275,7 +275,7 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
             )}
 
             {/*eslint-disable jsx-a11y/media-has-caption*/}
-            <video src={`${BASE_URL}${video?.video_url}`}
+            <video src={`${BASE_URL}${video?.url}`}
                    className="w-100 h-100"
                    autoPlay
                    crossOrigin="anonymous"
@@ -283,16 +283,7 @@ function VideoPlayer({savedTime}: Readonly<Props>) {
                    onLoadedMetadata={loadedMetadata}
                    onTimeUpdate={updateTimeline}
                    onEnded={() => setIsPlaying(false)}
-            >
-                {video.subtitle_url && (
-                    <track src={video.subtitle_url}
-                           kind="captions"
-                           srcLang="ru"
-                           label="Русские субтитры"
-                           default
-                    />
-                )}
-            </video>
+            />
 
             {!isMiniPlayer && <VideoPlayerSettings isShowSettings={isShowSettings}/>}
 

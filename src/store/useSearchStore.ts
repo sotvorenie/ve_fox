@@ -48,7 +48,7 @@ export const useSearchStore = create<SearchState>((set, get) => ({
                 set({
                     channels: data.channels,
                     videos: data.videos,
-                    hasMore: data.has_more,
+                    hasMore: data.hasMore,
                     total: data.total,
                     page: data.page + 1
                 })

@@ -5,7 +5,7 @@ import {BASE_URL} from "@api/url";
 
 import {UserAvatar} from "@/types/user";
 
-import {apiRedactUserAvatar} from "@api/user/user";
+import {apiUploadUserAvatar} from "@api/user/user";
 
 import {cropPhoto} from "@composables/useCropPhoto.ts";
 
@@ -55,8 +55,8 @@ function SettingsRedactAvatar({isLoading, setIsLoading}: Readonly<Props>) {
         try {
             const croppedPhoto = await cropPhoto(imageUrl, croppedAreaPixels)
 
-            const response: UserAvatar = await apiRedactUserAvatar(croppedPhoto)
-            if (response.new_avatar_url) updateUser({avatar_url: response.new_avatar_url})
+            const response: UserAvatar = await apiUploadUserAvatar(croppedPhoto)
+            if (response.newAvatarUrl) updateUser({avatarUrl: response.newAvatarUrl})
 
         } catch (err) {
             console.error(err)
@@ -87,7 +87,7 @@ function SettingsRedactAvatar({isLoading, setIsLoading}: Readonly<Props>) {
                 title="Редактировать аватар"
                 onClick={handleAvatar}
             >
-                {user.avatar_url ? (<img src={`${BASE_URL}/${user.avatar_url}`} alt=""/>) : (<UserIcon/>)}
+                {user.avatarUrl ? (<img src={`${BASE_URL}${user.avatarUrl}`} alt=""/>) : (<UserIcon/>)}
 
                 <RedactIcon className="absolute-center tr-opacity z-1 pointer-none"/>
 

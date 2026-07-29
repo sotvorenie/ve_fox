@@ -1,3 +1,5 @@
+import {VideoForList, VideosList} from "@/types/video.ts";
+
 export interface ChannelForList {
     id: number
     name: string
@@ -5,8 +7,14 @@ export interface ChannelForList {
 }
 
 export interface Channel extends ChannelForList {
-    path: string
+    url: string
     date: string
+}
+
+export interface ChannelResponse {
+    channel: Channel
+    newVideos: VideosList
+    popularVideos: VideoForList[]
 }
 
 export interface ChannelsListResponse {

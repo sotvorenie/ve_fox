@@ -3,10 +3,10 @@ import {useOutletContext, useParams} from "react-router-dom";
 
 import {BASE_URL} from "@api/url";
 
-import {VideoForList, VideosList} from "@/types/video";
-import {Channel} from "@/types/channel";
+import {VideoForList} from "@/types/video";
+import {Channel, ChannelResponse} from "@/types/channel";
 
-import {apiGetChannel, apiGetVideosFromChannel} from "@api/channel/channel";
+import {apiGetChannel} from "@api/channel/channel";
 
 import ChannelMain from "@channel/ChannelMain";
 import ChannelVideos from "@channel/ChannelVideos";
@@ -30,54 +30,29 @@ function ChannelPage() {
     const [total, setTotal] = useState<number>(0)
     const [hasMore, setHasMore] = useState<boolean>(false)
 
-    const getNewChannelVideos = async () => {
-        try {
-            const data: VideosList = await apiGetVideosFromChannel(+id!, page)
-
-            if (data) {
-                setVideos(data.videos)
-
-                if (page === 1) {
-                    setNewVideos(data.videos?.slice(0, 8))
-                }
-
-                setPage(page + 1)
-                setHasMore(data.has_more)
-                setTotal(data.total)
-            }
-        } catch (err) {
-            console.error(err)
-        }
-    }
-
-    const getPopularChannelVideos = async () => {
-        try {
-            const data: VideosList = await apiGetVideosFromChannel(+id!, 1, 8, false, true)
-
-            if (data) setPopularVideos(data.videos)
-        } catch (err) {
-            console.error(err)
-        }
-    }
-
     const getChannel = async () => {
         try {
-            const data: Channel = await apiGetChannel(+id!)
+            const response: ChannelResponse = await apiGetChannel(+id!)
 
-            if (data.name) {
-                setChannel(data)
+            if (response) {
+                setChannel(response.channel)
+                setVideos(response.newVideos.videos)
+
+                setNewVideos(response.newVideos.videos.slice(0, 8))
+                setPage(page + 1)
+                setHasMore(response.newVideos.hasMore)
+                setTotal(response.newVideos.total)
+
+                setPopularVideos(response.popularVideos)
             }
         } catch (err) {
             console.error(err)
         }
     }
-
-    useEffect(() => {
-        if (id) Promise.all([getChannel(), getNewChannelVideos(), getPopularChannelVideos()]).then()
-    }, [id])
 
     useEffect(() => {
         setHeaderOptions({ visibleNavigation: true, isOnlyBack: true })
+        getChannel().then()
     }, [])
 
     return (
@@ -86,8 +61,8 @@ function ChannelPage() {
 
             <div className="channel__info flex flex-align-center">
                 <div className="channel__avatar img-container flex-center">
-                    {channel?.avatar_url ?
-                        <img src={`${BASE_URL}${channel.avatar_url}`} alt={channel.name}/>
+                    {channel?.avatarUrl ?
+                        <img src={`${BASE_URL}${channel.avatarUrl}`} alt={channel.name}/>
                         : <span className="text-center">{channel?.name?.[0]}</span>
                     }
                 </div>

@@ -16,11 +16,11 @@ export const apiRedactUserPassword = (password: string): Promise<SuccessResponse
     return apiPatch('/user/redact_password', {password})
 }
 
-export const apiRedactUserAvatar = (file: File): Promise<UserAvatar> => {
+export const apiUploadUserAvatar = (file: File): Promise<UserAvatar> => {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('avatar', file);
 
-    return apiPost(`/user/redact_avatar`, formData)
+    return apiPost(`/user/upload_avatar`, formData)
 }
 
 export const apiSetUserRouterMap = (routerMap: string[]): Promise<SuccessResponse> => {

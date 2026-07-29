@@ -1,6 +1,7 @@
 import {create} from "zustand";
 
-import {CommentDeletedCount, CommentForListResponse} from "@/types/comment.ts";
+import {CommentForListResponse} from "@/types/comment.ts";
+import {SuccessResponse} from "@/types/success.ts";
 
 import {apiAddNewComment, apiDeleteComment, apiGetVideoComments} from "@api/comment/comment.ts";
 
@@ -75,7 +76,7 @@ export const useCommentsStore = create<CommentsState>((set, get) => ({
                 comments: [...state.comments, ...response.comments],
                 total: response.total,
                 page: response.page,
-                hasMore: response.has_more
+                hasMore: response.hasMore
             }))
         } catch (err) {
             console.error(err)
@@ -103,7 +104,7 @@ export const useCommentsStore = create<CommentsState>((set, get) => ({
     },
     deleteComment: async (id) => {
         try {
-            const response: CommentDeletedCount = await apiDeleteComment(id)
+            const response: SuccessResponse = await apiDeleteComment(id)
             if (response) {
                 set((state) => ({
                     comments: state.comments.filter((c) => c.id !== id),

@@ -23,7 +23,7 @@ function CommentsForm() {
     return (
         <div className="comments__form flex flex-align-center gap-10 mb-30">
             <div className="comments__avatar radius-50 img-container">
-                <img src={`${BASE_URL}${user?.avatar_url}`} alt=""/>
+                <img src={`${BASE_URL}${user?.avatarUrl}`} alt=""/>
             </div>
 
             <CommentsInput commentText={commentText}

@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 
-import {CommentDeletedCount, CommentForListResponse, CommentsListResponse} from "@/types/comment.ts";
+import {CommentForListResponse, CommentsListResponse} from "@/types/comment.ts";
+import {SuccessResponse} from "@/types/success.ts";
 
 import {commentAnswersArr} from "@data/countArrays.ts";
 
@@ -43,7 +44,7 @@ function CommentAnswer({
     const [answerComments, setAnswerComments] = useState<CommentForListResponse[]>([])
     const [isVisibleAnswers, setIsVisibleAnswers] = useState<boolean>(false)
     const [page, setPage] = useState<number>(0)
-    const [total, setTotal] = useState<number>(comment.question_comments_count)
+    const [total, setTotal] = useState<number>(comment.questionCommentsCount)
     const [hasMore, setHasMore] = useState<boolean>(true)
 
     const cancel = () => {
@@ -59,7 +60,7 @@ function CommentAnswer({
             const response: CommentsListResponse = await apiGetCommentAnswers(comment.id, page + 1)
             if (response?.comments?.length) {
                 setAnswerComments(prev => [...prev, ...response.comments])
-                setHasMore(response.has_more)
+                setHasMore(response.hasMore)
                 setPage(response.page)
             }
         } catch (err) {
@@ -90,7 +91,7 @@ function CommentAnswer({
 
     const deleteAnswer = async (id: number) => {
         try {
-            const response: CommentDeletedCount = await apiDeleteComment(id)
+            const response: SuccessResponse = await apiDeleteComment(id)
             if (response) {
                 setAnswerComments(prev => prev?.filter(c => c.id !== id))
                 setTotal(prev => prev - response.deleted_count)
@@ -110,7 +111,7 @@ function CommentAnswer({
             {isVisibleInputAnswer && (
                 <div className="comment__input flex flex-align-center gap-10">
                     <div className="comment__avatar img-container radius-50">
-                        <img src={`${BASE_URL}${user?.avatar_url}`} alt={comment.user?.name}/>
+                        <img src={`${BASE_URL}${user?.avatarUrl}`} alt={comment.user?.name}/>
                     </div>
                     <CommentsInput commentText={answerText}
                                    setCommentText={setAnswerText}
