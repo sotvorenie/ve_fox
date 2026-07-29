@@ -87,7 +87,7 @@ function SettingsRedactAvatar({isLoading, setIsLoading}: Readonly<Props>) {
                 title="Редактировать аватар"
                 onClick={handleAvatar}
             >
-                {user.avatarUrl ? (<img src={`${BASE_URL}${user.avatarUrl}`} alt=""/>) : (<UserIcon/>)}
+                {user.avatarUrl ? (<img src={`${BASE_URL}${user.avatarUrl}?t=${Date.now()}`} alt=""/>) : (<UserIcon/>)}
 
                 <RedactIcon className="absolute-center tr-opacity z-1 pointer-none"/>
 

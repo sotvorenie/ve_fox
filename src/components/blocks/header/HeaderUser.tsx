@@ -90,7 +90,7 @@ function HeaderUser() {
                     onClick={() => setIsVisibleSettings(prev => !prev)}
                     title={user.name}
                 >
-                    {user.avatarUrl ? (<img src={`${BASE_URL}${user.avatarUrl}`} alt=""/>) : (<UserIcon/>)}
+                    {user.avatarUrl ? (<img src={`${BASE_URL}${user.avatarUrl}?t=${Date.now()}`} alt=""/>) : (<UserIcon/>)}
                 </button>
             </Portal>
 
